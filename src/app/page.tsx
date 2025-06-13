@@ -3,132 +3,69 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Logo from '/public/logo.png'; // Replace with your logo path
+import logo from '@/public/logo.png';
 
 export default function HomePage() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   useEffect(() => {
-    setShowDisclaimer(true); // Always show on refresh
+    const accepted = localStorage.getItem('disclaimerAccepted');
+    if (accepted === 'true') setShowDisclaimer(false);
   }, []);
 
+  const handleAgree = () => {
+    localStorage.setItem('disclaimerAccepted', 'true');
+    setShowDisclaimer(false);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-slate-100 text-gray-800">
-      {/* Disclaimer Modal */}
+    <div className="relative min-h-screen bg-gradient-to-tr from-white to-gray-100 flex flex-col items-center justify-center text-center">
       {showDisclaimer && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-xl max-w-lg w-full shadow-xl border border-gray-300">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">DISCLAIMER:</h2>
-            <ul className="text-sm text-gray-700 list-disc pl-5 space-y-2">
-              <li>
-                The user wishes to gain more information about PJ Legal, its practice areas and its attorneys,
-                for personal information and use.
-              </li>
-              <li>
-                The information is made available only on specific request. Download or use is at the user's discretion and does not create a lawyer-client relationship.
-              </li>
-              <li>
-                No information on this website is legal advice or opinion.
-              </li>
-            </ul>
-            <p className="mt-4 text-sm text-gray-600">
-              PJ Legal is not responsible for any consequences based on information herein. Users must seek independent legal advice for any issues.
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-white shadow-2xl max-w-2xl w-full rounded-xl p-6 mx-4 animate-fade-in">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Website Disclaimer</h2>
+            <p className="text-sm text-gray-700 leading-relaxed mb-4">
+              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>'I AGREE'</strong>, you acknowledge and confirm that:
             </p>
-            <div className="mt-6 text-center">
-              <button
-                onClick={() => setShowDisclaimer(false)}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg shadow-md"
-              >
-                I Agree
-              </button>
-            </div>
+            <ul className="list-disc text-sm text-gray-700 pl-5 mb-4 space-y-2">
+              <li>You are accessing this website solely to obtain information about PJ Legal, its services, and attorneys on your own accord.</li>
+              <li>All information provided is at your request and is for informational purposes only. Accessing this site does not establish an attorney-client relationship.</li>
+              <li>No part of this website constitutes legal advice or a legal opinion.</li>
+              <li>PJ Legal is not responsible for any action taken based on the content herein. Always seek independent legal advice for your legal concerns.</li>
+            </ul>
+            <button
+              onClick={handleAgree}
+              className="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-sm transition"
+            >
+              I AGREE
+            </button>
           </div>
         </div>
       )}
 
-      {/* Page Content */}
-      <header className="py-6 px-4 flex justify-between items-center shadow-sm bg-white">
-        <div className="flex items-center space-x-3">
-          <Image src={Logo} alt="PJ Legal Logo" width={40} height={40} />
-          <h1 className="text-2xl font-bold text-indigo-700">PJ LEGAL</h1>
-        </div>
-        <nav className="space-x-6 text-sm font-medium text-gray-600">
-          <a href="#who" className="hover:text-indigo-700">Who We Are</a>
-          <a href="#services" className="hover:text-indigo-700">Services</a>
-          <a href="#contact" className="hover:text-indigo-700">Contact</a>
-        </nav>
-      </header>
-
-      <main className="px-4 py-12 max-w-6xl mx-auto">
-        <section id="hero" className="text-center py-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-            Practice Smarter. Defend Stronger.
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Trusted legal expertise to guide your decisions and protect your interests — every step of the way.
-          </p>
-        </section>
-
-        <section id="who" className="mt-16">
-          <h3 className="text-2xl font-bold text-indigo-700 mb-4">Who We Are</h3>
-          <p className="text-gray-700 max-w-3xl">
-            PJ Legal is a boutique law practice founded by R. Prajyoth Kumar, Advocate. With expertise in property, civil, cyber, regulatory, and criminal law, we serve clients across Telangana with integrity and clarity.
-          </p>
-        </section>
-
-        <section id="services" className="mt-16">
-          <h3 className="text-2xl font-bold text-indigo-700 mb-4">Our Services</h3>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700 list-disc pl-5">
-            <li>Property & Land Disputes</li>
-            <li>Civil and Criminal Litigation</li>
-            <li>Cybercrime & Digital Law</li>
-            <li>Regulatory Compliance & RTI</li>
-            <li>Document Drafting & Affidavits</li>
-            <li>Legal Consultation & Opinions</li>
-          </ul>
-        </section>
-
-        <section id="contact" className="mt-16">
-          <h3 className="text-2xl font-bold text-indigo-700 mb-4">Contact Us</h3>
-          <form
-            className="space-y-4 max-w-xl"
-            action="https://formsubmit.co/pjlegal.r@gmail.com" // Replace with your receiving email
-            method="POST"
+      <main className={`transition-opacity duration-300 ${showDisclaimer ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
+        <Image src={logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4">
+          Trusted Legal Solutions
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          PJ Legal is committed to providing personalized and professional legal services. Explore our expertise in civil, criminal, and corporate law.
+        </p>
+        <div className="mt-8 space-x-4">
+          <a
+            href="#contact"
+            className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg shadow-md"
           >
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="w-full px-4 py-2 border rounded-md"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="w-full px-4 py-2 border rounded-md"
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              required
-              className="w-full px-4 py-2 border rounded-md"
-              rows={4}
-            />
-            <button
-              type="submit"
-              className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
-            >
-              Send Message
-            </button>
-          </form>
-        </section>
+            Contact Us
+          </a>
+          <a
+            href="#services"
+            className="px-6 py-3 border border-blue-700 text-blue-700 hover:bg-blue-100 font-medium rounded-lg"
+          >
+            Our Services
+          </a>
+        </div>
       </main>
-
-      <footer className="text-center text-sm text-gray-500 py-6">
-        © {new Date().getFullYear()} PJ Legal. All rights reserved.
-      </footer>
     </div>
   );
 }
