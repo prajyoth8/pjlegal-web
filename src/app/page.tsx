@@ -6,38 +6,52 @@ import Image from 'next/image';
 import Logo from '/public/logo.png';
 
 export default function HomePage() {
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [agreed, setAgreed] = useState(false);
+  const [checked, setChecked] = useState(false);
 
-  const handleAgree = () => {
-    setShowDisclaimer(false);
+  const handleProceed = () => {
+    if (checked) setAgreed(true);
   };
 
   return (
     <div className="relative min-h-screen bg-gradient-to-tr from-white to-gray-100 flex flex-col items-center justify-center text-center">
-      {showDisclaimer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="bg-white shadow-2xl max-w-2xl w-full rounded-xl p-6 mx-4 animate-fade-in">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Website Disclaimer</h2>
-            <p className="text-sm text-gray-700 leading-relaxed mb-4">
-              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>&apos;I AGREE&apos;</strong>, you acknowledge and confirm that:
+      {!agreed && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80 backdrop-blur-sm">
+          <div className="bg-white shadow-2xl w-full max-w-3xl p-8 rounded-xl border border-gray-300 animate-fade-in">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Disclaimer</h2>
+            <p className="text-gray-800 text-sm leading-relaxed mb-4">
+              The Bar Council of India does not permit advertisement or solicitation by advocates in any form or manner. By accessing this website, you acknowledge and confirm that you are seeking information relating to PJ Legal of your own accord and that there has been no form of solicitation, advertisement, or inducement by PJ Legal or its members. The content of this website is for informational purposes only and should not be interpreted as soliciting or advertisement. No material or information provided on this website should be construed as legal advice. PJ Legal shall not be liable for any consequences of any action taken by relying on the material/information provided on this website. The contents of this website are the intellectual property of PJ Legal.
             </p>
-            <ul className="list-disc text-sm text-gray-700 pl-5 mb-4 space-y-2">
-              <li>You are accessing this website solely to obtain information about PJ Legal, its services, and attorneys on your own accord.</li>
-              <li>All information provided is at your request and is for informational purposes only. Accessing this site does not establish an attorney-client relationship.</li>
-              <li>No part of this website constitutes legal advice or a legal opinion.</li>
-              <li>PJ Legal is not responsible for any action taken based on the content herein. Always seek independent legal advice for your legal concerns.</li>
-            </ul>
+            <div className="flex items-center mb-4">
+              <input
+                id="agreeCheckbox"
+                type="checkbox"
+                checked={checked}
+                onChange={(e) => setChecked(e.target.checked)}
+                className="mr-2"
+              />
+              <label htmlFor="agreeCheckbox" className="text-sm text-gray-800">
+                I accept the above.
+              </label>
+            </div>
             <button
-              onClick={handleAgree}
-              className="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-sm transition"
+              onClick={handleProceed}
+              disabled={!checked}
+              className={`px-6 py-2 rounded-md font-semibold transition-colors shadow-sm text-white ${
+                checked ? 'bg-blue-700 hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
+              }`}
             >
-              I AGREE
+              PROCEED TO WEBSITE
             </button>
           </div>
         </div>
       )}
 
-      <main className={`transition-opacity duration-300 ${showDisclaimer ? 'blur-sm pointer-events-none select-none' : 'blur-0'}`}>
+      <main
+        className={`transition-opacity duration-300 w-full flex flex-col items-center px-4 ${
+          agreed ? 'opacity-100 blur-0' : 'opacity-40 blur-sm pointer-events-none select-none'
+        }`}
+      >
         <Image src={Logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4">
           Trusted Legal Solutions
