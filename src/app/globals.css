@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can also add your custom animations */
+@import './animations.css';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
