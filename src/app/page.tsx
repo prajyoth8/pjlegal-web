@@ -18,11 +18,12 @@ export default function HomePage() {
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-tr from-gray-100 to-white dark:from-gray-900 dark:to-black transition-colors duration-300">
       <Head>
         <title>PJ Legal</title>
-        <link rel="icon" href="/logo.png" />
+        <meta name="description" content="PJ Legal - Trusted Legal Solutions in India" />
+        <link rel="icon" href="/logo.png" type="image/png" />
       </Head>
 
       {!agreed && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 shadow-2xl max-w-3xl w-full p-8 rounded-xl border border-gray-300 dark:border-gray-700 animate-fade-in text-left">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Disclaimer</h2>
             <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed mb-4">
