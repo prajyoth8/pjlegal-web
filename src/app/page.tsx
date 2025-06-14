@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import logo from '@/public/logo.png';
+import Logo from '/public/logo.png';
 
 export default function HomePage() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -44,7 +44,7 @@ export default function HomePage() {
       )}
 
       <main className={`transition-opacity duration-300 ${showDisclaimer ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
-        <Image src={logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
+        <Image src={Logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4">
           Trusted Legal Solutions
         </h1>
