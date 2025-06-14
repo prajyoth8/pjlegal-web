@@ -1,20 +1,14 @@
 // 📁 src/app/page.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Logo from '/public/logo.png';
 
 export default function HomePage() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
-  useEffect(() => {
-    const accepted = localStorage.getItem('disclaimerAccepted');
-    if (accepted === 'true') setShowDisclaimer(false);
-  }, []);
-
   const handleAgree = () => {
-    localStorage.setItem('disclaimerAccepted', 'true');
     setShowDisclaimer(false);
   };
 
@@ -25,7 +19,7 @@ export default function HomePage() {
           <div className="bg-white shadow-2xl max-w-2xl w-full rounded-xl p-6 mx-4 animate-fade-in">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">Website Disclaimer</h2>
             <p className="text-sm text-gray-700 leading-relaxed mb-4">
-              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>&apos;I AGREE&apos;</strong>, you acknowledge and confirm that:
+              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>'I AGREE'</strong>, you acknowledge and confirm that:
             </p>
             <ul className="list-disc text-sm text-gray-700 pl-5 mb-4 space-y-2">
               <li>You are accessing this website solely to obtain information about PJ Legal, its services, and attorneys on your own accord.</li>
@@ -43,7 +37,7 @@ export default function HomePage() {
         </div>
       )}
 
-      <main className={`transition-opacity duration-300 ${showDisclaimer ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
+      <main className={`transition-opacity duration-300 ${showDisclaimer ? 'blur-sm pointer-events-none select-none' : 'blur-0'}`}>
         <Image src={Logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4">
           Trusted Legal Solutions
