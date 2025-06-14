@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'PJ Legal',
   description: 'PJ Legal',
   icons: {
-    icon: '/logo.png', // ✅ Make sure this file exists in /public
+    icon: '/public/logo.png', // ✅ Make sure this file exists in /public
   },
 };
 
