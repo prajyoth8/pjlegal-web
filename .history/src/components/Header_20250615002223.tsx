@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useState } from "react";
-import Link from "next/link";
+import Image from 'next/image';
+import { useState } from 'react';
+import Link from 'next/link';
+import Logo from '/public/logo.png';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,8 +12,7 @@ export default function Header() {
     <header className="w-full px-6 py-4 flex items-center justify-between text-white bg-transparent z-30">
       {/* Logo */}
       <div className="flex items-center space-x-3">
-        <Image src="/logo.png" alt="PJ Legal Logo" width={40} height={40} />
-
+        <Image src={Logo} alt="PJ Legal Logo" width={40} height={40} />
         <h1 className="font-bold text-xl tracking-wide">PJ LEGAL</h1>
       </div>
 

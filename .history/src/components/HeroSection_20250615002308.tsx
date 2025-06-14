@@ -1,0 +1,1 @@
+Cannot find module '/public/logo.png' or its corresponding type declarations.

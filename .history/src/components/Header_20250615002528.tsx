@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useState } from "react";
-import Link from "next/link";
+import Image from 'next/image';
+import { useState } from 'react';
+import Link from 'next/link';
+
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);

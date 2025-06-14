@@ -46,12 +46,11 @@ export default function HomePage() {
 
         {/* Main Content */}
         <main
-          className={`transition-opacity duration-300 w-full flex flex-col items-center px-4 ${
-            agreed
-              ? "opacity-100 blur-0"
-              : "opacity-40 blur-sm pointer-events-none select-none"
-          }`}
-        >
+  className={`transition-opacity duration-300 w-full flex flex-col items-center px-4 ${
+    agreed ? 'opacity-100 blur-0' : 'opacity-40 blur-sm pointer-events-none select-none'
+  }`}
+>
+
           <Header />
           <HeroSection />
           <NewsSection />
