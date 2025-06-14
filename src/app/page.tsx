@@ -25,7 +25,7 @@ export default function HomePage() {
           <div className="bg-white shadow-2xl max-w-2xl w-full rounded-xl p-6 mx-4 animate-fade-in">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">Website Disclaimer</h2>
             <p className="text-sm text-gray-700 leading-relaxed mb-4">
-              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>'I AGREE'</strong>, you acknowledge and confirm that:
+              The rules of the Bar Council of India prohibit law firms from soliciting work or advertising in any manner. By clicking on <strong>&apos;I AGREE&apos;</strong>, you acknowledge and confirm that:
             </p>
             <ul className="list-disc text-sm text-gray-700 pl-5 mb-4 space-y-2">
               <li>You are accessing this website solely to obtain information about PJ Legal, its services, and attorneys on your own accord.</li>
