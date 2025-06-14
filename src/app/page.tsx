@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
 import Logo from '/public/logo.png';
@@ -8,10 +8,6 @@ import Logo from '/public/logo.png';
 export default function HomePage() {
   const [agreed, setAgreed] = useState(false);
   const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    setAgreed(false); // Always show disclaimer on refresh
-  }, []);
 
   const handleProceed = () => {
     if (checked) setAgreed(true);
@@ -22,23 +18,24 @@ export default function HomePage() {
       <Head>
         <title>PJ Legal</title>
         <meta name="description" content="PJ Legal – Trusted Legal Solutions in India" />
-        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Main Container */}
       <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-tr from-gray-100 to-white dark:from-gray-900 dark:to-black transition-colors duration-300">
 
-        {/* Disclaimer Modal */}
+        {/* Disclaimer Overlay */}
         {!agreed && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
-            <div className="bg-white dark:bg-gray-900 shadow-2xl max-w-3xl w-full p-8 rounded-xl border border-gray-300 dark:border-gray-700 animate-fade-in text-left">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Disclaimer</h2>
-              <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed mb-4">
-                The Bar Council of India does not permit advertisement or solicitation by advocates in any form or manner. 
-                By accessing this website, you acknowledge and confirm that you are seeking information relating to PJ Legal 
-                of your own accord and that there has been no form of solicitation, advertisement, or inducement by PJ Legal 
-                or its members. The content of this website is for informational purposes only and should not be interpreted 
-                as soliciting or advertisement. No material or information provided on this website should be construed as 
-                legal advice. PJ Legal shall not be liable for any consequences of any action taken by relying on the 
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-md">
+            <div className="bg-white dark:bg-gray-900 text-left shadow-2xl max-w-2xl w-full p-8 mx-4 rounded-xl border border-gray-300 dark:border-gray-700 animate-fade-in">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Disclaimer</h2>
+              <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed mb-4">
+                The Bar Council of India does not permit advertisement or solicitation by advocates in any form or manner.
+                By accessing this website, you acknowledge and confirm that you are seeking information relating to PJ Legal
+                of your own accord and that there has been no form of solicitation, advertisement, or inducement by PJ Legal
+                or its members. The content of this website is for informational purposes only and should not be interpreted
+                as soliciting or advertisement. No material or information provided on this website should be construed as
+                legal advice. PJ Legal shall not be liable for any consequences of any action taken by relying on the
                 material/information provided on this website. The contents of this website are the intellectual property of PJ Legal.
               </p>
               <div className="flex items-center mb-4">
@@ -66,10 +63,10 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Main Homepage Content */}
+        {/* Homepage Content (Always Rendered, Just Blurred) */}
         <main
           className={`transition-opacity duration-300 w-full flex flex-col items-center px-4 ${
-            agreed ? 'opacity-100 blur-0' : 'opacity-20 blur-sm pointer-events-none select-none'
+            agreed ? 'opacity-100 blur-0' : 'opacity-40 blur-sm pointer-events-none select-none'
           }`}
         >
           <Image src={Logo} alt="PJ Legal Logo" className="w-72 mb-6 drop-shadow-lg" />
