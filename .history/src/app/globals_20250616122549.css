@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Theme variables */
+@import './animations.css';  /* Optional */
+
+/* Light/dark theme variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
