@@ -1,22 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #001f3f; /* navy */
+  --foreground: #FFD700; /* gold */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000b1e; /* dark navy */
+    --foreground: #fff5c2; /* pale gold */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
