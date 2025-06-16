@@ -20,8 +20,16 @@ export default function RootLayout({
       <body className="bg-black text-white">
         <Header />
         <main className="pt-16">{children}</main>
-        <Toaster position="top-center" />
       </body>
     </html>
+  );
+}
+
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <Toaster position="top-center" />
+    </>
   );
 }

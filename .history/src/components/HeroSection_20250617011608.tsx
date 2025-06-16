@@ -2,57 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
 
 export default function HeroSection() {
   const [showModal, setShowModal] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const calendlyRef = useRef<HTMLDivElement>(null);
-
-  // Close modal on ESC key
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setShowModal(false);
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, []);
-
-  // Click outside to close
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === modalRef.current) {
-      setShowModal(false);
-    }
-  };
-
-  // Load Calendly & show toast on event
-  useEffect(() => {
-    if (showModal && calendlyRef.current) {
-      const script = document.createElement("script");
-      script.src = "https://assets.calendly.com/assets/external/widget.js";
-      script.async = true;
-      document.body.appendChild(script);
-
-      (window as any).Calendly?.initInlineWidget({
-        url: "https://calendly.com/pjlegal-r",
-        parentElement: calendlyRef.current,
-        prefill: {},
-        utm: {},
-      });
-
-      const listener = (e: MessageEvent) => {
-        if (e.data?.event === "calendly.event_scheduled") {
-          toast.success("✅ Thank you! Your consultation is booked.");
-          setTimeout(() => setShowModal(false), 1500);
-        }
-      };
-
-      window.addEventListener("message", listener);
-      return () => window.removeEventListener("message", listener);
-    }
-  }, [showModal]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -70,11 +24,7 @@ export default function HeroSection() {
 
       {/* Calendly Modal */}
       {showModal && (
-        <div
-          ref={modalRef}
-          onClick={handleBackdropClick}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-10"
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-10">
           <div className="bg-white rounded-xl max-w-3xl w-full p-6 relative shadow-lg">
             <button
               className="absolute top-3 right-4 text-gray-700 hover:text-red-500 text-2xl font-bold"
@@ -82,7 +32,16 @@ export default function HeroSection() {
             >
               ×
             </button>
-            <div ref={calendlyRef} className="w-full h-[600px]" />
+            <iframe
+              src="https://calendly.com/pjlegal-r"
+              width="100%"
+              height="600"
+              className="border-none w-full"
+              loading="lazy"
+              title="Book Consultation"
+            >
+              Loading…
+            </iframe>
           </div>
         </div>
       )}
@@ -129,7 +88,7 @@ export default function HeroSection() {
           </Link>
         </motion.div>
 
-        {/* Scroll Down Arrow */}
+        {/* Scroll Down Indicator */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,19 +100,9 @@ export default function HeroSection() {
               ?.scrollIntoView({ behavior: "smooth" })
           }
         >
-          <svg
-            className="w-8 h-8 text-white group-hover:text-blue-400 animate-bounce drop-shadow-md"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+          <div className="text-white text-4xl animate-bounce group-hover:text-blue-400 transition">
+            ↓
+          </div>
           <p className="text-sm text-gray-300 mt-1 group-hover:text-blue-400 transition">
             Scroll Down
           </p>

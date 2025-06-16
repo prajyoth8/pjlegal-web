@@ -11,7 +11,6 @@ const navLinks = [
   { name: "Practice Areas", href: "#practice" },
   { name: "Articles", href: "#articles" },
   { name: "Contact", href: "#contact" },
-  { name: "News", href: "#news" },
 ];
 
 export default function Header() {

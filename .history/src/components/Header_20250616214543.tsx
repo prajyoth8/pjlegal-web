@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About Us", href: "#about" },
-  { name: "Practice Areas", href: "#practice" },
-  { name: "Articles", href: "#articles" },
-  { name: "Contact", href: "#contact" },
-  { name: "News", href: "#news" },
+  { name: 'Home', href: '/' },
+  { name: 'About Us', href: '#about' },
+  { name: 'Practice Areas', href: '#practice' },
+  { name: 'Articles', href: '#articles' },
+  { name: 'Contact', href: '#contact' },
 ];
 
 export default function Header() {

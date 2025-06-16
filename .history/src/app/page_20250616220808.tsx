@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <CarouselSection />
+      {/* other sections like <CarouselSection /> */}
     </div>
   );
 }

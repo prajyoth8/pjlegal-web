@@ -136,9 +136,7 @@ export default function HeroSection() {
           transition={{ delay: 2, duration: 1 }}
           className="mt-12 cursor-pointer group"
           onClick={() =>
-            document
-              .getElementById("practice")
-              ?.scrollIntoView({ behavior: "smooth" })
+            document.getElementById("practice")?.scrollIntoView({ behavior: "smooth" })
           }
         >
           <svg
@@ -148,11 +146,7 @@ export default function HeroSection() {
             strokeWidth="2"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
           <p className="text-sm text-gray-300 mt-1 group-hover:text-blue-400 transition">
             Scroll Down

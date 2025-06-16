@@ -2,16 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
 
 export default function HeroSection() {
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
-  const calendlyRef = useRef<HTMLDivElement>(null);
 
-  // Close modal on ESC key
+  // Close modal on ESC
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowModal(false);
@@ -20,39 +18,12 @@ export default function HeroSection() {
     return () => document.removeEventListener("keydown", handleKey);
   }, []);
 
-  // Click outside to close
+  // Click outside modal to close
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalRef.current) {
       setShowModal(false);
     }
   };
-
-  // Load Calendly & show toast on event
-  useEffect(() => {
-    if (showModal && calendlyRef.current) {
-      const script = document.createElement("script");
-      script.src = "https://assets.calendly.com/assets/external/widget.js";
-      script.async = true;
-      document.body.appendChild(script);
-
-      (window as any).Calendly?.initInlineWidget({
-        url: "https://calendly.com/pjlegal-r",
-        parentElement: calendlyRef.current,
-        prefill: {},
-        utm: {},
-      });
-
-      const listener = (e: MessageEvent) => {
-        if (e.data?.event === "calendly.event_scheduled") {
-          toast.success("✅ Thank you! Your consultation is booked.");
-          setTimeout(() => setShowModal(false), 1500);
-        }
-      };
-
-      window.addEventListener("message", listener);
-      return () => window.removeEventListener("message", listener);
-    }
-  }, [showModal]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -82,7 +53,16 @@ export default function HeroSection() {
             >
               ×
             </button>
-            <div ref={calendlyRef} className="w-full h-[600px]" />
+            <iframe
+              src="https://calendly.com/pjlegal-r"
+              width="100%"
+              height="600"
+              className="border-none w-full"
+              loading="lazy"
+              title="Book Consultation"
+            >
+              Loading…
+            </iframe>
           </div>
         </div>
       )}
@@ -129,16 +109,14 @@ export default function HeroSection() {
           </Link>
         </motion.div>
 
-        {/* Scroll Down Arrow */}
+        {/* Enhanced Scroll Down Indicator */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 1 }}
           className="mt-12 cursor-pointer group"
           onClick={() =>
-            document
-              .getElementById("practice")
-              ?.scrollIntoView({ behavior: "smooth" })
+            document.getElementById("practice")?.scrollIntoView({ behavior: "smooth" })
           }
         >
           <svg
@@ -148,11 +126,7 @@ export default function HeroSection() {
             strokeWidth="2"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
           <p className="text-sm text-gray-300 mt-1 group-hover:text-blue-400 transition">
             Scroll Down
