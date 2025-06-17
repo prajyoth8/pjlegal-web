@@ -1,5 +1,7 @@
+/// <reference types="react" />
+
 import "react-markdown";
-import type { ComponentType, ReactNode, JSX } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 declare module "react-markdown" {
   type TagName = keyof JSX.IntrinsicElements | string;
