@@ -197,14 +197,15 @@ export default function ContactSection() {
                 Hyderabad, Telangana 500001
               </p>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.382526149176!2d78.46648702591123!3d17.441396051245547!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb90a5d40aa43f%3A0x759891c5155b2eac!2sPrakash%20Nagar%2C%20Begumpet%2C%20Hyderabad%2C%20Telangana%20500016!5e0!3m2!1sen!2sin!4v1750162240236!5m2!1sen!2sin"
+                src="https://maps.app.goo.gl/qWxiPiJpar8bJbZt6" // replace with real map
+                
                 width="100%"
                 height="200"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 className="rounded-lg shadow-md"
-              ></iframe>
+              />
             </motion.div>
 
             <motion.div
@@ -223,14 +224,14 @@ export default function ContactSection() {
                 Karimnagar, Telangana 505001
               </p>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60561.20757594816!2d79.09194859174164!3d18.434882034129032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bccd910bcf48931%3A0x4889b0398ed69f07!2sKarimnagar%2C%20Telangana!5e0!3m2!1sen!2sin!4v1750162608292!5m2!1sen!2sin"
+                src="https://www.google.com/maps/place/Karimnagar,+Telangana/@18.434882,79.0919486,13z/data=!3m1!4b1!4m6!3m5!1s0x3bccd910bcf48931:0x4889b0398ed69f07!8m2!3d18.4385553!4d79.1288412!16zL20vMDMxYzJk?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" // replace with real map
                 width="100%"
                 height="200"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 className="rounded-lg shadow-md"
-              ></iframe>
+              />
             </motion.div>
           </div>
         </div>
