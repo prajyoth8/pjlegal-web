@@ -21,16 +21,10 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const isValidEmail = (email: string) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export default function ContactSection() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -42,9 +36,7 @@ export default function ContactSection() {
     }
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -52,15 +44,12 @@ export default function ContactSection() {
     e.preventDefault();
     const { name, email, phone, message } = form;
 
-    if (!name || !email || !phone || !message)
-      return toast.error("Please fill all fields");
+    if (!name || !email || !phone || !message) return toast.error("Please fill all fields");
     if (!isValidEmail(email)) return toast.error("Enter a valid email address");
 
     setLoading(true);
 
-    const { error } = await supabase
-      .from("contact_messages")
-      .insert({ name, email, phone, message });
+    const { error } = await supabase.from("contact_messages").insert({ name, email, phone, message });
     await sendContactEmail({ name, email, phone, message }); // send email via backend
 
     setLoading(false);
@@ -73,14 +62,9 @@ export default function ContactSection() {
   };
 
   return (
-    <section
-      id="contact"
-      className="relative bg-gray-100 dark:bg-gray-900 py-16 px-4"
-    >
+    <section id="contact" className="relative bg-gray-100 dark:bg-gray-900 py-16 px-4">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">
-          Contact Us
-        </h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">Contact Us</h2>
 
         <div className="grid md:grid-cols-2 gap-10">
           {/* 📩 Contact Form */}
@@ -132,48 +116,13 @@ export default function ContactSection() {
 
             {/* 🌐 Social Icons */}
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a
-                href="tel:+918712351102"
-                className="text-green-600 hover:scale-110 text-3xl transition"
-              >
-                <FaPhoneAlt />
-              </a>
-              <a
-                href="mailto:pjlegal.r@gmail.com"
-                className="text-red-600 hover:scale-110 text-3xl transition"
-              >
-                <FaEnvelope />
-              </a>
-              <a
-                href="https://wa.me/918712351102"
-                className="text-green-500 hover:scale-110 text-3xl transition"
-              >
-                <FaWhatsapp />
-              </a>
-              <a
-                href="https://facebook.com"
-                className="text-blue-600 hover:scale-110 text-2xl transition"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="https://instagram.com"
-                className="text-pink-600 hover:scale-110 text-2xl transition"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://linkedin.com"
-                className="text-blue-400 hover:scale-110 text-2xl transition"
-              >
-                <FaLinkedinIn />
-              </a>
-              <a
-                href="https://twitter.com"
-                className="text-sky-500 hover:scale-110 text-2xl transition"
-              >
-                <FaTwitter />
-              </a>
+              <a href="tel:+918712351102" className="text-green-600 hover:scale-110 text-3xl transition"><FaPhoneAlt /></a>
+              <a href="mailto:pjlegal.r@gmail.com" className="text-red-600 hover:scale-110 text-3xl transition"><FaEnvelope /></a>
+              <a href="https://wa.me/918712351102" className="text-green-500 hover:scale-110 text-3xl transition"><FaWhatsapp /></a>
+              <a href="https://facebook.com" className="text-blue-600 hover:scale-110 text-2xl transition"><FaFacebookF /></a>
+              <a href="https://instagram.com" className="text-pink-600 hover:scale-110 text-2xl transition"><FaInstagram /></a>
+              <a href="https://linkedin.com" className="text-blue-400 hover:scale-110 text-2xl transition"><FaLinkedinIn /></a>
+              <a href="https://twitter.com" className="text-sky-500 hover:scale-110 text-2xl transition"><FaTwitter /></a>
             </div>
           </div>
 
@@ -186,14 +135,10 @@ export default function ContactSection() {
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
             >
-              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                Hyderabad Office
-              </h3>
+              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">Hyderabad Office</h3>
               <p className="text-gray-800 dark:text-gray-300 mb-2">
-                PJ LEGAL
-                <br />
-                Prakashnagar, Begumpet,
-                <br />
+                PJ LEGAL<br />
+                Prakashnagar, Begumpet,<br />
                 Hyderabad, Telangana 500001
               </p>
               <iframe
@@ -214,12 +159,9 @@ export default function ContactSection() {
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
             >
-              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                Karimnagar Office
-              </h3>
+              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">Karimnagar Office</h3>
               <p className="text-gray-800 dark:text-gray-300 mb-2">
-                Christian Colony,
-                <br />
+                Christian Colony,<br />
                 Karimnagar, Telangana 505001
               </p>
               <iframe
@@ -237,16 +179,10 @@ export default function ContactSection() {
 
         {/* 📱 Floating Mobile Buttons */}
         <div className="md:hidden fixed bottom-6 right-4 flex flex-col items-end space-y-3 z-50">
-          <a
-            href="tel:+918712351102"
-            className="bg-green-600 text-white p-3 rounded-full shadow-md hover:scale-105 transition"
-          >
+          <a href="tel:+918712351102" className="bg-green-600 text-white p-3 rounded-full shadow-md hover:scale-105 transition">
             <FaPhoneAlt size={20} />
           </a>
-          <a
-            href="https://wa.me/918712351102"
-            className="bg-green-500 text-white p-3 rounded-full shadow-md hover:scale-105 transition"
-          >
+          <a href="https://wa.me/918712351102" className="bg-green-500 text-white p-3 rounded-full shadow-md hover:scale-105 transition">
             <FaWhatsapp size={20} />
           </a>
         </div>

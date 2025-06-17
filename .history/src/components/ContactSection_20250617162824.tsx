@@ -1,124 +1,101 @@
+// ✅ 1. ContactSection.tsx (Enhanced layout with social icons below form)
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import {
-  FaWhatsapp,
-  FaPhoneAlt,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-  FaEnvelope,
-} from "react-icons/fa";
-import SuccessModal from "./SuccessModal";
-import { sendContactEmail } from "@/utils/EmailService";
+  Mail,
+  Phone,
+  Linkedin,
+  Facebook,
+  Twitter,
+  Instagram,
+  MessageCircle,
+} from "lucide-react";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const isValidEmail = (email: string) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const isValidEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
 
 export default function ContactSection() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === "#contact") {
-      const el = document.getElementById("contact");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, email, phone, message } = form;
-
     if (!name || !email || !phone || !message)
       return toast.error("Please fill all fields");
     if (!isValidEmail(email)) return toast.error("Enter a valid email address");
 
     setLoading(true);
-
-    const { error } = await supabase
-      .from("contact_messages")
-      .insert({ name, email, phone, message });
-    await sendContactEmail({ name, email, phone, message }); // send email via backend
-
+    const { error } = await supabase.from("contact_messages").insert({
+      name,
+      email,
+      phone,
+      message,
+    });
     setLoading(false);
+
     if (error) toast.error("Submission failed");
     else {
-      setShowSuccess(true);
-      toast.success("Message sent!");
-      setForm({ name: "", email: "", phone: "", message: "" });
+      toast.success("Message sent successfully");
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
     }
   };
 
   return (
-    <section
-      id="contact"
-      className="relative bg-gray-100 dark:bg-gray-900 py-16 px-4"
-    >
+    <section id="contact" className="bg-gray-100 dark:bg-gray-900 py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">
           Contact Us
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* 📩 Contact Form */}
+        <div className="grid md:grid-cols-2 gap-10 items-start">
+          {/* Contact Form */}
           <div>
             <form
               onSubmit={handleSubmit}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg space-y-4"
             >
               <input
-                name="name"
                 type="text"
                 placeholder="Your Name"
-                value={form.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white text-black"
               />
               <input
-                name="email"
                 type="email"
                 placeholder="Your Email"
-                value={form.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white text-black"
               />
               <input
-                name="phone"
                 type="tel"
                 placeholder="Your Contact Number"
-                value={form.phone}
-                onChange={handleChange}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white text-black"
               />
               <textarea
-                name="message"
                 rows={4}
                 placeholder="Your Message"
-                value={form.message}
-                onChange={handleChange}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white text-black"
               />
               <button
@@ -130,59 +107,61 @@ export default function ContactSection() {
               </button>
             </form>
 
-            {/* 🌐 Social Icons */}
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a
-                href="tel:+918712351102"
-                className="text-green-600 hover:scale-110 text-3xl transition"
-              >
-                <FaPhoneAlt />
-              </a>
+            {/* Social Icons */}
+            <div className="mt-8 flex justify-center space-x-4 text-blue-600 dark:text-blue-300">
               <a
                 href="mailto:pjlegal.r@gmail.com"
-                className="text-red-600 hover:scale-110 text-3xl transition"
+                aria-label="Email"
+                target="_blank"
               >
-                <FaEnvelope />
+                <Mail className="w-6 h-6 hover:text-blue-800" />
+              </a>
+              <a href="tel:+918712351102" aria-label="Phone" target="_blank">
+                <Phone className="w-6 h-6 hover:text-blue-800" />
               </a>
               <a
                 href="https://wa.me/918712351102"
-                className="text-green-500 hover:scale-110 text-3xl transition"
+                aria-label="WhatsApp"
+                target="_blank"
               >
-                <FaWhatsapp />
+                <MessageCircle className="w-6 h-6 hover:text-green-600" />
               </a>
               <a
                 href="https://facebook.com"
-                className="text-blue-600 hover:scale-110 text-2xl transition"
+                aria-label="Facebook"
+                target="_blank"
               >
-                <FaFacebookF />
+                <Facebook className="w-6 h-6 hover:text-blue-700" />
               </a>
               <a
                 href="https://instagram.com"
-                className="text-pink-600 hover:scale-110 text-2xl transition"
+                aria-label="Instagram"
+                target="_blank"
               >
-                <FaInstagram />
+                <Instagram className="w-6 h-6 hover:text-pink-500" />
               </a>
               <a
                 href="https://linkedin.com"
-                className="text-blue-400 hover:scale-110 text-2xl transition"
+                aria-label="LinkedIn"
+                target="_blank"
               >
-                <FaLinkedinIn />
+                <Linkedin className="w-6 h-6 hover:text-blue-600" />
               </a>
               <a
                 href="https://twitter.com"
-                className="text-sky-500 hover:scale-110 text-2xl transition"
+                aria-label="Twitter"
+                target="_blank"
               >
-                <FaTwitter />
+                <Twitter className="w-6 h-6 hover:text-blue-400" />
               </a>
             </div>
           </div>
 
-          {/* 🗺️ Address + Map */}
+          {/* Addresses + Maps */}
           <div className="space-y-8">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
             >
@@ -195,65 +174,51 @@ export default function ContactSection() {
                 Prakashnagar, Begumpet,
                 <br />
                 Hyderabad, Telangana 500001
+                <br />
+                India
               </p>
               <iframe
-                src="https://www.google.com/maps/embed?pb=..." // replace with real map
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.403565590368!2d78.47449297507577!3d17.437462501899507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9732d5dbeb55%3A0x7e5b4e07e8e1cbf4!2sTelangana%20High%20Court!5e0!3m2!1sen!2sin!4v1687349493170!5m2!1sen!2sin"
                 width="100%"
                 height="200"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 className="rounded-lg shadow-md"
-              />
+              ></iframe>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
             >
               <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
                 Karimnagar Office
               </h3>
               <p className="text-gray-800 dark:text-gray-300 mb-2">
+                PJ LEGAL
+                <br />
                 Christian Colony,
                 <br />
                 Karimnagar, Telangana 505001
+                <br />
+                India
               </p>
               <iframe
-                src="https://www.google.com/maps/embed?pb=..." // replace with real map
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3802.046119289376!2d79.1275685746987!3d18.438555872018245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcced5d1fd0d9e5%3A0xe06a1d24de71c748!2sKarimnagar%20District%20Court!5e0!3m2!1sen!2sin!4v1687393001833!5m2!1sen!2sin"
                 width="100%"
                 height="200"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 className="rounded-lg shadow-md"
-              />
+              ></iframe>
             </motion.div>
           </div>
         </div>
-
-        {/* 📱 Floating Mobile Buttons */}
-        <div className="md:hidden fixed bottom-6 right-4 flex flex-col items-end space-y-3 z-50">
-          <a
-            href="tel:+918712351102"
-            className="bg-green-600 text-white p-3 rounded-full shadow-md hover:scale-105 transition"
-          >
-            <FaPhoneAlt size={20} />
-          </a>
-          <a
-            href="https://wa.me/918712351102"
-            className="bg-green-500 text-white p-3 rounded-full shadow-md hover:scale-105 transition"
-          >
-            <FaWhatsapp size={20} />
-          </a>
-        </div>
       </div>
-
-      {/* 🎉 Modal */}
-      <SuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
     </section>
   );
 }
