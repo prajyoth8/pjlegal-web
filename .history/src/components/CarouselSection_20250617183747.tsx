@@ -195,6 +195,7 @@ const images = [
 export default function CarouselSection() {
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
+    drag: true, // ✅ Swipe support
     slides: {
       perView: 3,
       spacing: 20,
@@ -214,6 +215,7 @@ export default function CarouselSection() {
 
   const scrollPrev = () => slider.current?.prev();
   const scrollNext = () => slider.current?.next();
+
   const [modalData, setModalData] = useState<null | (typeof images)[0]>(null);
 
   useEffect(() => {
@@ -229,6 +231,7 @@ export default function CarouselSection() {
         Explore Our Expertise
       </h2>
 
+      {/* Arrows */}
       <button
         className="absolute z-20 left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full"
         onClick={scrollPrev}
@@ -243,6 +246,7 @@ export default function CarouselSection() {
         <ChevronRight className="text-white" size={28} />
       </button>
 
+      {/* Carousel */}
       <div ref={sliderRef} className="keen-slider px-6">
         {images.map((img, index) => (
           <div
@@ -250,17 +254,17 @@ export default function CarouselSection() {
             className="keen-slider__slide group relative rounded-xl shadow-xl overflow-hidden cursor-pointer"
             onClick={() => setModalData(img)}
           >
-            <div className="w-full h-[300px] sm:h-[260px] md:h-[280px] lg:h-[300px] relative rounded-xl overflow-hidden bg-black/80 flex items-center justify-center">
+            <div className="w-full sm:h-[260px] md:h-[280px] lg:h-[300px] relative rounded-xl overflow-hidden">
               <Image
                 src={img.src}
                 alt={img.title}
                 fill
                 sizes="(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 25vw"
-                loading="lazy"
                 className="object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-4 py-3 text-white">
-                <h3 className="text-base font-semibold">{img.title}</h3>
+              {/* ✅ Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-white">
+                <h3 className="text-lg font-semibold">{img.title}</h3>
                 <p className="text-sm">{img.caption}</p>
               </div>
             </div>
@@ -268,9 +272,10 @@ export default function CarouselSection() {
         ))}
       </div>
 
+      {/* Modal */}
       {modalData && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4 py-10">
-          <div className="bg-gray-900 rounded-xl max-w-5xl w-full p-6 relative flex flex-col lg:flex-row gap-6">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center px-4 py-10">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-xl max-w-5xl w-full p-6 relative flex flex-col lg:flex-row gap-6">
             <button
               className="absolute top-3 right-3 text-white hover:text-red-500"
               onClick={() => setModalData(null)}
@@ -278,26 +283,27 @@ export default function CarouselSection() {
               <X size={24} />
             </button>
 
+            {/* Text */}
             <div className="flex-1 text-white overflow-y-auto max-h-[70vh] pr-2 text-left">
               <h3 className="text-2xl font-bold mb-1">{modalData.title}</h3>
               <p className="text-sm text-gray-300 mb-4">{modalData.caption}</p>
               <ReactMarkdown
                 className="prose prose-invert max-w-none text-white text-sm
-                [&>ul>li]:before:content-['🔹'] 
-                [&>ul>li]:before:mr-2 
-                [&>ul>li]:before:text-blue-400"
+                  [&>ul>li]:before:content-['🔹']
+                  [&>ul>li]:before:mr-2
+                  [&>ul>li]:before:text-blue-400"
               >
                 {modalData.description}
               </ReactMarkdown>
             </div>
 
+            {/* Image */}
             <div className="w-full lg:w-[40%] rounded-lg overflow-hidden">
               <Image
                 src={modalData.src}
                 alt={modalData.title}
                 width={600}
                 height={400}
-                loading="lazy"
                 className="object-contain rounded-md w-full h-full"
               />
             </div>
