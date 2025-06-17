@@ -1,6 +1,5 @@
 // ✅ src/app/contact/page.tsx
 import ContactSection from "@/components/ContactSection";
-import ContactHero from "@/components/ContactHero";
 
 export default function ContactPage() {
   return (
