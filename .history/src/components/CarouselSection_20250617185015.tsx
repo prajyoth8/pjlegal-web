@@ -269,14 +269,13 @@ export default function CarouselSection() {
       </div>
 
       {modalData && (
-        <div className="fixed inset-0 z-50 bg-black/80 overflow-y-auto flex items-center justify-center px-4 py-10">
-          <div className="bg-gray-900 rounded-xl max-w-5xl w-full p-6 pt-10 relative flex flex-col lg:flex-row gap-6">
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4 py-10">
+          <div className="bg-gray-900 rounded-xl max-w-5xl w-full p-6 relative flex flex-col lg:flex-row gap-6">
             <button
-              className="absolute top-4 right-4 z-50 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-2 rounded-full md:top-3 md:right-3"
+              className="absolute top-3 right-3 text-white hover:text-red-500"
               onClick={() => setModalData(null)}
-              aria-label="Close"
             >
-              <X size={20} />
+              <X size={24} />
             </button>
 
             <div className="flex-1 text-white overflow-y-auto max-h-[70vh] pr-2 text-left">
@@ -284,9 +283,9 @@ export default function CarouselSection() {
               <p className="text-sm text-gray-300 mb-4">{modalData.caption}</p>
               <ReactMarkdown
                 className="prose prose-invert max-w-none text-white text-sm
-          [&>ul>li]:before:content-['🔹'] 
-          [&>ul>li]:before:mr-2 
-          [&>ul>li]:before:text-blue-400"
+                [&>ul>li]:before:content-['🔹'] 
+                [&>ul>li]:before:mr-2 
+                [&>ul>li]:before:text-blue-400"
               >
                 {modalData.description}
               </ReactMarkdown>
