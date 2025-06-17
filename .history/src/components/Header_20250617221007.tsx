@@ -18,30 +18,24 @@ const navLinks = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [query, setQuery] = useState("");
   const pathname = usePathname();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const isPageRoute = (href: string) => href.startsWith("/");
 
   const renderLink = (link: { name: string; href: string }) => {
     const isActive = pathname === link.href;
-    const isVisible = link.name.toLowerCase().includes(query.toLowerCase());
-
     return (
-      isVisible && (
-        <Link
-          key={link.name}
-          href={link.href}
-          className={`block text-sm font-medium transition duration-200 px-2 py-1 rounded-lg ${
-            isActive
-              ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-semibold"
-              : "text-gray-300 hover:text-white hover:bg-white/10"
-          }`}
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          {link.name}
-        </Link>
-      )
+      <Link
+        key={link.name}
+        href={link.href}
+        className={`text-sm font-medium transition duration-200 block md:inline ${
+          isActive ? "bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent" : "text-gray-300 hover:text-white"
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        {link.name}
+      </Link>
     );
   };
 
@@ -62,25 +56,20 @@ export default function Header() {
             <span className="text-white font-bold text-xl">PJ LEGAL</span>
           </Link>
 
-          {/* Desktop Nav + Search */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex space-x-6 items-center">
             {navLinks.map(renderLink)}
             <button
-              className="text-white hover:text-yellow-400"
               onClick={() => setSearchOpen(!searchOpen)}
+              className="text-white hover:text-yellow-400"
+              aria-label="Search"
             >
               <Search size={20} />
             </button>
-          </div>
+          </nav>
 
           {/* Mobile Toggle */}
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              className="text-white hover:text-yellow-400"
-              onClick={() => setSearchOpen(!searchOpen)}
-            >
-              <Search size={20} />
-            </button>
+          <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-white focus:outline-none"
@@ -90,27 +79,37 @@ export default function Header() {
             </button>
           </div>
         </div>
-
-        {/* Search Bar */}
-        {searchOpen && (
-          <div className="bg-black bg-opacity-90 px-4 py-3 mt-1 rounded-b-md md:rounded-md shadow-md">
-            <input
-              type="text"
-              placeholder="Search menu..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-          </div>
-        )}
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden px-4 pb-4 pt-2 space-y-2 bg-black bg-opacity-90">
-            {navLinks.map(renderLink)}
-          </div>
-        )}
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden px-6 pb-4 pt-4 bg-black bg-opacity-95 space-y-4">
+          {navLinks.map(renderLink)}
+          <div className="border-t border-gray-700 pt-4">
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="text-white hover:text-yellow-400 flex items-center space-x-2"
+              aria-label="Search"
+            >
+              <Search size={18} />
+              <span className="text-sm">Search</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Search Bar */}
+      {searchOpen && (
+        <div className="absolute w-full top-full bg-black/90 px-4 py-2 border-t border-gray-800">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-full bg-gray-800 text-white px-4 py-2 rounded outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      )}
     </header>
   );
 }
