@@ -299,7 +299,9 @@ export default function CarouselSection() {
             <div className="flex-1 text-white overflow-y-auto pr-2 text-left">
               <h3 className="text-2xl font-bold mb-1">{modalData.title}</h3>
               <p className="text-sm text-gray-300 mb-4">{modalData.caption}</p>
-              <ReactMarkdown className="prose prose-invert max-w-none text-white text-sm [&>ul>li]:before:content-['🔹'] [&>ul>li]:before:mr-2 [&>ul>li]:before:text-blue-400">
+              <ReactMarkdown
+                className="prose prose-invert max-w-none text-white text-sm [&>ul>li]:before:content-['🔹'] [&>ul>li]:before:mr-2 [&>ul>li]:before:text-blue-400"
+              >
                 {modalData.description}
               </ReactMarkdown>
             </div>
