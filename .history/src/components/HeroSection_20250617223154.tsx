@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import Typed from "react-typed";
 
 declare global {
   interface Window {
@@ -104,7 +105,15 @@ export default function HeroSection() {
           transition={{ duration: 1 }}
           className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-xl"
         >
-          Empowering Justice <br /> With Intelligence & Integrity
+          <Typed
+            strings={[
+              "Empowering Justice",
+              "With Intelligence & Integrity",
+            ]}
+            typeSpeed={60}
+            backSpeed={40}
+            loop
+          />
         </motion.h1>
 
         <motion.p

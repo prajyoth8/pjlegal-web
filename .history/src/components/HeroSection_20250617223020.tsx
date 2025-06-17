@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import Typed from "react-typed";
 
 declare global {
   interface Window {
@@ -64,15 +65,17 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background Image */}
-      <Image
-        src="/assets/hero.png"
-        alt="Hero"
-        fill
-        sizes="100vw"
-        className="object-cover object-center"
-        priority
-      />
+      {/* Background Video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/assets/hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent z-10 backdrop-blur-sm" />
@@ -98,14 +101,23 @@ export default function HeroSection() {
 
       {/* Hero Content */}
       <div className="relative z-20 flex flex-col justify-center items-center min-h-screen text-center px-4">
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-xl"
         >
-          Empowering Justice <br /> With Intelligence & Integrity
-        </motion.h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-xl leading-tight">
+            <Typed
+              strings={[
+                "Empowering Justice",
+                "With Intelligence & Integrity",
+              ]}
+              typeSpeed={60}
+              backSpeed={40}
+              loop
+            />
+          </h1>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

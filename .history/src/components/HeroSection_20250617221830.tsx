@@ -24,6 +24,7 @@ export default function HeroSection() {
   const modalRef = useRef<HTMLDivElement>(null);
   const calendlyRef = useRef<HTMLDivElement>(null);
 
+  // ESC key close
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowModal(false);
@@ -77,7 +78,7 @@ export default function HeroSection() {
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent z-10 backdrop-blur-sm" />
 
-      {/* Calendly Modal */}
+      {/* Modal */}
       {showModal && (
         <div
           ref={modalRef}
@@ -86,12 +87,12 @@ export default function HeroSection() {
         >
           <div className="bg-white rounded-xl max-w-3xl w-full p-6 relative shadow-xl backdrop-blur-lg">
             <button
-              className="absolute top-3 right-4 text-gray-700 hover:text-red-500 text-2xl font-bold"
+              className="absolute top-3 right-4 text-gray-700 hover:text-red-500 text-2xl font-bold z-50"
               onClick={() => setShowModal(false)}
             >
               ×
             </button>
-            <div ref={calendlyRef} className="w-full h-[600px]" />
+            <div ref={calendlyRef} className="w-full h-[600px] overflow-auto" />
           </div>
         </div>
       )}
@@ -117,7 +118,7 @@ export default function HeroSection() {
           expertise.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* Call-to-Action Buttons */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
