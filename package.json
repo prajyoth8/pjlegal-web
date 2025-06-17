@@ -19,7 +19,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.57.0",
     "react-hot-toast": "^2.5.2",
-    "react-markdown": "^8.0.7",
+    "react-markdown": "^8.0.5",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
