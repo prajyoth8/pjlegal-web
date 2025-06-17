@@ -1,42 +1,36 @@
-"use client";
-
 import Lottie from "react-lottie-player";
-import { Dialog } from "@headlessui/react";
+import successAnimation from "@/../public/assets/lottie/success.json"; // Adjusted import
 
+// ✅ Add this missing interface
 interface SuccessModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function SuccessModal({ open, onClose }: SuccessModalProps) {
+const SuccessModal = ({ open, onClose }: SuccessModalProps) => {
+  if (!open) return null;
+
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center"
-    >
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-      <div className="relative z-10 bg-white dark:bg-gray-900 rounded-xl p-6 max-w-sm mx-auto shadow-xl">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
         <Lottie
           loop={false}
           play
+          animationData={successAnimation}
           style={{ width: 200, height: 200 }}
-          // ✅ Use PUBLIC URL instead of import
-          src="/assets/lottie/success.json"
         />
-        <h2 className="text-xl font-semibold text-center mt-4 text-black dark:text-white">
+        <h2 className="text-xl font-semibold mt-4 text-black dark:text-white">
           Message Sent!
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 mt-1">
-          We’ll get back to you soon.
-        </p>
         <button
           onClick={onClose}
-          className="mt-4 mx-auto block px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
+          className="mt-4 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded"
         >
           Close
         </button>
       </div>
-    </Dialog>
+    </div>
   );
-}
+};
+
+export default SuccessModal;
