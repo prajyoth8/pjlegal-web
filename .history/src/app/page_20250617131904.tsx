@@ -8,7 +8,6 @@ export default function Home() {
     <div>
       <HeroSection />
       <CarouselSection />
-      <HomeWrapper />
     </div>
   );
 }
