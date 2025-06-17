@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import "keen-slider/keen-slider.min.css";
 import ReactMarkdown from "react-markdown";
@@ -201,7 +201,7 @@ export default function CarouselSection() {
     },
     breakpoints: {
       "(max-width: 768px)": {
-        slides: { perView: 1.2, spacing: 12 },
+        slides: { perView: 1, spacing: 12 },
       },
       "(min-width: 769px) and (max-width: 1024px)": {
         slides: { perView: 2.2, spacing: 16 },
@@ -214,14 +214,8 @@ export default function CarouselSection() {
 
   const scrollPrev = () => slider.current?.prev();
   const scrollNext = () => slider.current?.next();
-  const [modalData, setModalData] = useState<null | (typeof images)[0]>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      slider.current?.next();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [slider]);
+  const [modalData, setModalData] = useState<null | (typeof images)[0]>(null);
 
   return (
     <section className="py-16 bg-gray-900 relative">
@@ -250,13 +244,13 @@ export default function CarouselSection() {
             className="keen-slider__slide group relative rounded-xl shadow-xl overflow-hidden cursor-pointer"
             onClick={() => setModalData(img)}
           >
-            <div className="w-full h-[300px] relative rounded-xl overflow-hidden">
+            <div className="w-full aspect-[4/3] relative bg-white rounded-xl overflow-hidden flex items-center justify-center">
               <Image
                 src={img.src}
                 alt={img.title}
                 fill
-                sizes="(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                sizes="100vw"
               />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-white">
                 <h3 className="text-lg font-semibold">{img.title}</h3>
@@ -276,10 +270,9 @@ export default function CarouselSection() {
             >
               <X size={24} />
             </button>
-
-            <div className="flex-1 text-white overflow-y-auto max-h-[70vh] pr-2 text-left">
-              <h3 className="text-2xl font-bold mb-1">{modalData.title}</h3>
-              <p className="text-sm text-gray-300 mb-4">{modalData.caption}</p>
+            <div className="flex-1 text-white overflow-y-auto max-h-[70vh] pr-2">
+              <h3 className="text-2xl font-bold">{modalData.title}</h3>
+              <p className="text-sm text-gray-300 mb-2">{modalData.caption}</p>
               <ReactMarkdown
                 className="prose prose-invert max-w-none text-white text-sm
                 [&>ul>li]:before:content-['🔹'] 
@@ -289,7 +282,6 @@ export default function CarouselSection() {
                 {modalData.description}
               </ReactMarkdown>
             </div>
-
             <div className="w-full lg:w-[40%] rounded-lg overflow-hidden">
               <Image
                 src={modalData.src}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import "keen-slider/keen-slider.min.css";
 import ReactMarkdown from "react-markdown";
@@ -195,19 +195,13 @@ const images = [
 export default function CarouselSection() {
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
-    slides: {
-      perView: 3,
-      spacing: 20,
-    },
+    slides: { perView: 1, spacing: 20 },
     breakpoints: {
-      "(max-width: 768px)": {
-        slides: { perView: 1.2, spacing: 12 },
+      "(min-width: 640px)": {
+        slides: { perView: 1.2, spacing: 20 },
       },
-      "(min-width: 769px) and (max-width: 1024px)": {
-        slides: { perView: 2.2, spacing: 16 },
-      },
-      "(min-width: 1025px)": {
-        slides: { perView: 3.5, spacing: 24 },
+      "(min-width: 1024px)": {
+        slides: { perView: 1.5, spacing: 24 },
       },
     },
   });
@@ -247,21 +241,23 @@ export default function CarouselSection() {
         {images.map((img, index) => (
           <div
             key={index}
-            className="keen-slider__slide group relative rounded-xl shadow-xl overflow-hidden cursor-pointer"
+            className="keen-slider__slide group bg-white rounded-xl shadow-xl overflow-hidden cursor-pointer"
             onClick={() => setModalData(img)}
           >
-            <div className="w-full h-[300px] relative rounded-xl overflow-hidden">
+            <div className="w-full aspect-[4/3] relative">
               <Image
                 src={img.src}
                 alt={img.title}
                 fill
-                sizes="(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-contain p-4"
+                sizes="100vw"
               />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-white">
-                <h3 className="text-lg font-semibold">{img.title}</h3>
-                <p className="text-sm">{img.caption}</p>
-              </div>
+            </div>
+            <div className="px-4 py-2">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {img.title}
+              </h3>
+              <p className="text-sm text-gray-600">{img.caption}</p>
             </div>
           </div>
         ))}
