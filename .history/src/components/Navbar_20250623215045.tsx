@@ -231,11 +231,12 @@ export default function Navbar() {
   };
 
   const scrollToId = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
 
   return (
     <nav
@@ -331,26 +332,18 @@ export default function Navbar() {
             // Normal menu links
             const href = item.href!;
             return (
-              <a
+              <Link
                 key={item.name}
-                href={item.href?.startsWith("#") ? item.href : undefined}
-                onClick={(e) => {
-                  if (item.href?.startsWith("#")) {
-                    e.preventDefault();
-                    scrollToId(item.href.slice(1));
-                  } else {
-                    router.push(item.href!);
-                  }
-                }}
+                href={href}
                 className={clsx(
-                  "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
-                  pathname === item.href
+                  "font-medium px-3 py-2 rounded-lg transition",
+                  pathname === href
                     ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
                     : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
                 )}
               >
                 {item.name}
-              </a>
+              </Link>
             );
           })}
 

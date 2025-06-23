@@ -332,25 +332,26 @@ export default function Navbar() {
             const href = item.href!;
             return (
               <a
-                key={item.name}
-                href={item.href?.startsWith("#") ? item.href : undefined}
-                onClick={(e) => {
-                  if (item.href?.startsWith("#")) {
-                    e.preventDefault();
-                    scrollToId(item.href.slice(1));
-                  } else {
-                    router.push(item.href!);
-                  }
-                }}
-                className={clsx(
-                  "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
-                  pathname === item.href
-                    ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
-                )}
-              >
-                {item.name}
-              </a>
+  key={item.name}
+  href={item.href?.startsWith("#") ? item.href : undefined}
+  onClick={(e) => {
+    if (item.href?.startsWith("#")) {
+      e.preventDefault();
+      scrollToId(item.href.slice(1));
+    } else {
+      router.push(item.href!);
+    }
+  }}
+  className={clsx(
+    "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
+    pathname === item.href
+      ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
+      : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+  )}
+>
+  {item.name}
+</a>
+
             );
           })}
 

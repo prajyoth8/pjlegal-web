@@ -88,7 +88,6 @@ import { useEffect, useState } from "react";
 import WelcomeSection from "@/components/light/WelcomeSection";
 import PracticeSection from "@/components/light/PracticeSection";
 import NewsSection from "@/components/light/NewsSection";
-import AboutSection from "@/components/light/AboutSection";
 import DisclaimerModal from "@/components/DisclaimerModal";
 import Navbar from "./Navbar";
 
