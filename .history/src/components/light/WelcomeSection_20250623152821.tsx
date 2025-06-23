@@ -43,7 +43,7 @@ export default function WelcomeSection() {
           className="flex flex-col items-center gap-4"
         >
           <Image
-            src="/pj_logo_black.png"
+            src="/pj_logo_white.png"
             alt="PJ Legal Logo"
             width={100}
             height={100}

@@ -22,7 +22,7 @@ export default function WelcomeSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative w-full max-w-7xl rounded-3xl shadow-2xl bg-[url('/assets/hero_light.jpg')] bg-cover bg-center px-4 sm:px-6 lg:px-12 py-16 sm:py-20 text-center flex flex-col items-center hover:shadow-yellow-200 hover:shadow-[0_0_50px_0_rgba(255,223,0,0.3)] transition-all duration-500"
+        className="relative w-full max-w-7xl rounded-3xl shadow-2xl bg-[url('/assets/gavel_courtroom.png')] bg-cover bg-center px-4 sm:px-6 lg:px-12 py-16 sm:py-20 text-center flex flex-col items-center hover:shadow-yellow-200 hover:shadow-[0_0_50px_0_rgba(255,223,0,0.3)] transition-all duration-500"
       >
         {/* 🔽 Auto-scroll Hint */}
         <a
@@ -43,7 +43,7 @@ export default function WelcomeSection() {
           className="flex flex-col items-center gap-4"
         >
           <Image
-            src="/pj_logo_black.png"
+            src="/assets/pj_logo_icon.png"
             alt="PJ Legal Logo"
             width={100}
             height={100}
