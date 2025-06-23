@@ -49,8 +49,8 @@ export default function WelcomeSection() {
             height={100}
             className="object-contain"
           />
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-100 tracking-tight">
-            PJ LEGAL
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-900 tracking-tight">
+            <span className="text-blue-700">PJ</span> LEGAL
           </h1>
         </motion.div>
 
