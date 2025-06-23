@@ -2,13 +2,12 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 import next from "eslint-plugin-next";
-import eslintPluginNext from "eslint-plugin-next";
 
 export default [
-  // JavaScript base rules
+  // Base JavaScript rules
   js.configs.recommended,
 
-  // TypeScript recommended settings
+  // TypeScript support
   ...tseslint.configs.recommendedTypeChecked,
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -21,26 +20,26 @@ export default [
 
   // Next.js plugin rules
   {
-    plugins: { next: eslintPluginNext },
+    plugins: { next },
     rules: {
-      ...eslintPluginNext.configs["recommended"].rules,
+      ...next.configs["recommended"].rules,
     },
   },
 
-  // Prettier override to disable conflicts
+  // Prettier overrides
   prettier,
 
-  // Custom overrides
+  // Custom project-specific rules
   {
     rules: {
-      // No need to import React in scope
+      // Next.js doesn't require 'React' in scope
       "react/react-in-jsx-scope": "off",
-
-      // Common overrides
+      "no-useless-catch": "off",
       "@typescript-eslint/no-explicit-any": "warn",
+
+      // Optional: turn off overly strict rules
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-floating-promises": "off",
-      "no-useless-catch": "off",
     },
   },
 ];

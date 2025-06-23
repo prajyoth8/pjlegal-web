@@ -165,7 +165,7 @@ export default function ContactSection() {
                   <a
                     href="https://wa.me/918712351102"
                     target="_blank"
-                    className="flex items-center gap-1 px-3 py-1 bg-green-600 text-white text-sm rounded"
+                    className="flex items-center gap-1 px-3 py-1 bg-green-600 text-white text-sm rounded" rel="noreferrer"
                   >
                     <MessageSquare size={16} /> WhatsApp
                   </a>
@@ -182,10 +182,10 @@ export default function ContactSection() {
               </div>
             ))}
             <div className="flex gap-4 justify-center mt-4">
-              <a href="https://facebook.com" target="_blank" className="text-blue-600 hover:scale-110 transition"><Facebook /></a>
-              <a href="https://instagram.com" target="_blank" className="text-pink-500 hover:scale-110 transition"><Instagram /></a>
-              <a href="https://linkedin.com" target="_blank" className="text-blue-800 hover:scale-110 transition"><Linkedin /></a>
-              <a href="https://twitter.com" target="_blank" className="text-sky-500 hover:scale-110 transition"><Twitter /></a>
+              <a href="https://facebook.com" target="_blank" className="text-blue-600 hover:scale-110 transition" rel="noreferrer"><Facebook /></a>
+              <a href="https://instagram.com" target="_blank" className="text-pink-500 hover:scale-110 transition" rel="noreferrer"><Instagram /></a>
+              <a href="https://linkedin.com" target="_blank" className="text-blue-800 hover:scale-110 transition" rel="noreferrer"><Linkedin /></a>
+              <a href="https://twitter.com" target="_blank" className="text-sky-500 hover:scale-110 transition" rel="noreferrer"><Twitter /></a>
             </div>
           </motion.div>
         </div>

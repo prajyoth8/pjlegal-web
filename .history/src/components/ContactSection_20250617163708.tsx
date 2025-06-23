@@ -144,28 +144,28 @@ export default function ContactSection() {
               <a
                 href="https://facebook.com"
                 target="_blank"
-                className="text-blue-600 hover:scale-110 text-2xl transition"
+                className="text-blue-600 hover:scale-110 text-2xl transition" rel="noreferrer"
               >
                 <FaFacebookF />
               </a>
               <a
                 href="https://instagram.com"
                 target="_blank"
-                className="text-pink-600 hover:scale-110 text-2xl transition"
+                className="text-pink-600 hover:scale-110 text-2xl transition" rel="noreferrer"
               >
                 <FaInstagram />
               </a>
               <a
                 href="https://linkedin.com"
                 target="_blank"
-                className="text-blue-400 hover:scale-110 text-2xl transition"
+                className="text-blue-400 hover:scale-110 text-2xl transition" rel="noreferrer"
               >
                 <FaLinkedinIn />
               </a>
               <a
                 href="https://twitter.com"
                 target="_blank"
-                className="text-sky-500 hover:scale-110 text-2xl transition"
+                className="text-sky-500 hover:scale-110 text-2xl transition" rel="noreferrer"
               >
                 <FaTwitter />
               </a>

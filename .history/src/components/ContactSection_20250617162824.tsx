@@ -112,45 +112,45 @@ export default function ContactSection() {
               <a
                 href="mailto:pjlegal.r@gmail.com"
                 aria-label="Email"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Mail className="w-6 h-6 hover:text-blue-800" />
               </a>
-              <a href="tel:+918712351102" aria-label="Phone" target="_blank">
+              <a href="tel:+918712351102" aria-label="Phone" target="_blank" rel="noreferrer">
                 <Phone className="w-6 h-6 hover:text-blue-800" />
               </a>
               <a
                 href="https://wa.me/918712351102"
                 aria-label="WhatsApp"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <MessageCircle className="w-6 h-6 hover:text-green-600" />
               </a>
               <a
                 href="https://facebook.com"
                 aria-label="Facebook"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Facebook className="w-6 h-6 hover:text-blue-700" />
               </a>
               <a
                 href="https://instagram.com"
                 aria-label="Instagram"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Instagram className="w-6 h-6 hover:text-pink-500" />
               </a>
               <a
                 href="https://linkedin.com"
                 aria-label="LinkedIn"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Linkedin className="w-6 h-6 hover:text-blue-600" />
               </a>
               <a
                 href="https://twitter.com"
                 aria-label="Twitter"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Twitter className="w-6 h-6 hover:text-blue-400" />
               </a>

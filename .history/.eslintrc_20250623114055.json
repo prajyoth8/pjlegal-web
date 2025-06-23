@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    // Optional customizations
+    "react/react-in-jsx-scope": "off", // ✅ Not needed in React 17+
+    "no-unused-vars": "warn",
+    "react/prop-types": "off", // Not needed with TypeScript
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "prettier/prettier": ["warn"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // 🔍 Auto-detect React version
+    }
+  }
+}

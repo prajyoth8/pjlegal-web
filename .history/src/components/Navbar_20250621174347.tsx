@@ -39,7 +39,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["about", "practice-areas", "articles", "news", "education", "contact"];
-      for (let id of sections) {
+      for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();

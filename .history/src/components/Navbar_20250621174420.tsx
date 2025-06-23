@@ -48,7 +48,7 @@ export default function Navbar() {
         "education",
         "contact",
       ];
-      for (let id of sections) {
+      for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
