@@ -211,9 +211,7 @@ export default function Navbar() {
     return () => clearTimeout(delay);
   }, [searchText]);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "auto";
-  }, [menuOpen]);
+  
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -369,15 +367,15 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-6 pb-4 space-y-2 bg-gray-50 shadow-inner"
+            className="md:hidden px-6 pb-4 space-y-2"
           >
             {desktopMenuItems.map((item) => {
               if (item.isDropdown) {
                 return (
                   <div key="mobile-practice" className="border-t pt-3">
                     <div
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                      className="flex items-center justify-between text-gray-700 font-medium cursor-pointer hover:bg-purple-50 p-2 rounded"
+                      onClick={() => setDropdownOpen((prev) => !prev)}
+                      className="flex items-center justify-between text-gray-700 font-medium cursor-pointer"
                     >
                       Practice Areas <ChevronDown className="w-4 h-4" />
                     </div>
@@ -387,42 +385,17 @@ export default function Navbar() {
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -4 }}
-                          className="pl-3 mt-2 space-y-2"
+                          className="pl-3 mt-2 space-y-1"
                         >
                           {practiceSubItems.map((pItem) => (
-                            <div key={pItem.name}>
-                              <div
-                                className="text-sm text-gray-700 font-medium cursor-pointer hover:bg-purple-100 px-2 py-1 rounded flex justify-between"
-                                onClick={() =>
-                                  setSubDropdownOpen(
-                                    subDropdownOpen === pItem.name ? null : pItem.name
-                                  )
-                                }
-                              >
-                                {pItem.name} <ChevronRight className="w-4 h-4" />
-                              </div>
-                              <AnimatePresence>
-                                {subDropdownOpen === pItem.name && (
-                                  <motion.div
-                                    initial={{ opacity: 0, y: -2 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -2 }}
-                                    className="ml-4 space-y-1"
-                                  >
-                                    {pItem.sub?.map((sub) => (
-                                      <Link
-                                        key={sub.name}
-                                        href={sub.href}
-                                        onClick={() => setMenuOpen(false)}
-                                        className="block text-gray-600 hover:text-purple-700 hover:bg-purple-100 px-2 py-1 rounded text-sm"
-                                      >
-                                        {sub.name}
-                                      </Link>
-                                    ))}
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                            </div>
+                            <Link
+                              key={pItem.name}
+                              href={pItem.href}
+                              onClick={() => setMenuOpen(false)}
+                              className="block text-sm text-gray-600 hover:text-purple-700"
+                            >
+                              {pItem.name}
+                            </Link>
                           ))}
                         </motion.div>
                       )}
@@ -435,12 +408,7 @@ export default function Navbar() {
                     key={item.name}
                     href={item.href!}
                     onClick={() => setMenuOpen(false)}
-                    className={clsx(
-                      "block font-medium px-3 py-2 rounded",
-                      pathname === item.href
-                        ? "bg-purple-100 text-purple-700 shadow"
-                        : "text-gray-700 hover:text-purple-700 hover:bg-purple-100"
-                    )}
+                    className="block text-gray-700 hover:text-purple-700 font-medium"
                   >
                     {item.name}
                   </Link>
@@ -448,11 +416,11 @@ export default function Navbar() {
               }
             })}
 
-            {/* Search Modal Trigger */}
+            {/* Search & Disclaimer (Mobile) */}
             <div className="pt-4 border-t">
               <button
-                onClick={() => setShowSearch(true)}
-                className="text-gray-700 flex items-center gap-2 hover:text-purple-600"
+                onClick={() => setShowSearch(!showSearch)}
+                className="text-gray-700 flex items-center gap-2"
               >
                 <Search className="w-4 h-4" /> Search
               </button>
@@ -468,48 +436,40 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Search Modal */}
+      {/* Search Input Below Navbar */}
       <AnimatePresence>
         {showSearch && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="px-6 pb-4"
           >
-            <div className="bg-white w-full max-w-lg p-4 rounded-lg shadow-xl">
-              <input
-                type="text"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                placeholder="Search pages, sections..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-100 text-sm"
-              />
-              {suggestions.length > 0 && (
-                <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
-                  {suggestions.map(({ label, route, matchIndices }) => (
-                    <div
-                      key={route}
-                      className="px-4 py-2 hover:bg-purple-100 cursor-pointer text-sm text-gray-700"
-                      onClick={() => {
-                        setSearchText("");
-                        setShowSearch(false);
-                        setSuggestions([]);
-                        router.push(route);
-                      }}
-                    >
-                      {highlightMatch(label, matchIndices)}
-                    </div>
-                  ))}
-                </div>
-              )}
-              <button
-                onClick={() => setShowSearch(false)}
-                className="mt-4 text-sm text-gray-500 hover:text-gray-800"
-              >
-                Close
-              </button>
-            </div>
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search pages, sections..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-100 text-sm"
+            />
+            {suggestions.length > 0 && (
+              <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
+                {suggestions.map(({ label, route, matchIndices }) => (
+                  <div
+                    key={route}
+                    className="px-4 py-2 hover:bg-purple-100 cursor-pointer text-sm text-gray-700"
+                    onClick={() => {
+                      setSearchText("");
+                      setShowSearch(false);
+                      setSuggestions([]);
+                      router.push(route);
+                    }}
+                  >
+                    {highlightMatch(label, matchIndices)}
+                  </div>
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -517,6 +477,7 @@ export default function Navbar() {
   );
 }
 
+// Helper function to highlight matched keywords in suggestions
 function highlightMatch(label: string, indices: [number, number][]) {
   if (!indices.length) return label;
   const result: JSX.Element[] = [];
