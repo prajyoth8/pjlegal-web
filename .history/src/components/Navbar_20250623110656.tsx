@@ -40,166 +40,56 @@ export default function Navbar() {
   // Practice Areas and their sub-menus
   const practiceSubItems = [
     {
-      name: "Private Client & Family Office",
-      href: "/practice-areas/private",
+      name: "Litigation",
+      href: "/practice-areas/litigation",
       sub: [
-        "Estate & Succession Planning",
-        "Family Dispute Resolution",
-        "Wealth Management",
-        "Family Constitution",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
+        { name: "Civil Litigation", href: "/practice-areas/litigation/civil" },
+        {
+          name: "Criminal Litigation",
+          href: "/practice-areas/litigation/criminal",
+        },
+      ],
     },
     {
-      name: "Dispute Resolution",
-      href: "/practice-areas/dispute",
+      name: "Contracts",
+      href: "/practice-areas/contracts",
       sub: [
-        "Litigation",
-        "Arbitration",
-        "Mediation & Conciliation",
-        "White Collar & Regulatory Investigations",
-        "Corporate & Commercial Disputes",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
+        { name: "Drafting", href: "/practice-areas/contracts/drafting" },
+        { name: "Review", href: "/practice-areas/contracts/review" },
+      ],
     },
     {
-      name: "Real Estate & Urban Infrastructure",
-      href: "/practice-areas/realestate",
-      sub: [
-        "Land Acquisition",
-        "REITs",
-        "Development & Redevelopment",
-        "Leases & Licenses",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/realestate#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Banking & Finance",
-      href: "/practice-areas/banking",
-      sub: [
-        "Acquisition Financing",
-        "Asset Financing",
-        "Climate & Energy Financing",
-        "Cross Border Financing",
-        "Corporate Financing",
-        "Debt Restructuring & Recovery",
-        "Debt Capital Markets",
-        "Financial Regulatory",
-        "Fintech",
-        "Multilateral & Development Financing",
-        "Project & Infrastructure Financing",
-        "Securitization",
-        "Structured Financing",
-        "Syndicated Lending",
-        "Trade Financing",
-        "Environmental, Social & Governance (ESG)",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/banking#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-
-    {
-      name: "Employment & Labour",
-      href: "/practice-areas/employment",
-      sub: [
-        "Advisory & Compliance",
-        "Dispute Management",
-        "Employee Stock Option Plans",
-        "Employment Contracts",
-        "Workplace Harassment & Grievances",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/employment#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Environment, Health & Safety",
-      href: "/practice-areas/environment",
-      sub: [
-        "Environmental Clearances",
-        "Compliance & Audits",
-        "Litigation & Enforcement",
-        "Environmental Advisory",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/environment#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Intellectual Property",
+      name: "IP & Trademarks",
       href: "/practice-areas/ip",
       sub: [
-        "Trademarks",
-        "Copyright",
-        "Patents",
-        "IPR Litigation",
-        "Technology & Licensing",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/ip#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-
-    {
-      name: "Restructuring & Insolvency",
-      href: "/practice-areas/insolvency",
-      sub: [
-        "Insolvency Resolution",
-        "Liquidation",
-        "NCLT Representation",
-        "Creditor & Debtor Advisory",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/insolvency#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
+        { name: "Patent Filing", href: "/practice-areas/ip/patents" },
+        {
+          name: "Trademark Registration",
+          href: "/practice-areas/ip/trademarks",
+        },
+      ],
     },
     {
-      name: "Taxation",
-      href: "/practice-areas/tax",
+      name: "Legal Advisory",
+      href: "/practice-areas/advisory",
       sub: [
-        "Direct Tax",
-        "Indirect Tax",
-        "GST",
-        "Tax Litigation",
-        "International Taxation",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/tax#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
+        {
+          name: "Startup Consulting",
+          href: "/practice-areas/advisory/startups",
+        },
+        {
+          name: "Regulatory Advice",
+          href: "/practice-areas/advisory/regulatory",
+        },
+      ],
     },
     {
-      name: "Technology, Media & Telecommunications",
-      href: "/practice-areas/technology",
+      name: "Family & Property",
+      href: "/practice-areas/family",
       sub: [
-        "Data Protection & Privacy",
-        "E-Commerce",
-        "Technology Contracts",
-        "Gaming & OTT",
-        "Cybersecurity",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/technology#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
+        { name: "Divorce", href: "/practice-areas/family/divorce" },
+        { name: "Property Disputes", href: "/practice-areas/family/property" },
+      ],
     },
   ];
 

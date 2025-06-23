@@ -9,7 +9,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
-// Type definition for search suggestions
 type Suggestion = {
   label: string;
   route: string;
@@ -27,17 +26,6 @@ export default function Navbar() {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [scrolled, setScrolled] = useState(false);
 
-  // Desktop menu items including a marker for the dropdown
-  const desktopMenuItems = [
-    { name: "About", href: "/about" },
-    { name: "Practice Areas", isDropdown: true },
-    { name: "Articles/Blogs", href: "/articles" },
-    { name: "News", href: "/news" },
-    { name: "Education", href: "/education" },
-    { name: "Contact", href: "/contact" },
-  ];
-
-  // Practice Areas and their sub-menus
   const practiceSubItems = [
     {
       name: "Private Client & Family Office",
@@ -203,9 +191,17 @@ export default function Navbar() {
     },
   ];
 
-  // Search engine setup using Fuse.js
+  const desktopMenuItems = [
+    { name: "About", href: "/about" },
+    { name: "Practice Areas", isDropdown: true }, // Marker for dropdown
+    { name: "Articles/Blogs", href: "/articles" },
+    { name: "News", href: "/news" },
+    { name: "Education", href: "/education" },
+    { name: "Contact", href: "/contact" },
+  ];
+
   const allItems = [
-    ...desktopMenuItems.filter((item) => !item.isDropdown),
+    ...desktopMenuItems,
     ...practiceSubItems.flatMap((item) => [item, ...(item.sub || [])]),
     { name: "Disclaimer", href: "/disclaimer" },
   ];
@@ -239,7 +235,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Logo click navigation
   const handleLogoClick = () => {
     if (pathname === "/") {
       window.location.reload();
@@ -248,6 +243,7 @@ export default function Navbar() {
     }
   };
 
+  // ... (Remaining JSX and logic continues as in previous implementation)
   return (
     <nav
       className={clsx(
@@ -258,7 +254,6 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
         <div
           onClick={handleLogoClick}
           className="flex items-center gap-2 cursor-pointer"
@@ -272,100 +267,96 @@ export default function Navbar() {
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          {desktopMenuItems.map((item) => {
-            if (item.isDropdown) {
-              // Render Practice Areas dropdown
+          {["About", "Articles/Blogs", "News", "Education", "Contact"].map(
+            (item) => {
+              const href = `/${item
+                .toLowerCase()
+                .replace("/", "")
+                .replace(/\s+/g, "")}`;
               return (
-                <div
-                  key="Practice Areas"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => {
-                    setDropdownOpen(false);
-                    setSubDropdownOpen(null);
-                  }}
-                  className="relative"
+                <Link
+                  key={item}
+                  href={href}
+                  className={clsx(
+                    "font-medium px-3 py-2 rounded-lg transition",
+                    pathname === href
+                      ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                  )}
                 >
-                  <button
-                    className={clsx(
-                      "flex items-center px-3 py-2 rounded-lg font-medium transition",
-                      pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
-                        : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                    )}
-                  >
-                    Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
-                  </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
-                      >
-                        {practiceSubItems.map((item) => (
-                          <div
-                            key={item.name}
-                            onMouseEnter={() => setSubDropdownOpen(item.name)}
-                            onMouseLeave={() => setSubDropdownOpen(null)}
-                            className="relative group"
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                            >
-                              {item.name} <ChevronRight className="w-4 h-4" />
-                            </Link>
-                            <AnimatePresence>
-                              {subDropdownOpen === item.name && item.sub && (
-                                <motion.div
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -10 }}
-                                  className="absolute top-0 left-full ml-1 bg-white shadow-md rounded-lg py-2 w-64"
-                                >
-                                  {item.sub.map((sub) => (
-                                    <Link
-                                      key={sub.name}
-                                      href={sub.href}
-                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                  {item}
+                </Link>
               );
             }
+          )}
 
-            // Normal menu links
-            const href = item.href!;
-            return (
-              <Link
-                key={item.name}
-                href={href}
-                className={clsx(
-                  "font-medium px-3 py-2 rounded-lg transition",
-                  pathname === href
-                    ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
-                    : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                )}
-              >
-                {item.name}
-              </Link>
-            );
-          })}
+          <div
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => {
+              setDropdownOpen(false);
+              setSubDropdownOpen(null);
+            }}
+            className="relative"
+          >
+            <button
+              className={clsx(
+                "flex items-center px-3 py-2 rounded-lg font-medium transition",
+                pathname?.startsWith("/practice-areas")
+                  ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
+                  : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+              )}
+            >
+              Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
+            </button>
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-56 z-50"
+                >
+                  {practiceSubItems.map((item) => (
+                    <div
+                      key={item.name}
+                      onMouseEnter={() => setSubDropdownOpen(item.name)}
+                      onMouseLeave={() => setSubDropdownOpen(null)}
+                      className="relative group"
+                    >
+                      <Link
+                        href={item.href}
+                        className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                      >
+                        {item.name} <ChevronRight className="w-4 h-4" />
+                      </Link>
+                      <AnimatePresence>
+                        {subDropdownOpen === item.name && item.sub && (
+                          <motion.div
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            className="absolute top-0 left-full ml-1 bg-white shadow-md rounded-lg py-2 w-56"
+                          >
+                            {item.sub.map((sub) => (
+                              <Link
+                                key={sub.name}
+                                href={sub.href}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
-          {/* Search icon */}
           <button
             onClick={() => setShowSearch(!showSearch)}
             className="text-gray-600 hover:text-blue-600"
@@ -373,7 +364,6 @@ export default function Navbar() {
             <Search className="w-5 h-5" />
           </button>
 
-          {/* Disclaimer CTA */}
           <Link
             href="/disclaimer"
             className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold px-4 py-2 rounded-full shadow hover:opacity-90 transition"
@@ -382,7 +372,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -391,7 +380,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Search Input Below Navbar */}
       <AnimatePresence>
         {showSearch && (
           <motion.div
@@ -432,7 +420,6 @@ export default function Navbar() {
   );
 }
 
-// Helper function to highlight matched keywords in suggestions
 function highlightMatch(label: string, indices: [number, number][]) {
   if (!indices.length) return label;
   const result: JSX.Element[] = [];

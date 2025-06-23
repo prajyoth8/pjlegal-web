@@ -9,7 +9,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
-// Type definition for search suggestions
 type Suggestion = {
   label: string;
   route: string;
@@ -27,62 +26,7 @@ export default function Navbar() {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [scrolled, setScrolled] = useState(false);
 
-  // Desktop menu items including a marker for the dropdown
-  const desktopMenuItems = [
-    { name: "About", href: "/about" },
-    { name: "Practice Areas", isDropdown: true },
-    { name: "Articles/Blogs", href: "/articles" },
-    { name: "News", href: "/news" },
-    { name: "Education", href: "/education" },
-    { name: "Contact", href: "/contact" },
-  ];
-
-  // Practice Areas and their sub-menus
   const practiceSubItems = [
-    {
-      name: "Private Client & Family Office",
-      href: "/practice-areas/private",
-      sub: [
-        "Estate & Succession Planning",
-        "Family Dispute Resolution",
-        "Wealth Management",
-        "Family Constitution",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Dispute Resolution",
-      href: "/practice-areas/dispute",
-      sub: [
-        "Litigation",
-        "Arbitration",
-        "Mediation & Conciliation",
-        "White Collar & Regulatory Investigations",
-        "Corporate & Commercial Disputes",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Real Estate & Urban Infrastructure",
-      href: "/practice-areas/realestate",
-      sub: [
-        "Land Acquisition",
-        "REITs",
-        "Development & Redevelopment",
-        "Leases & Licenses",
-      ].map((name) => ({
-        name,
-        href:
-          "/practice-areas/realestate#" +
-          name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
     {
       name: "Banking & Finance",
       href: "/practice-areas/banking",
@@ -109,7 +53,53 @@ export default function Navbar() {
           "/practice-areas/banking#" + name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
-
+    {
+      name: "Competition & Antitrust",
+      href: "/practice-areas/competition",
+      sub: [
+        "Anti‑Competitive Agreements",
+        "Abuse of Dominant Position",
+        "Merger Control",
+        "Competition Compliance & Training",
+        "Competition Advisory",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/competition#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
+      })),
+    },
+    {
+      name: "Corporate & M&A",
+      href: "/practice-areas/corporate",
+      sub: [
+        "Corporate Transactions",
+        "Private Equity & Funds",
+        "Capital Markets",
+        "General Corporate",
+        "ESG",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/corporate#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
+      })),
+    },
+    {
+      name: "Dispute Resolution",
+      href: "/practice-areas/dispute",
+      sub: [
+        "Litigation",
+        "Arbitration",
+        "Mediation & Conciliation",
+        "White Collar & Regulatory Investigations",
+        "Corporate & Commercial Disputes",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
+      })),
+    },
     {
       name: "Employment & Labour",
       href: "/practice-areas/employment",
@@ -155,7 +145,35 @@ export default function Navbar() {
         href: "/practice-areas/ip#" + name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
-
+    {
+      name: "Private Client & Family Office",
+      href: "/practice-areas/private",
+      sub: [
+        "Estate & Succession Planning",
+        "Family Dispute Resolution",
+        "Wealth Management",
+        "Family Constitution",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
+      })),
+    },
+    {
+      name: "Real Estate & Urban Infrastructure",
+      href: "/practice-areas/realestate",
+      sub: [
+        "Land Acquisition",
+        "REITs",
+        "Development & Redevelopment",
+        "Leases & Licenses",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/realestate#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
+      })),
+    },
     {
       name: "Restructuring & Insolvency",
       href: "/practice-areas/insolvency",
@@ -203,9 +221,17 @@ export default function Navbar() {
     },
   ];
 
-  // Search engine setup using Fuse.js
+  const desktopMenuItems = [
+    { name: "About", href: "/about" },
+    { name: "Practice Areas", href: "/practice-areas" },
+    { name: "Articles/Blogs", href: "/articles" },
+    { name: "News", href: "/news" },
+    { name: "Education", href: "/education" },
+    { name: "Contact", href: "/contact" },
+  ];
+
   const allItems = [
-    ...desktopMenuItems.filter((item) => !item.isDropdown),
+    ...desktopMenuItems,
     ...practiceSubItems.flatMap((item) => [item, ...(item.sub || [])]),
     { name: "Disclaimer", href: "/disclaimer" },
   ];
@@ -239,7 +265,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Logo click navigation
   const handleLogoClick = () => {
     if (pathname === "/") {
       window.location.reload();
@@ -248,7 +273,7 @@ export default function Navbar() {
     }
   };
 
-  return (
+  // ... (Remaining JSX and logic continues as in previous implementation) return (
     <nav
       className={clsx(
         "fixed top-0 z-50 w-full transition-all duration-300",
@@ -258,7 +283,6 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
         <div
           onClick={handleLogoClick}
           className="flex items-center gap-2 cursor-pointer"
@@ -272,86 +296,12 @@ export default function Navbar() {
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          {desktopMenuItems.map((item) => {
-            if (item.isDropdown) {
-              // Render Practice Areas dropdown
-              return (
-                <div
-                  key="Practice Areas"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => {
-                    setDropdownOpen(false);
-                    setSubDropdownOpen(null);
-                  }}
-                  className="relative"
-                >
-                  <button
-                    className={clsx(
-                      "flex items-center px-3 py-2 rounded-lg font-medium transition",
-                      pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
-                        : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                    )}
-                  >
-                    Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
-                  </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
-                      >
-                        {practiceSubItems.map((item) => (
-                          <div
-                            key={item.name}
-                            onMouseEnter={() => setSubDropdownOpen(item.name)}
-                            onMouseLeave={() => setSubDropdownOpen(null)}
-                            className="relative group"
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                            >
-                              {item.name} <ChevronRight className="w-4 h-4" />
-                            </Link>
-                            <AnimatePresence>
-                              {subDropdownOpen === item.name && item.sub && (
-                                <motion.div
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -10 }}
-                                  className="absolute top-0 left-full ml-1 bg-white shadow-md rounded-lg py-2 w-64"
-                                >
-                                  {item.sub.map((sub) => (
-                                    <Link
-                                      key={sub.name}
-                                      href={sub.href}
-                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            }
-
-            // Normal menu links
-            const href = item.href!;
+          {["About", "Articles/Blogs", "News", "Education", "Contact"].map((item) => {
+            const href = `/${item.toLowerCase().replace("/", "").replace(/\s+/g, "")}`;
             return (
               <Link
-                key={item.name}
+                key={item}
                 href={href}
                 className={clsx(
                   "font-medium px-3 py-2 rounded-lg transition",
@@ -360,12 +310,77 @@ export default function Navbar() {
                     : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                 )}
               >
-                {item.name}
+                {item}
               </Link>
             );
           })}
 
-          {/* Search icon */}
+          <div
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => {
+              setDropdownOpen(false);
+              setSubDropdownOpen(null);
+            }}
+            className="relative"
+          >
+            <button
+              className={clsx(
+                "flex items-center px-3 py-2 rounded-lg font-medium transition",
+                pathname?.startsWith("/practice-areas")
+                  ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow"
+                  : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+              )}
+            >
+              Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
+            </button>
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-56 z-50"
+                >
+                  {practiceSubItems.map((item) => (
+                    <div
+                      key={item.name}
+                      onMouseEnter={() => setSubDropdownOpen(item.name)}
+                      onMouseLeave={() => setSubDropdownOpen(null)}
+                      className="relative group"
+                    >
+                      <Link
+                        href={item.href}
+                        className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                      >
+                        {item.name} <ChevronRight className="w-4 h-4" />
+                      </Link>
+                      <AnimatePresence>
+                        {subDropdownOpen === item.name && item.sub && (
+                          <motion.div
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            className="absolute top-0 left-full ml-1 bg-white shadow-md rounded-lg py-2 w-56"
+                          >
+                            {item.sub.map((sub) => (
+                              <Link
+                                key={sub.name}
+                                href={sub.href}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <button
             onClick={() => setShowSearch(!showSearch)}
             className="text-gray-600 hover:text-blue-600"
@@ -373,7 +388,6 @@ export default function Navbar() {
             <Search className="w-5 h-5" />
           </button>
 
-          {/* Disclaimer CTA */}
           <Link
             href="/disclaimer"
             className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold px-4 py-2 rounded-full shadow hover:opacity-90 transition"
@@ -382,7 +396,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -391,7 +404,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Search Input Below Navbar */}
       <AnimatePresence>
         {showSearch && (
           <motion.div
@@ -432,7 +444,6 @@ export default function Navbar() {
   );
 }
 
-// Helper function to highlight matched keywords in suggestions
 function highlightMatch(label: string, indices: [number, number][]) {
   if (!indices.length) return label;
   const result: JSX.Element[] = [];
