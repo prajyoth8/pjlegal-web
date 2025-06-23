@@ -49,7 +49,8 @@ export default function Navbar() {
         "Family Constitution",
       ].map((name) => ({
         name,
-        href: "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
     {
@@ -63,18 +64,24 @@ export default function Navbar() {
         "Corporate & Commercial Disputes",
       ].map((name) => ({
         name,
-        href: "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
     {
       name: "Real Estate & Urban Infrastructure",
       href: "/practice-areas/realestate",
-      sub: ["Land Acquisition", "REITs", "Development & Redevelopment", "Leases & Licenses"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/realestate#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
+      sub: [
+        "Land Acquisition",
+        "REITs",
+        "Development & Redevelopment",
+        "Leases & Licenses",
+      ].map((name) => ({
+        name,
+        href:
+          "/practice-areas/realestate#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
+      })),
     },
     {
       name: "Banking & Finance",
@@ -98,7 +105,8 @@ export default function Navbar() {
         "Environmental, Social & Governance (ESG)",
       ].map((name) => ({
         name,
-        href: "/practice-areas/banking#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/banking#" + name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
 
@@ -113,7 +121,9 @@ export default function Navbar() {
         "Workplace Harassment & Grievances",
       ].map((name) => ({
         name,
-        href: "/practice-areas/employment#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/employment#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
     {
@@ -126,18 +136,24 @@ export default function Navbar() {
         "Environmental Advisory",
       ].map((name) => ({
         name,
-        href: "/practice-areas/environment#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/environment#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
     {
       name: "Intellectual Property",
       href: "/practice-areas/ip",
-      sub: ["Trademarks", "Copyright", "Patents", "IPR Litigation", "Technology & Licensing"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/ip#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
+      sub: [
+        "Trademarks",
+        "Copyright",
+        "Patents",
+        "IPR Litigation",
+        "Technology & Licensing",
+      ].map((name) => ({
+        name,
+        href: "/practice-areas/ip#" + name.toLowerCase().replace(/\s+/g, "-"),
+      })),
     },
 
     {
@@ -150,18 +166,24 @@ export default function Navbar() {
         "Creditor & Debtor Advisory",
       ].map((name) => ({
         name,
-        href: "/practice-areas/insolvency#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/insolvency#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
     {
       name: "Taxation",
       href: "/practice-areas/tax",
-      sub: ["Direct Tax", "Indirect Tax", "GST", "Tax Litigation", "International Taxation"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/tax#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
+      sub: [
+        "Direct Tax",
+        "Indirect Tax",
+        "GST",
+        "Tax Litigation",
+        "International Taxation",
+      ].map((name) => ({
+        name,
+        href: "/practice-areas/tax#" + name.toLowerCase().replace(/\s+/g, "-"),
+      })),
     },
     {
       name: "Technology, Media & Telecommunications",
@@ -174,7 +196,9 @@ export default function Navbar() {
         "Cybersecurity",
       ].map((name) => ({
         name,
-        href: "/practice-areas/technology#" + name.toLowerCase().replace(/\s+/g, "-"),
+        href:
+          "/practice-areas/technology#" +
+          name.toLowerCase().replace(/\s+/g, "-"),
       })),
     },
   ];
@@ -237,8 +261,16 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
-          <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
+        <div
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <Image
+            src="/assets/pj_logo_icon.png"
+            alt="PJ Logo"
+            width={40}
+            height={40}
+          />
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
 
@@ -353,86 +385,15 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
+        <button
+          className="md:hidden text-gray-700"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-6 pb-4 space-y-2"
-          >
-            {desktopMenuItems.map((item) => {
-              if (item.isDropdown) {
-                return (
-                  <div key="mobile-practice" className="border-t pt-3">
-                    <div
-                      onClick={() => setDropdownOpen((prev) => !prev)}
-                      className="flex items-center justify-between text-gray-700 font-medium cursor-pointer"
-                    >
-                      Practice Areas <ChevronDown className="w-4 h-4" />
-                    </div>
-                    <AnimatePresence>
-                      {dropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          className="pl-3 mt-2 space-y-1"
-                        >
-                          {practiceSubItems.map((pItem) => (
-                            <Link
-                              key={pItem.name}
-                              href={pItem.href}
-                              onClick={() => setMenuOpen(false)}
-                              className="block text-sm text-gray-600 hover:text-purple-700"
-                            >
-                              {pItem.name}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              } else {
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href!}
-                    onClick={() => setMenuOpen(false)}
-                    className="block text-gray-700 hover:text-purple-700 font-medium"
-                  >
-                    {item.name}
-                  </Link>
-                );
-              }
-            })}
-
-            {/* Search & Disclaimer (Mobile) */}
-            <div className="pt-4 border-t">
-              <button
-                onClick={() => setShowSearch(!showSearch)}
-                className="text-gray-700 flex items-center gap-2"
-              >
-                <Search className="w-4 h-4" /> Search
-              </button>
-              <Link
-                href="/disclaimer"
-                onClick={() => setMenuOpen(false)}
-                className="block mt-3 text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-center font-semibold py-2 rounded-full shadow hover:opacity-90"
-              >
-                Disclaimer
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      
 
       {/* Search Input Below Navbar */}
       <AnimatePresence>
@@ -441,7 +402,7 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="px-6 pb-4"
+            className="hidden md:block px-6 pb-4"
           >
             <input
               type="text"
@@ -483,7 +444,9 @@ function highlightMatch(label: string, indices: [number, number][]) {
 
   indices.forEach(([start, end], i) => {
     if (lastIndex < start) {
-      result.push(<span key={`text-${i}`}>{label.slice(lastIndex, start)}</span>);
+      result.push(
+        <span key={`text-${i}`}>{label.slice(lastIndex, start)}</span>
+      );
     }
     result.push(
       <span
