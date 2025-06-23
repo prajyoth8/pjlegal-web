@@ -220,14 +220,15 @@ export default function Navbar() {
     const delay = setTimeout(() => {
       if (searchText.trim()) {
         const results = fuse.search(searchText.trim()).slice(0, 6);
-        const formatted: Suggestion[] = results
-          .filter((r) => typeof r.item.href === "string")
-          .map((r) => ({
-            label: r.item.name,
-            route: r.item.href!,
-            matchIndices: [...(r.matches?.[0]?.indices || [])],
-          }));
-        setSuggestions(formatted);
+const formatted: Suggestion[] = results
+  .filter((r) => typeof r.item.href === "string")
+  .map((r) => ({
+    label: r.item.name,
+    route: r.item.href!,
+    matchIndices: [...(r.matches?.[0]?.indices || [])],
+  }));
+setSuggestions(formatted);
+
       } else {
         setSuggestions([]);
       }
