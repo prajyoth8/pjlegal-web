@@ -75,14 +75,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogoClick = () => {
-    if (pathname === "/") {
-      window.location.reload();
-    } else {
-      router.push("/");
-    }
-  };
-
   return (
     <nav
       className={clsx(
@@ -93,31 +85,38 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div
-          onClick={handleLogoClick}
-          className="flex items-center gap-2 cursor-pointer"
-        >
-          <Image
-            src="/assets/pj_logo_icon.png"
-            alt="PJ Logo"
-            width={40}
-            height={40}
-          />
-          <span className="text-xl font-bold text-gray-900">PJ Legal</span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-2 cursor-pointer">
+            <Image
+              src="/assets/pj_logo_icon.png"
+              alt="PJ Logo"
+              width={40}
+              height={40}
+            />
+            <span className="text-xl font-bold text-gray-900">PJ Legal</span>
+          </div>
+        </Link>
 
         <div className="hidden md:flex items-center gap-6">
-          <Link
-            href="/about"
-            className={clsx(
-              "font-medium transition",
-              pathname === "/about"
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-700 hover:text-blue-600"
-            )}
-          >
-            About
-          </Link>
+          {["About", "Articles/Blogs", "News", "Education", "Contact"].map(
+            (item, idx) => (
+              <Link
+                key={item}
+                href={`/${item
+                  .toLowerCase()
+                  .replace("/", "")
+                  .replace(/\s+/g, "")}`}
+                className={clsx(
+                  "font-medium transition",
+                  pathname === `/${item.toLowerCase()}`
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "text-gray-700 hover:text-blue-600"
+                )}
+              >
+                {item}
+              </Link>
+            )
+          )}
 
           <div
             onMouseEnter={() => setDropdownOpen(true)}
@@ -156,21 +155,6 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          {desktopMenuItems.slice(1).map(({ name, href }) => (
-            <Link
-              key={name}
-              href={href}
-              className={clsx(
-                "font-medium transition",
-                pathname === href
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-700 hover:text-blue-600"
-              )}
-            >
-              {name}
-            </Link>
-          ))}
-
           <button
             onClick={() => setShowSearch(!showSearch)}
             className="text-gray-600 hover:text-blue-600"
@@ -195,43 +179,6 @@ export default function Navbar() {
       </div>
 
       <AnimatePresence>
-        {showSearch && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="hidden md:block px-6 pb-4"
-          >
-            <input
-              type="text"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Search pages, sections..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-            />
-            {suggestions.length > 0 && (
-              <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
-                {suggestions.map(({ label, route, matchIndices }) => (
-                  <div
-                    key={route}
-                    className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700"
-                    onClick={() => {
-                      setSearchText("");
-                      setShowSearch(false);
-                      setSuggestions([]);
-                      router.push(route);
-                    }}
-                  >
-                    {highlightMatch(label, matchIndices)}
-                  </div>
-                ))}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -243,29 +190,27 @@ export default function Navbar() {
               <p className="text-gray-500 font-semibold text-sm mb-1">
                 Navigation
               </p>
-              <Link
-                href="/about"
-                className="block py-2 text-gray-700 hover:text-blue-600"
-                onClick={() => setMenuOpen(false)}
-              >
-                About
-              </Link>
-              <div>
-                <p className="text-gray-500 font-semibold text-sm mt-2">
-                  Practice Areas
-                </p>
-                {practiceSubItems.map(({ name, href }) => (
+              {["About", "Articles/Blogs", "News", "Education", "Contact"].map(
+                (item) => (
                   <Link
-                    key={name}
-                    href={href}
+                    key={item}
+                    href={`/${item
+                      .toLowerCase()
+                      .replace("/", "")
+                      .replace(/\s+/g, "")}`}
                     className="block py-2 text-gray-700 hover:text-blue-600"
                     onClick={() => setMenuOpen(false)}
                   >
-                    {name}
+                    {item}
                   </Link>
-                ))}
-              </div>
-              {desktopMenuItems.slice(1).map(({ name, href }) => (
+                )
+              )}
+            </div>
+            <div>
+              <p className="text-gray-500 font-semibold text-sm mb-1">
+                Practice Areas
+              </p>
+              {practiceSubItems.map(({ name, href }) => (
                 <Link
                   key={name}
                   href={href}

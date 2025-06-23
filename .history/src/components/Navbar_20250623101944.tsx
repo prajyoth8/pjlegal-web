@@ -12,7 +12,7 @@ import Fuse from "fuse.js";
 type Suggestion = {
   label: string;
   route: string;
-  matchIndices: [number, number][];
+  matchIndices: readonly [number, number][];
 };
 
 export default function Navbar() {
@@ -59,7 +59,7 @@ export default function Navbar() {
         const formatted: Suggestion[] = results.map((r) => ({
           label: r.item.name,
           route: r.item.href,
-          matchIndices: [...(r.matches?.[0]?.indices || [])],
+          matchIndices: r.matches?.[0]?.indices || [],
         }));
         setSuggestions(formatted);
       } else {
@@ -75,14 +75,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogoClick = () => {
-    if (pathname === "/") {
-      window.location.reload();
-    } else {
-      router.push("/");
-    }
-  };
-
   return (
     <nav
       className={clsx(
@@ -93,20 +85,20 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div
-          onClick={handleLogoClick}
-          className="flex items-center gap-2 cursor-pointer"
-        >
-          <Image
-            src="/assets/pj_logo_icon.png"
-            alt="PJ Logo"
-            width={40}
-            height={40}
-          />
-          <span className="text-xl font-bold text-gray-900">PJ Legal</span>
-        </div>
+        <Link href="/" passHref>
+          <div className="flex items-center gap-2 cursor-pointer">
+            <Image
+              src="/assets/pj_logo_icon.png"
+              alt="PJ Logo"
+              width={40}
+              height={40}
+            />
+            <span className="text-xl font-bold text-gray-900">PJ Legal</span>
+          </div>
+        </Link>
 
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-6 relative">
           <Link
             href="/about"
             className={clsx(
@@ -156,7 +148,7 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          {desktopMenuItems.slice(1).map(({ name, href }) => (
+          {desktopMenuItems.map(({ name, href }) => (
             <Link
               key={name}
               href={href}
@@ -186,6 +178,7 @@ export default function Navbar() {
           </Link>
         </div>
 
+        {/* Mobile Menu Icon */}
         <button
           className="md:hidden text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -194,6 +187,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Search & Suggestions Desktop */}
       <AnimatePresence>
         {showSearch && (
           <motion.div
@@ -231,87 +225,72 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-white shadow-md px-6 py-4 space-y-4 max-h-[70vh] overflow-y-auto rounded-b-lg"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden bg-white shadow-md px-6 pb-4"
           >
-            <div>
-              <p className="text-gray-500 font-semibold text-sm mb-1">
-                Navigation
-              </p>
-              <Link
-                href="/about"
-                className="block py-2 text-gray-700 hover:text-blue-600"
-                onClick={() => setMenuOpen(false)}
-              >
+            <div className="space-y-2 mt-2">
+              <Link href="/about" className="block py-2 text-sm text-gray-700">
                 About
               </Link>
               <div>
-                <p className="text-gray-500 font-semibold text-sm mt-2">
-                  Practice Areas
-                </p>
-                {practiceSubItems.map(({ name, href }) => (
+                <p className="font-semibold text-sm">Practice Areas</p>
+                {practiceSubItems.map((sub) => (
                   <Link
-                    key={name}
-                    href={href}
-                    className="block py-2 text-gray-700 hover:text-blue-600"
-                    onClick={() => setMenuOpen(false)}
+                    key={sub.name}
+                    href={sub.href}
+                    className="block py-1 text-sm text-gray-600 hover:text-blue-600"
                   >
-                    {name}
+                    {sub.name}
                   </Link>
                 ))}
               </div>
-              {desktopMenuItems.slice(1).map(({ name, href }) => (
+              {desktopMenuItems.map(({ name, href }) => (
                 <Link
                   key={name}
                   href={href}
-                  className="block py-2 text-gray-700 hover:text-blue-600"
-                  onClick={() => setMenuOpen(false)}
+                  className="block py-2 text-sm text-gray-700"
                 >
                   {name}
                 </Link>
               ))}
+              <Link
+                href="/disclaimer"
+                className="block bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white text-center font-semibold py-2 mt-4 rounded-full shadow-md"
+              >
+                Disclaimer
+              </Link>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="w-full mt-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              />
+              {suggestions.length > 0 && (
+                <div className="mt-2 bg-white shadow rounded border border-gray-200">
+                  {suggestions.map(({ label, route, matchIndices }) => (
+                    <div
+                      key={route}
+                      className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setSearchText("");
+                        setSuggestions([]);
+                        router.push(route);
+                      }}
+                    >
+                      {highlightMatch(label, matchIndices)}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-
-            <Link
-              href="/disclaimer"
-              className="block bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white text-center font-semibold py-2 mt-2 rounded-full shadow-md"
-              onClick={() => setMenuOpen(false)}
-            >
-              Disclaimer
-            </Link>
-
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              className="w-full mt-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-            />
-
-            {suggestions.length > 0 && (
-              <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
-                {suggestions.map(({ label, route, matchIndices }) => (
-                  <div
-                    key={route}
-                    className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700"
-                    onClick={() => {
-                      setSearchText("");
-                      setShowSearch(false);
-                      setSuggestions([]);
-                      router.push(route);
-                      setMenuOpen(false);
-                    }}
-                  >
-                    {highlightMatch(label, matchIndices)}
-                  </div>
-                ))}
-              </div>
-            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -319,11 +298,10 @@ export default function Navbar() {
   );
 }
 
-function highlightMatch(label: string, indices: [number, number][]) {
+function highlightMatch(label: string, indices: readonly [number, number][]) {
   if (!indices.length) return label;
   const result: JSX.Element[] = [];
   let lastIndex = 0;
-
   indices.forEach(([start, end], i) => {
     if (lastIndex < start) {
       result.push(
@@ -340,10 +318,8 @@ function highlightMatch(label: string, indices: [number, number][]) {
     );
     lastIndex = end + 1;
   });
-
   if (lastIndex < label.length) {
     result.push(<span key="tail">{label.slice(lastIndex)}</span>);
   }
-
   return <>{result}</>;
 }

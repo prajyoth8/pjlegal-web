@@ -93,16 +93,8 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div
-          onClick={handleLogoClick}
-          className="flex items-center gap-2 cursor-pointer"
-        >
-          <Image
-            src="/assets/pj_logo_icon.png"
-            alt="PJ Logo"
-            width={40}
-            height={40}
-          />
+        <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
+          <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
 
@@ -186,10 +178,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <button
-          className="md:hidden text-gray-700"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
+        <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
@@ -240,9 +229,7 @@ export default function Navbar() {
             className="md:hidden bg-white shadow-md px-6 py-4 space-y-4 max-h-[70vh] overflow-y-auto rounded-b-lg"
           >
             <div>
-              <p className="text-gray-500 font-semibold text-sm mb-1">
-                Navigation
-              </p>
+              <p className="text-gray-500 font-semibold text-sm mb-1">Navigation</p>
               <Link
                 href="/about"
                 className="block py-2 text-gray-700 hover:text-blue-600"
@@ -251,9 +238,7 @@ export default function Navbar() {
                 About
               </Link>
               <div>
-                <p className="text-gray-500 font-semibold text-sm mt-2">
-                  Practice Areas
-                </p>
+                <p className="text-gray-500 font-semibold text-sm mt-2">Practice Areas</p>
                 {practiceSubItems.map(({ name, href }) => (
                   <Link
                     key={name}
@@ -326,9 +311,7 @@ function highlightMatch(label: string, indices: [number, number][]) {
 
   indices.forEach(([start, end], i) => {
     if (lastIndex < start) {
-      result.push(
-        <span key={`text-${i}`}>{label.slice(lastIndex, start)}</span>
-      );
+      result.push(<span key={`text-${i}`}>{label.slice(lastIndex, start)}</span>);
     }
     result.push(
       <span
