@@ -22,7 +22,7 @@ export default function WelcomeSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative w-full max-w-7xl rounded-3xl shadow-2xl bg-[url('/assets/lawyer_silhouette.png')] bg-cover bg-center px-4 sm:px-6 lg:px-12 py-16 sm:py-20 text-center flex flex-col items-center hover:shadow-yellow-200 hover:shadow-[0_0_50px_0_rgba(255,223,0,0.3)] transition-all duration-500"
+        className="relative w-full max-w-7xl rounded-3xl shadow-2xl bg-[url('/assets/lawyer_sil.png')] bg-cover bg-center px-4 sm:px-6 lg:px-12 py-16 sm:py-20 text-center flex flex-col items-center hover:shadow-yellow-200 hover:shadow-[0_0_50px_0_rgba(255,223,0,0.3)] transition-all duration-500"
       >
         {/* 🔽 Auto-scroll Hint */}
         <a
