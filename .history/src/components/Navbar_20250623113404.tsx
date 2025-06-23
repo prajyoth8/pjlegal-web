@@ -293,7 +293,7 @@ export default function Navbar() {
                     className={clsx(
                       "flex items-center px-3 py-2 rounded-lg font-medium transition",
                       pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
+                        ? "bg-gradient-to-r from-purple-1000 to-purple-700 text-white shadow"
                         : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
                     )}
                   >
@@ -358,7 +358,7 @@ export default function Navbar() {
                 className={clsx(
                   "font-medium px-3 py-2 rounded-lg transition",
                   pathname === href
-                    ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
+                    ? "bg-gradient-to-r from-purple-1000 to-purple-700 text-white shadow"
                     : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
                 )}
               >
@@ -407,7 +407,7 @@ export default function Navbar() {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search pages, sections..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-100 text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-1000 text-sm"
             />
             {suggestions.length > 0 && (
               <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">

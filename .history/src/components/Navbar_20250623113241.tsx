@@ -256,7 +256,7 @@ export default function Navbar() {
         "fixed top-0 z-50 w-full transition-all duration-300",
         scrolled
           ? "bg-white/90 backdrop-blur-md shadow-md"
-          : "bg-gradient-to-r from-white via-purple-100 to-white"
+          : "bg-gradient-to-r from-white via-purple-50 to-white"
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -293,8 +293,8 @@ export default function Navbar() {
                     className={clsx(
                       "flex items-center px-3 py-2 rounded-lg font-medium transition",
                       pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-                        : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+                        ? "bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow"
+                        : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
                     )}
                   >
                     Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
@@ -316,7 +316,7 @@ export default function Navbar() {
                           >
                             <Link
                               href={item.href}
-                              className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+                              className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-50"
                             >
                               {item.name} <ChevronRight className="w-4 h-4" />
                             </Link>
@@ -332,7 +332,7 @@ export default function Navbar() {
                                     <Link
                                       key={sub.name}
                                       href={sub.href}
-                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-50"
                                     >
                                       {sub.name}
                                     </Link>
@@ -358,8 +358,8 @@ export default function Navbar() {
                 className={clsx(
                   "font-medium px-3 py-2 rounded-lg transition",
                   pathname === href
-                    ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+                    ? "bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow"
+                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
                 )}
               >
                 {item.name}
@@ -407,14 +407,14 @@ export default function Navbar() {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search pages, sections..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-100 text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
             />
             {suggestions.length > 0 && (
               <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
                 {suggestions.map(({ label, route, matchIndices }) => (
                   <div
                     key={route}
-                    className="px-4 py-2 hover:bg-purple-100 cursor-pointer text-sm text-gray-700"
+                    className="px-4 py-2 hover:bg-purple-50 cursor-pointer text-sm text-gray-700"
                     onClick={() => {
                       setSearchText("");
                       setShowSearch(false);

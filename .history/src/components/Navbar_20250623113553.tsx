@@ -293,7 +293,7 @@ export default function Navbar() {
                     className={clsx(
                       "flex items-center px-3 py-2 rounded-lg font-medium transition",
                       pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
+                        ? "bg-gradient-to-r from-purple-1000 to-purple-700 text-white shadow"
                         : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
                     )}
                   >
