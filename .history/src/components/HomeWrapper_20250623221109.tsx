@@ -119,7 +119,6 @@ export default function HomeWrapper() {
           <AboutSection />
           <PracticeSection />
           <NewsSection />
-          <ContactSection />
         </div>
       )}
     </>

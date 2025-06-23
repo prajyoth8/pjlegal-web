@@ -8,9 +8,7 @@ module.exports = {
       fontFamily: {
         roboto: ["'Roboto'", "sans-serif"],
       },
-      fontSize: {
-        base: "16px",
-      },
+      
       animation: {
         gradientLoop: "gradientLoop 15s ease infinite",
         "bounce-once": "bounce 0.8s ease-out 1",
