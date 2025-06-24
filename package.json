@@ -12,7 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "framer-motion": "^12.18.1",
+    "framer-motion": "^12.19.1",
     "fuse.js": "^7.1.0",
     "keen-slider": "^6.8.6",
     "lottie-react": "^2.4.1",

@@ -1,87 +1,3 @@
-// // 📁 src/components/HomeWrapper.tsx
-// "use client";
-
-// import { useEffect, useState } from "react";
-// // ❌ Old import from base folder
-// // import HeroSection from "@/components/HeroSection";
-// // import CarouselSection from "@/components/CarouselSection";
-
-// // ✅ New import from animated subfolder
-// import HeroSection from "@/components/animated/HeroSection";
-// import CarouselSection from "@/components/animated/PracticeCarousel";
-
-// import DisclaimerModal from "@/components/DisclaimerModal";
-
-// export default function HomeWrapper() {
-//   const [showDisclaimer, setShowDisclaimer] = useState(true);
-//   const [checked, setChecked] = useState(false);
-
-//   useEffect(() => {
-//     setShowDisclaimer(true);
-//   }, []);
-
-//   return (
-//     <>
-//       {showDisclaimer && (
-//         <DisclaimerModal
-//           checked={checked}
-//           onCheck={() => setChecked(!checked)}
-//           onProceed={() => setShowDisclaimer(false)}
-//           disabled={!checked}
-//         />
-//       )}
-
-//       {!showDisclaimer && (
-//         <div>
-//           <HeroSection />
-//           <CarouselSection />
-//         </div>
-//       )}
-//     </>
-//   );
-// }
-
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import WelcomeBar from "@/components/ai/WelcomeBar";
-// import PromptCommandBar from "@/components/ai/PromptCommandBar";
-// import PracticeCardsSection from "@/components/ai/PracticeCardsSection";
-// import NewsUpdatesSection from "@/components/ai/NewsUpdatesSection";
-// import ArticlesSection from "@/components/ai/ArticlesSection";
-// import DisclaimerModal from "@/components/DisclaimerModal";
-
-// export default function HomeWrapper() {
-//   const [showDisclaimer, setShowDisclaimer] = useState(true);
-//   const [checked, setChecked] = useState(false);
-
-//   useEffect(() => {
-//     setShowDisclaimer(true);
-//   }, []);
-
-//   return (
-//     <>
-//       {showDisclaimer ? (
-//         <DisclaimerModal
-//           checked={checked}
-//           onCheck={() => setChecked(!checked)}
-//           onProceed={() => setShowDisclaimer(false)}
-//           disabled={!checked}
-//         />
-//       ) : (
-//         <div className="space-y-20 pb-32">
-//           <WelcomeBar />
-//           <PromptCommandBar />
-//           <PracticeCardsSection />
-//           <NewsUpdatesSection />
-//           <ArticlesSection />
-//         </div>
-//       )}
-//     </>
-//   );
-// }
-
-// ✅ src/components/HomeWrapper.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -95,14 +11,52 @@ import ArticlesSection from "@/components/light/ArticlesSection";
 import EducationSection from "@/components/light/EducationSection";
 import Navbar from "./Navbar";
 import VisitorsSection from "@/components/light/VisitorsSection";
+import Footer from "@/components/Footer";
+import { useSearchParams } from "next/navigation";
 
 export default function HomeWrapper() {
+  const searchParams = useSearchParams();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    setShowDisclaimer(true);
-  }, []);
+  const accepted = sessionStorage.getItem("pj_disclaimer_accepted");
+  if (accepted === "true") {
+    setShowDisclaimer(false);
+
+    // Handle scrollTo if coming back via direct navigation
+    const scrollTo = searchParams?.get("scrollTo");
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTo);
+        if (el) {
+          const yOffset = -80;
+          const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 400);
+    }
+  }
+}, []);
+
+
+  const handleProceed = () => {
+    sessionStorage.setItem("pj_disclaimer_accepted", "true");
+    setShowDisclaimer(false);
+
+    // Scroll to requested section if scrollTo param exists
+    const scrollTo = searchParams?.get("scrollTo");
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTo);
+        if (el) {
+          const yOffset = -80;
+          const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 300);
+    }
+  };
 
   return (
     <>
@@ -110,7 +64,7 @@ export default function HomeWrapper() {
         <DisclaimerModal
           checked={checked}
           onCheck={() => setChecked(!checked)}
-          onProceed={() => setShowDisclaimer(false)}
+          onProceed={handleProceed}
           disabled={!checked}
         />
       )}
@@ -126,6 +80,7 @@ export default function HomeWrapper() {
           <EducationSection />
           <VisitorsSection />
           <ContactSection />
+          
         </div>
       )}
     </>
