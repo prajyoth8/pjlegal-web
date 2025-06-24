@@ -54,10 +54,10 @@ export default function Navbar() {
 
   // Search engine setup using Fuse.js
   const allItems = [
-    ...desktopMenuItems.filter((item) => !item.isDropdown),
-    ...practiceSubItems.flatMap((item) => [item, ...(item.sub || [])]),
-    { name: "Disclaimer", href: "/disclaimer" },
-  ];
+  ...desktopMenuItems.filter((item) => !item.isDropdown),
+  ...practiceSubItems,
+  { name: "Disclaimer", href: "/disclaimer" },
+];
 
   const fuse = new Fuse(allItems, {
     keys: ["name"],
