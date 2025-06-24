@@ -85,14 +85,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import WelcomeSection from "@/components/light/WelcomeSection";
-import PracticeSection from "@/components/light/PracticeSection";
-import NewsSection from "@/components/light/NewsSection";
-import AboutSection from "@/components/light/AboutSection";
-import DisclaimerModal from "@/components/DisclaimerModal";
-import ContactSection from "@/components/light/ContactSection";
-import ArticlesSection from "@/components/light/ArticlesSection";
-import EducationSection from "@/components/light/EducationSection";
+import WelcomeSection from "/src/components/light/WelcomeSection";
+import PracticeSection from "/src/components/light/PracticeSection";
+import NewsSection from "/src/components/light/NewsSection";
+import AboutSection from "/src/components/light/AboutSection";
+import DisclaimerModal from "/src/components/DisclaimerModal";
+import ContactSection from "/src/components/light/ContactSection";
+import ArticlesSection from "/src/components/light/ArticlesSection";
+import EducationSection from "/src/components/light/EducationSection";
 import Navbar from "./Navbar";
 import VisitorsSection from "./light/VisitorsSection";
 
