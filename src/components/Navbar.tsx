@@ -271,16 +271,7 @@ export default function Navbar() {
                                     exit={{ opacity: 0, y: -2 }}
                                     className="ml-4 space-y-1"
                                   >
-                                    {pItem.sub?.map((sub) => (
-                                      <Link
-                                        key={sub.name}
-                                        href={sub.href}
-                                        onClick={() => setMenuOpen(false)}
-                                        className="block text-gray-600 hover:text-purple-700 hover:bg-purple-100 px-2 py-1 rounded text-sm"
-                                      >
-                                        {sub.name}
-                                      </Link>
-                                    ))}
+                                    
                                   </motion.div>
                                 )}
                               </AnimatePresence>
