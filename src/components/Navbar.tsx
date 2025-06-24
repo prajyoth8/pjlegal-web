@@ -39,145 +39,18 @@ export default function Navbar() {
 
   // Practice Areas and their sub-menus
   const practiceSubItems = [
-    {
-      name: "Private Client & Family Office",
-      href: "/practice-areas/private",
-      sub: [
-        "Estate & Succession Planning",
-        "Family Dispute Resolution",
-        "Wealth Management",
-        "Family Constitution",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/private#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Dispute Resolution",
-      href: "/practice-areas/dispute",
-      sub: [
-        "Litigation",
-        "Arbitration",
-        "Mediation & Conciliation",
-        "White Collar & Regulatory Investigations",
-        "Corporate & Commercial Disputes",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/dispute#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Real Estate & Urban Infrastructure",
-      href: "/practice-areas/realestate",
-      sub: ["Land Acquisition", "REITs", "Development & Redevelopment", "Leases & Licenses"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/realestate#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
-    },
-    {
-      name: "Banking & Finance",
-      href: "/practice-areas/banking",
-      sub: [
-        "Acquisition Financing",
-        "Asset Financing",
-        "Climate & Energy Financing",
-        "Cross Border Financing",
-        "Corporate Financing",
-        "Debt Restructuring & Recovery",
-        "Debt Capital Markets",
-        "Financial Regulatory",
-        "Fintech",
-        "Multilateral & Development Financing",
-        "Project & Infrastructure Financing",
-        "Securitization",
-        "Structured Financing",
-        "Syndicated Lending",
-        "Trade Financing",
-        "Environmental, Social & Governance (ESG)",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/banking#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
+  { name: "Civil Law", href: "/practice-areas/civil-law" },
+  { name: "Constitutional Law", href: "/practice-areas/constitutional-law" },
+  { name: "Corporate Laws", href: "/practice-areas/corporate-laws" },
+  { name: "Criminal Law", href: "/practice-areas/criminal-law" },
+  { name: "Election Law", href: "/practice-areas/election-law" },
+  { name: "Family Law", href: "/practice-areas/family-law" },
+  { name: "Labour Law", href: "/practice-areas/labour-law" },
+  { name: "Property Law", href: "/practice-areas/property-law" },
+  { name: "Real Estate RERA", href: "/practice-areas/real-estate-rera" },
+  { name: "Service Law", href: "/practice-areas/service-law" },
+];
 
-    {
-      name: "Employment & Labour",
-      href: "/practice-areas/employment",
-      sub: [
-        "Advisory & Compliance",
-        "Dispute Management",
-        "Employee Stock Option Plans",
-        "Employment Contracts",
-        "Workplace Harassment & Grievances",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/employment#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Environment, Health & Safety",
-      href: "/practice-areas/environment",
-      sub: [
-        "Environmental Clearances",
-        "Compliance & Audits",
-        "Litigation & Enforcement",
-        "Environmental Advisory",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/environment#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Intellectual Property",
-      href: "/practice-areas/ip",
-      sub: ["Trademarks", "Copyright", "Patents", "IPR Litigation", "Technology & Licensing"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/ip#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
-    },
-
-    {
-      name: "Restructuring & Insolvency",
-      href: "/practice-areas/insolvency",
-      sub: [
-        "Insolvency Resolution",
-        "Liquidation",
-        "NCLT Representation",
-        "Creditor & Debtor Advisory",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/insolvency#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-    {
-      name: "Taxation",
-      href: "/practice-areas/tax",
-      sub: ["Direct Tax", "Indirect Tax", "GST", "Tax Litigation", "International Taxation"].map(
-        (name) => ({
-          name,
-          href: "/practice-areas/tax#" + name.toLowerCase().replace(/\s+/g, "-"),
-        })
-      ),
-    },
-    {
-      name: "Technology, Media & Telecommunications",
-      href: "/practice-areas/technology",
-      sub: [
-        "Data Protection & Privacy",
-        "E-Commerce",
-        "Technology Contracts",
-        "Gaming & OTT",
-        "Cybersecurity",
-      ].map((name) => ({
-        name,
-        href: "/practice-areas/technology#" + name.toLowerCase().replace(/\s+/g, "-"),
-      })),
-    },
-  ];
 
   // Search engine setup using Fuse.js
   const allItems = [
@@ -287,40 +160,15 @@ export default function Navbar() {
                         className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
                       >
                         {practiceSubItems.map((item) => (
-                          <div
-                            key={item.name}
-                            onMouseEnter={() => setSubDropdownOpen(item.name)}
-                            onMouseLeave={() => setSubDropdownOpen(null)}
-                            className="relative group"
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
-                            >
-                              {item.name} <ChevronRight className="w-4 h-4" />
-                            </Link>
-                            <AnimatePresence>
-                              {subDropdownOpen === item.name && item.sub && (
-                                <motion.div
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -10 }}
-                                  className="absolute top-0 left-full ml-1 bg-white shadow-md rounded-lg py-2 w-64"
-                                >
-                                  {item.sub.map((sub) => (
-                                    <Link
-                                      key={sub.name}
-                                      href={sub.href}
-                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ))}
+  <Link
+    key={item.name}
+    href={item.href}
+    className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+  >
+    {item.name}
+  </Link>
+))}
+
                       </motion.div>
                     )}
                   </AnimatePresence>
