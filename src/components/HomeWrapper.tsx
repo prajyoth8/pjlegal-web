@@ -91,6 +91,8 @@ import NewsSection from "@/components/light/NewsSection";
 import AboutSection from "@/components/light/AboutSection";
 import DisclaimerModal from "@/components/DisclaimerModal";
 import ContactSection from "@/components/light/ContactSection";
+import ArticlesSection from "@/components/light/ArticlesSection";
+import EducationSection from "@/components/light/EducationSection";
 import Navbar from "./Navbar";
 
 export default function HomeWrapper() {
@@ -119,6 +121,8 @@ export default function HomeWrapper() {
           <AboutSection />
           <PracticeSection />
           <NewsSection />
+          <ArticlesSection />
+          <EducationSection />
           <ContactSection />
         </div>
       )}

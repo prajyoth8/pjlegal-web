@@ -29,12 +29,14 @@ export default function Navbar() {
 
   // Desktop menu items including a marker for the dropdown
   const desktopMenuItems = [
-    { name: "About", href: "/about" },
-    { name: "Practice Areas", isDropdown: true },
-    { name: "Articles/Blogs", href: "/articles" },
-    { name: "News", href: "/news" },
-    { name: "Education", href: "/education" },
-    { name: "Contact", href: "/contact" },
+    { name: "About", href: "#about" },
+    { name: "Practice Areas", isDropdown: true, href: "#practice" },
+
+    { name: "News", href: "#news" },
+    { name: "Articles/Blogs", href: "#articles" },
+    
+    { name: "Education", href: "#education" },
+    { name: "Contact", href: "#contact" },
   ];
 
   // Practice Areas and their sub-menus
@@ -94,6 +96,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+  if (pathname === "/" && typeof window !== "undefined") {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => scrollToId(hash.slice(1)), 200);
+    }
+  }
+}, [pathname]);
+
+
   // Logo click navigation
   const handleLogoClick = () => {
     if (pathname === "/") {
@@ -133,46 +145,54 @@ export default function Navbar() {
               // Render Practice Areas dropdown
               return (
                 <div
-                  key="Practice Areas"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => {
-                    setDropdownOpen(false);
-                    setSubDropdownOpen(null);
-                  }}
-                  className="relative"
-                >
-                  <button
-                    className={clsx(
-                      "flex items-center px-3 py-2 rounded-lg font-medium transition",
-                      pathname?.startsWith("/practice-areas")
-                        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-                        : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
-                    )}
-                  >
-                    Practice Areas <ChevronDown className="ml-1 w-4 h-4" />
-                  </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
-                      >
-                        {practiceSubItems.map((item) => (
-  <Link
-    key={item.name}
-    href={item.href}
-    className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+  key="Practice Areas"
+  onMouseEnter={() => setDropdownOpen(true)}
+  onMouseLeave={() => {
+    setDropdownOpen(false);
+    setSubDropdownOpen(null);
+  }}
+  className="relative"
+>
+  <button
+    onClick={(e) => {
+      e.preventDefault();
+      if (pathname !== "/") {
+        router.push(`/${item.href}`);
+      } else {
+        scrollToId(item.href!.slice(1));
+      }
+    }}
+    className={clsx(
+      "flex items-center px-3 py-2 rounded-lg font-medium transition",
+      pathname?.startsWith("/practice-areas")
+        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
+        : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+    )}
   >
-    {item.name}
-  </Link>
-))}
+    {item.name} <ChevronDown className="ml-1 w-4 h-4" />
+  </button>
 
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+  <AnimatePresence>
+    {dropdownOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
+      >
+        {practiceSubItems.map((sub) => (
+          <Link
+            key={sub.name}
+            href={sub.href}
+            className="block px-4 py-2 text-sm text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+          >
+            {sub.name}
+          </Link>
+        ))}
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
               );
             }
 
@@ -238,11 +258,21 @@ export default function Navbar() {
                 return (
                   <div key="mobile-practice" className="border-t pt-3">
                     <div
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                      className="flex items-center justify-between text-gray-700 font-medium cursor-pointer hover:bg-purple-50 p-2 rounded bg-purple-100/30"
-                    >
-                      Practice Areas <ChevronDown className="w-4 h-4" />
-                    </div>
+  onClick={() => {
+    // Scroll to section
+    if (pathname === "/") {
+      scrollToId("practice");
+    } else {
+      router.push("/#practice");
+    }
+    // Toggle dropdown
+    setDropdownOpen(!dropdownOpen);
+  }}
+  className="flex items-center justify-between text-gray-700 font-medium cursor-pointer hover:bg-purple-50 p-2 rounded bg-purple-100/30"
+>
+  Practice Areas <ChevronDown className="w-4 h-4" />
+</div>
+
                     <AnimatePresence>
                       {dropdownOpen && (
                         <motion.div
@@ -284,19 +314,33 @@ export default function Navbar() {
                 );
               } else {
                 return (
-                  <Link
-                    key={item.name}
-                    href={item.href!}
-                    onClick={() => setMenuOpen(false)}
-                    className={clsx(
-                      "block font-medium px-3 py-2 rounded",
-                      pathname === item.href
-                        ? "bg-purple-100 text-purple-700 shadow"
-                        : "text-gray-700 hover:text-purple-700 hover:bg-purple-100"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
+                  <a
+  key={item.name}
+  href={item.href?.startsWith("#") ? item.href : undefined}
+  onClick={(e) => {
+    if (item.href?.startsWith("#")) {
+      e.preventDefault();
+      setMenuOpen(false);
+      if (pathname !== "/") {
+        router.push(`/${item.href}`);
+      } else {
+        scrollToId(item.href.slice(1));
+      }
+    } else {
+      setMenuOpen(false);
+      router.push(item.href!);
+    }
+  }}
+  className={clsx(
+    "block font-medium px-3 py-2 rounded",
+    pathname === item.href
+      ? "bg-purple-100 text-purple-700 shadow"
+      : "text-gray-700 hover:text-purple-700 hover:bg-purple-100"
+  )}
+>
+  {item.name}
+</a>
+
                 );
               }
             })}
