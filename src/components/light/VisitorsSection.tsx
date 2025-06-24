@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import CountUp from "react-countup";
-import { getVisitCount, incrementVisitCount } from "/src/services/metrics";
+import { getVisitCount, incrementVisitCount } from "@/services/metrics";
 
 export default function VisitorsSection() {
   const [visits, setVisits] = useState<number>(0);
