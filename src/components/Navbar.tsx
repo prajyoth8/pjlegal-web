@@ -100,10 +100,14 @@ export default function Navbar() {
   if (pathname === "/" && typeof window !== "undefined") {
     const hash = window.location.hash;
     if (hash) {
-      setTimeout(() => scrollToId(hash.slice(1)), 200);
+      setTimeout(() => {
+        scrollToId(hash.slice(1));
+        setActiveHash(hash); // ← ✅ added
+      }, 200);
     }
   }
 }, [pathname]);
+
 
 
   // Logo click navigation
@@ -116,11 +120,32 @@ export default function Navbar() {
   };
 
   const scrollToId = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  const el = document.getElementById(id);
+  if (el) {
+    const yOffset = -80;
+    const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    // 🔥 Update hash and active state
+    history.pushState(null, "", `#${id}`);
+    setActiveHash(`#${id}`);
+  }
+};
+
+
+const [activeHash, setActiveHash] = useState<string>("");
+
+useEffect(() => {
+  const handleHashChange = () => {
+    setActiveHash(window.location.hash);
   };
+
+  // Set on load
+  handleHashChange();
+
+  window.addEventListener("hashchange", handleHashChange);
+  return () => window.removeEventListener("hashchange", handleHashChange);
+}, []);
+
 
   return (
     <nav
@@ -164,9 +189,10 @@ export default function Navbar() {
     }}
     className={clsx(
       "flex items-center px-3 py-2 rounded-lg font-medium transition",
-      pathname?.startsWith("/practice-areas")
-        ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-        : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+      pathname?.startsWith("/practice-areas") || activeHash === "#practice"
+
+        ? "bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow"
+    : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
     )}
   >
     {item.name} <ChevronDown className="ml-1 w-4 h-4" />
@@ -211,11 +237,12 @@ export default function Navbar() {
                   }
                 }}
                 className={clsx(
-                  "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
-                  pathname === item.href
-                    ? "bg-gradient-to-r from-purple-100 to-purple-700 text-white shadow"
-                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
-                )}
+  "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
+  activeHash === item.href
+    ? "bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow"
+    : "text-gray-700 hover:text-purple-600 hover:bg-purple-100"
+)}
+
               >
                 {item.name}
               </a>
@@ -332,11 +359,14 @@ export default function Navbar() {
     }
   }}
   className={clsx(
-    "block font-medium px-3 py-2 rounded",
-    pathname === item.href
-      ? "bg-purple-100 text-purple-700 shadow"
-      : "text-gray-700 hover:text-purple-700 hover:bg-purple-100"
-  )}
+  "block font-medium px-3 py-2 rounded",
+  activeHash === item.href
+    ? "bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow"
+    : "text-gray-700 hover:text-purple-700 hover:bg-purple-100"
+)}
+
+
+
 >
   {item.name}
 </a>

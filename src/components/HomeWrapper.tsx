@@ -94,6 +94,7 @@ import ContactSection from "@/components/light/ContactSection";
 import ArticlesSection from "@/components/light/ArticlesSection";
 import EducationSection from "@/components/light/EducationSection";
 import Navbar from "./Navbar";
+import VisitorsSection from "./light/VisitorsSection";
 
 export default function HomeWrapper() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -123,6 +124,7 @@ export default function HomeWrapper() {
           <NewsSection />
           <ArticlesSection />
           <EducationSection />
+          <VisitorsSection />
           <ContactSection />
         </div>
       )}
