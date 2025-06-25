@@ -134,11 +134,13 @@ export default function Navbar() {
     const yOffset = -80;
     const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
+
+    if (pathname === "/") {
+      history.pushState(null, "", `#${id}`);
+    }
     setActiveHash(`#${id}`);
-    history.pushState(null, "", `#${id}`);
   }
 };
-
 
 
 

@@ -134,11 +134,13 @@ export default function Navbar() {
     const yOffset = -80;
     const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
+
+    if (pathname === "/") {
+      history.pushState(null, "", `#${id}`);
+    }
     setActiveHash(`#${id}`);
-    history.pushState(null, "", `#${id}`);
   }
 };
-
 
 
 
@@ -323,18 +325,16 @@ useEffect(() => {
   const isSection = item.href?.startsWith("#");
   const target = isSection ? item.href.slice(1) : "";
 
-  // Always collapse menu before scroll
+  // Collapse menu and dropdowns first
   setMenuOpen(false);
   setDropdownOpen(false);
   setSubDropdownOpen(null);
 
-  // Scroll/navigate after collapse delay
+  // Scroll or navigate after menu collapse
   setTimeout(() => {
     if (isHome) {
       if (pathname === "/") {
-        window.history.pushState(null, "", "/");
         window.scrollTo({ top: 0, behavior: "smooth" });
-        setActiveHash("");
       } else {
         router.push("/?scrollTo=welcome");
       }
@@ -347,9 +347,8 @@ useEffect(() => {
     } else {
       router.push(item.href!);
     }
-  }, 300);
+  }, 300); // Delay to let mobile menu close
 }}
-
 
 
     className={clsx(
