@@ -1,16 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone, Mail, MapPin, Calendar, Send, CheckCircle, Clock } from "lucide-react";
-import { FaWhatsapp, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  Send,
+  CheckCircle,
+  Clock,
+} from "lucide-react";
+import {
+  FaWhatsapp,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { supabase } from "@/lib/supabaseClient";
-import toast from "react-hot-toast";
-import ConsultationModal from "@/components/ConsultationModal";
 
 export default function ContactSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,46 +27,15 @@ export default function ContactSection() {
     message: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const { name, email, phone, subject, message } = formData;
-
-    const { error } = await supabase.from("contact_messages").insert([
-      {
-        name,
-        email,
-        phone,
-        subject,
-        message,
-        submitted_at: new Date().toISOString(),
-      },
-    ]);
-
-    if (error) {
-      console.error("Supabase insert error:", error);
-      toast.error("❌ Failed to send message. Please try again.");
-      return;
-    }
-
-    // Trigger email via API
-    const emailRes = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, subject, message }),
-    });
-
-    if (!emailRes.ok) {
-      toast.error("✅ Message saved, but failed to send email.");
-      return;
-    }
-
-    toast.success("🎉 Message submitted successfully. We’ll respond within 24 hours.");
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    console.log("Form submitted:", formData);
   };
 
   const phoneMailCards = [
@@ -107,7 +84,10 @@ export default function ContactSection() {
           {/* Left: Phone + Mail */}
           <div className="md:col-span-3 space-y-6">
             {phoneMailCards.map((item, i) => (
-              <div key={i} className="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+              <div
+                key={i}
+                className="bg-slate-800/50 p-5 rounded-xl border border-slate-700"
+              >
                 <div className="flex items-center space-x-4">
                   <div className="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg">
                     <item.icon className="w-5 h-5 text-white" />
@@ -125,10 +105,7 @@ export default function ContactSection() {
               </div>
             ))}
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center"
-            >
+            <button className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center">
               <Calendar className="w-4 h-4 mr-2" />
               Schedule Free Consultation
             </button>
@@ -137,7 +114,9 @@ export default function ContactSection() {
           {/* Center: Form */}
           <div className="md:col-span-6">
             <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-              <h3 className="text-white text-xl font-semibold mb-6">Send a Message</h3>
+              <h3 className="text-white text-xl font-semibold mb-6">
+                Send a Message
+              </h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
@@ -200,7 +179,9 @@ export default function ContactSection() {
 
             {/* Social Icons */}
             <div className="mt-8 text-center">
-              <p className="text-slate-400 text-sm uppercase mb-2 tracking-wide">Connect with us</p>
+              <p className="text-slate-400 text-sm uppercase mb-2 tracking-wide">
+                Connect with us
+              </p>
               <div className="flex justify-center gap-4">
                 <a
                   href="https://wa.me/918712351102"
@@ -304,7 +285,6 @@ export default function ContactSection() {
           box-shadow: 0 0 0 1px #f59e0b;
         }
       `}</style>
-      <ConsultationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

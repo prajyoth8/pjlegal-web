@@ -6,11 +6,8 @@ import { FaWhatsapp, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/
 import { FaXTwitter } from "react-icons/fa6";
 import { supabase } from "@/lib/supabaseClient";
 import toast from "react-hot-toast";
-import ConsultationModal from "@/components/ConsultationModal";
 
 export default function ContactSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -125,10 +122,7 @@ export default function ContactSection() {
               </div>
             ))}
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center"
-            >
+            <button className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center">
               <Calendar className="w-4 h-4 mr-2" />
               Schedule Free Consultation
             </button>
@@ -304,7 +298,6 @@ export default function ContactSection() {
           box-shadow: 0 0 0 1px #f59e0b;
         }
       `}</style>
-      <ConsultationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

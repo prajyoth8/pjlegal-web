@@ -305,6 +305,7 @@ export default function ContactSection() {
         }
       `}</style>
       <ConsultationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
     </section>
   );
 }

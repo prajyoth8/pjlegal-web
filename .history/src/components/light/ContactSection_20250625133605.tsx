@@ -4,13 +4,8 @@ import React, { useState } from "react";
 import { Phone, Mail, MapPin, Calendar, Send, CheckCircle, Clock } from "lucide-react";
 import { FaWhatsapp, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { supabase } from "@/lib/supabaseClient";
-import toast from "react-hot-toast";
-import ConsultationModal from "@/components/ConsultationModal";
 
 export default function ContactSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,42 +19,36 @@ export default function ContactSection() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const { name, email, phone, subject, message } = formData;
+  const { name, email, phone, subject, message } = formData;
 
-    const { error } = await supabase.from("contact_messages").insert([
-      {
-        name,
-        email,
-        phone,
-        subject,
-        message,
-        submitted_at: new Date().toISOString(),
-      },
-    ]);
+  const { error } = await supabase.from("contact_messages").insert([
+    {
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      submitted_at: new Date().toISOString(),
+    },
+  ]);
 
-    if (error) {
-      console.error("Supabase insert error:", error);
-      toast.error("❌ Failed to send message. Please try again.");
-      return;
-    }
-
-    // Trigger email via API
-    const emailRes = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, subject, message }),
+  if (error) {
+    console.error("Supabase insert error:", error);
+    toast.error("❌ Failed to send message. Please try again.");
+  } else {
+    toast.success("✅ Message sent successfully!");
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
     });
+  }
+};
 
-    if (!emailRes.ok) {
-      toast.error("✅ Message saved, but failed to send email.");
-      return;
-    }
-
-    toast.success("🎉 Message submitted successfully. We’ll respond within 24 hours.");
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-  };
 
   const phoneMailCards = [
     {
@@ -125,10 +114,7 @@ export default function ContactSection() {
               </div>
             ))}
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center"
-            >
+            <button className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center">
               <Calendar className="w-4 h-4 mr-2" />
               Schedule Free Consultation
             </button>
@@ -304,7 +290,6 @@ export default function ContactSection() {
           box-shadow: 0 0 0 1px #f59e0b;
         }
       `}</style>
-      <ConsultationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

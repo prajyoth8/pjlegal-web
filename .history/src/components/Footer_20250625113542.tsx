@@ -2,7 +2,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { FaWhatsapp, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaWhatsapp,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -48,7 +53,13 @@ export default function Footer() {
         {/* Brand */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <Image src="/pj_logo_black.png" alt="PJ Legal" width={100} height={100} />
+            <Image
+              src="/pj_logo_black.png"
+              alt="PJ Legal"
+              width={100}
+              height={100}
+              
+            />
             <h2 className="text-2xl font-extrabold text-white">PJ Legal</h2>
           </div>
           <p className="text-sm leading-relaxed text-white/80">
@@ -124,16 +135,28 @@ export default function Footer() {
             >
               <FaWhatsapp />
             </a>
-            <a href="https://facebook.com" className="text-blue-300 hover:scale-110 transition">
+            <a
+              href="https://facebook.com"
+              className="text-blue-300 hover:scale-110 transition"
+            >
               <FaFacebookF />
             </a>
-            <a href="https://instagram.com" className="text-pink-300 hover:scale-110 transition">
+            <a
+              href="https://instagram.com"
+              className="text-pink-300 hover:scale-110 transition"
+            >
               <FaInstagram />
             </a>
-            <a href="https://linkedin.com" className="text-sky-300 hover:scale-110 transition">
+            <a
+              href="https://linkedin.com"
+              className="text-sky-300 hover:scale-110 transition"
+            >
               <FaLinkedinIn />
             </a>
-            <a href="https://twitter.com" className="text-sky-400 hover:scale-110 transition">
+            <a
+              href="https://twitter.com"
+              className="text-sky-400 hover:scale-110 transition"
+            >
               <FaXTwitter />
             </a>
           </div>

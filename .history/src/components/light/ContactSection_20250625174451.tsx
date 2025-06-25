@@ -59,6 +59,7 @@ export default function ContactSection() {
 
     toast.success("🎉 Message submitted successfully. We’ll respond within 24 hours.");
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    setTimeout(() => oncvlose(), 10000); // inside handleSubmit after success
   };
 
   const phoneMailCards = [
