@@ -166,6 +166,7 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
+
           {desktopMenuItems.map((item) => {
             if (item.isDropdown) {
               // Render Practice Areas dropdown

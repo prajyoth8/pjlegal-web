@@ -166,6 +166,7 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
+
           {desktopMenuItems.map((item) => {
             if (item.isDropdown) {
               // Render Practice Areas dropdown
@@ -277,7 +278,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="lg:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
