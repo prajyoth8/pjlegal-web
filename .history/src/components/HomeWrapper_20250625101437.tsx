@@ -20,40 +20,27 @@ export default function HomeWrapper() {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const accepted = sessionStorage.getItem("pj_disclaimer_accepted");
-    if (accepted === "true") {
-      setShowDisclaimer(false);
+  const accepted = sessionStorage.getItem("pj_disclaimer_accepted");
+  if (accepted === "true") {
+    setShowDisclaimer(false);
 
-      // Handle scrollTo if coming back via direct navigation
-      const scrollTo = searchParams?.get("scrollTo");
-      if (scrollTo) {
-        setTimeout(() => {
-          const el = document.getElementById(scrollTo);
-          if (el) {
-            const yOffset = -80;
-            const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
-          }
-        }, 400);
-      }
+    // Handle scrollTo if coming back via direct navigation
+    const scrollTo = searchParams?.get("scrollTo");
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTo);
+        if (el) {
+          const yOffset = -80;
+          const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 400);
     }
-  }, []);
+  }
+  
 
-  useEffect(() => {
-    if (!showDisclaimer) {
-      const scrollTo = searchParams?.get("scrollTo");
-      if (scrollTo) {
-        setTimeout(() => {
-          const el = document.getElementById(scrollTo);
-          if (el) {
-            const yOffset = -80;
-            const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
-          }
-        }, 300);
-      }
-    }
-  }, [searchParams, showDisclaimer]);
+}, []);
+
 
   const handleProceed = () => {
     sessionStorage.setItem("pj_disclaimer_accepted", "true");
@@ -95,6 +82,7 @@ export default function HomeWrapper() {
           <EducationSection />
           <VisitorsSection />
           <ContactSection />
+          
         </div>
       )}
     </>
