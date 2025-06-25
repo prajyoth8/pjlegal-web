@@ -382,33 +382,22 @@ export default function Navbar() {
                     href={item.href?.startsWith("#") ? item.href : undefined}
                     onClick={(e) => {
                       e.preventDefault();
-                      const isHome = item.name === "Home";
-                      const isSection = item.href?.startsWith("#");
-                      const target = isSection ? item.href.slice(1) : "";
-
-                      // Collapse the menu first
-                      setMenuOpen(false);
-                      setDropdownOpen(false);
-                      setSubDropdownOpen(null);
-
-                      setTimeout(() => {
-                        if (isHome) {
-                          if (pathname === "/") {
-                            window.scrollTo({ top: 0, behavior: "smooth" });
-                            setActiveHash("");
-                          } else {
-                            router.push("/?scrollTo=welcome");
-                          }
-                        } else if (isSection) {
-                          if (pathname === "/") {
-                            scrollToId(target);
-                          } else {
-                            router.push(`/?scrollTo=${target}`);
-                          }
+                      if (item.name === "Home") {
+                        if (pathname === "/") {
+                          window.scrollTo({ top: 0, behavior: "smooth" });
                         } else {
-                          router.push(item.href!);
+                          router.push("/?scrollTo=welcome");
                         }
-                      }, 300); // Wait for dropdown to close
+                      } else if (item.href?.startsWith("#")) {
+                        const target = item.href.slice(1);
+                        if (pathname === "/") {
+                          scrollToId(target);
+                        } else {
+                          router.push(`/?scrollTo=${target}`);
+                        }
+                      } else {
+                        router.push(item.href!);
+                      }
                     }}
                     className={clsx(
                       "block font-medium px-3 py-2 rounded",
