@@ -100,7 +100,6 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 import ChatbotWidget from "@/components/ChatbotWidget";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 export default function HybridLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -133,8 +132,6 @@ export default function HybridLayout({ children }: { children: React.ReactNode }
         <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : ""}`}>
           <div className="pt-16 min-h-[calc(100vh-4rem)]">{children}</div>
           <Footer />
-          <ChatbotWidget />
-          <ScrollToTopButton />
         </main>
       </div>
     </div>
