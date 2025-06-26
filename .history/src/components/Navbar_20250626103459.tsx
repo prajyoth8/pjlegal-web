@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
+
 // Type definition for search suggestions
 type Suggestion = {
   label: string;
@@ -16,7 +17,7 @@ type Suggestion = {
   matchIndices: [number, number][];
 };
 
-export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }) {
+export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -159,13 +160,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div
-          onClick={() => {
-            if (toggleSidebar) toggleSidebar();
-            else handleLogoClick(); // fallback if toggleSidebar not present
-          }}
-          className="flex items-center gap-2 cursor-pointer"
-        >
+        <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
           <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
@@ -283,16 +278,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="lg:hidden text-gray-700"
-          onClick={() => {
-            if (toggleSidebar) {
-              toggleSidebar(); // <-- trigger sidebar layout toggle
-            } else {
-              setMenuOpen(!menuOpen); // <-- fallback to in-Navbar mobile menu
-            }
-          }}
-        >
+        <button className="lg:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>

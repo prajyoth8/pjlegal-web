@@ -60,13 +60,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           // ✅ Sidebar Mode Layout
           <div className="flex min-h-screen">
             <Sidebar />
-            <div className="flex flex-col flex-1 overflow-y-auto">
-              <main className="flex-grow bg-gray-50 dark:bg-black p-4">{children}</main>
-              <Footer /> {/* ✅ Add footer here */}
-            </div>
-          </div>
-        ) : (
-          <>
+    <div className="flex flex-col flex-1 overflow-y-auto">
+      <main className="flex-grow bg-gray-50 dark:bg-black p-4">
+        {children}
+      </main>
+      <Footer /> {/* ✅ Add footer here */}
+    </div>
+  </div>
+) : (
+  <>
             <Navbar />
             <main className="pt-16">{children}</main>
             <Footer />

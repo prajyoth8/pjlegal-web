@@ -159,13 +159,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div
-          onClick={() => {
-            if (toggleSidebar) toggleSidebar();
-            else handleLogoClick(); // fallback if toggleSidebar not present
-          }}
-          className="flex items-center gap-2 cursor-pointer"
-        >
+        <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
           <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
         </div>
