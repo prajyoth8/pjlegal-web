@@ -149,13 +149,6 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <button
-          onClick={() => toggleSidebar?.()}
-          className="lg:block hidden text-gray-700 hover:text-amber-600"
-        >
-          <AlignLeft className="w-6 h-6" />
-        </button>
-
         {/* Logo */}
         <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
           <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
@@ -272,6 +265,18 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
           >
             Disclaimer
           </Link>
+          <button
+            onClick={toggleSidebar}
+            className="lg:block hidden text-gray-700 hover:text-amber-600"
+          >
+            <AlignLeft className="w-6 h-6" />
+          </button>
+
+          {/* ✅ Logo */}
+          <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
+            <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
+            <span className="text-xl font-bold text-gray-900">PJ Legal</span>
+          </div>
         </div>
 
         {/* ✅ Mobile Menu Toggle */}

@@ -27,8 +27,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [scrolled, setScrolled] = useState(false);
   const [activeHash, setActiveHash] = useState<string>("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // Desktop menu items including a marker for the dropdown
+
   const desktopMenuItems = [
     { name: "Home", href: "#" },
     { name: "About", href: "#about" },
@@ -38,7 +37,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     { name: "Education", href: "#education" },
     { name: "Contact", href: "#contact" },
   ];
-  // Practice Areas and their sub-menus
+
   const practiceSubItems = [
     { name: "Civil Law", href: "/practice-areas/civil-law" },
     { name: "Constitutional Law", href: "/practice-areas/constitutional-law" },
@@ -149,129 +148,20 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <button
-          onClick={() => toggleSidebar?.()}
-          className="lg:block hidden text-gray-700 hover:text-amber-600"
-        >
-          <AlignLeft className="w-6 h-6" />
-        </button>
-
-        {/* Logo */}
-        <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
-          <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
-          <span className="text-xl font-bold text-gray-900">PJ Legal</span>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-6">
-          {desktopMenuItems.map((item) => {
-            if (item.isDropdown) {
-              // Render Practice Areas dropdown
-              return (
-                <div
-                  key="Practice Areas"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => {
-                    setDropdownOpen(false);
-                    setSubDropdownOpen(null);
-                  }}
-                  className="relative"
-                >
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (pathname !== "/") {
-                        router.push(`/${item.href}`);
-                      } else {
-                        scrollToId(item.href!.slice(1));
-                      }
-                    }}
-                    className={clsx(
-                      "flex items-center px-3 py-2 rounded-lg font-medium transition",
-                      pathname?.startsWith("/practice-areas") || activeHash === "#practice"
-                        ? "bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow"
-                        : "text-gray-700 hover:text-amber-600 hover:bg-amber-100"
-                    )}
-                  >
-                    {item.name} <ChevronDown className="ml-1 w-4 h-4" />
-                  </button>
-
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-10 left-0 bg-white shadow-lg rounded-lg py-2 w-64 z-50"
-                      >
-                        {practiceSubItems.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            href={sub.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:text-amber-600 hover:bg-amber-100"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            }
-
-            // Normal menu links
-            const href = item.href!;
-            return (
-              <a
-                key={item.name}
-                href={item.href?.startsWith("#") ? item.href : undefined}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.name === "Home") {
-                    if (pathname === "/") {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    } else {
-                      router.push("/?scrollTo=welcome");
-                    }
-                  } else if (item.href?.startsWith("#")) {
-                    const target = item.href.slice(1);
-                    if (pathname === "/") {
-                      scrollToId(target);
-                    } else {
-                      router.push(`/?scrollTo=${target}`);
-                    }
-                  } else {
-                    router.push(item.href!);
-                  }
-                }}
-                className={clsx(
-                  "font-medium px-3 py-2 rounded-lg transition cursor-pointer",
-                  activeHash === item.href
-                    ? "bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow"
-                    : "text-gray-700 hover:text-amber-600 hover:bg-amber-100"
-                )}
-              >
-                {item.name}
-              </a>
-            );
-          })}
-
-          {/* Search icon */}
+        <div className="flex items-center gap-3">
+          {/* ✅ Sidebar Toggle Icon for Desktop/Tablet */}
           <button
-            onClick={() => setShowSearch(!showSearch)}
-            className="text-gray-600 hover:text-amber-600"
+            onClick={toggleSidebar}
+            className="lg:block hidden text-gray-700 hover:text-amber-600"
           >
-            <Search className="w-5 h-5" />
+            <AlignLeft className="w-6 h-6" />
           </button>
 
-          {/* Disclaimer CTA */}
-          <Link
-            href="/disclaimer"
-            className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold px-4 py-2 rounded-full shadow hover:opacity-90 transition"
-          >
-            Disclaimer
-          </Link>
+          {/* ✅ Logo */}
+          <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
+            <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
+            <span className="text-xl font-bold text-gray-900">PJ Legal</span>
+          </div>
         </div>
 
         {/* ✅ Mobile Menu Toggle */}

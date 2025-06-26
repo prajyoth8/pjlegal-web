@@ -15,16 +15,14 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/30 z-30 lg:hidden" onClick={closeSidebar} />
-      )}
-
       {/* Optional: debug */}
       <p className="fixed bottom-2 left-2 z-[999] bg-white p-2 text-black shadow">
         Sidebar Open: {sidebarOpen ? "Yes" : "No"}
       </p>
 
-      <main className="min-h-screen pt-[80px] bg-gray-100 dark:bg-black">{children}</main>
+      <main className="min-h-screen pt-[80px] bg-gray-100 dark:bg-black">
+        {children}
+      </main>
     </>
   );
 }

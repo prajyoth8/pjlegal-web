@@ -2,11 +2,22 @@
 
 import { X } from "lucide-react";
 
-export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+export default function Sidebar({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   return (
     <>
       {/* Backdrop */}
-      {isOpen && <div className="fixed inset-0 bg-black bg-opacity-40 z-30" onClick={onClose} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-30"
+          onClick={onClose}
+        />
+      )}
 
       {/* Sidebar Panel */}
       <div
@@ -23,18 +34,10 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
 
         {/* Sidebar Content */}
         <nav className="space-y-4">
-          <a href="/" className="block hover:text-amber-400">
-            Dashboard
-          </a>
-          <a href="#about" className="block hover:text-amber-400">
-            About
-          </a>
-          <a href="#practice" className="block hover:text-amber-400">
-            Practice Areas
-          </a>
-          <a href="#contact" className="block hover:text-amber-400">
-            Contact
-          </a>
+          <a href="/" className="block hover:text-amber-400">Dashboard</a>
+          <a href="#about" className="block hover:text-amber-400">About</a>
+          <a href="#practice" className="block hover:text-amber-400">Practice Areas</a>
+          <a href="#contact" className="block hover:text-amber-400">Contact</a>
           {/* Add more items as needed */}
         </nav>
       </div>

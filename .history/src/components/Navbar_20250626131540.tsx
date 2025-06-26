@@ -4,21 +4,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AlignLeft, Menu, X, ChevronDown, ChevronRight, Search } from "lucide-react";
+import { AlignLeft, X, ChevronDown, ChevronRight, Search } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
+// Type definition for search suggestions
 type Suggestion = {
   label: string;
   route: string;
   matchIndices: [number, number][];
 };
 
-export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }) {
+export default function Navbar() {
+
+  toggleSidebar
+}: {
+  toggleSidebar?: () => void;
+}) {
+
   const pathname = usePathname();
   const router = useRouter();
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [subDropdownOpen, setSubDropdownOpen] = useState<string | null>(null);
@@ -26,8 +32,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [scrolled, setScrolled] = useState(false);
-  const [activeHash, setActiveHash] = useState<string>("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   // Desktop menu items including a marker for the dropdown
   const desktopMenuItems = [
     { name: "Home", href: "#" },
@@ -38,6 +43,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     { name: "Education", href: "#education" },
     { name: "Contact", href: "#contact" },
   ];
+
   // Practice Areas and their sub-menus
   const practiceSubItems = [
     { name: "Civil Law", href: "/practice-areas/civil-law" },
@@ -52,6 +58,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     { name: "Service Law", href: "/practice-areas/service-law" },
   ];
 
+  // Search engine setup using Fuse.js
   const allItems = [
     ...desktopMenuItems.filter((item) => !item.isDropdown),
     ...practiceSubItems,
@@ -99,30 +106,24 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
       if (hash) {
         setTimeout(() => {
           scrollToId(hash.slice(1));
-          setActiveHash(hash);
+          setActiveHash(hash); // ← ✅ added
         }, 200);
       }
     }
   }, [pathname]);
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      setActiveHash(window.location.hash);
-    };
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
+  // Logo click navigation
   const handleLogoClick = () => {
+    // Collapse all menus (mobile)
     setMenuOpen(false);
     setDropdownOpen(false);
     setSubDropdownOpen(null);
 
+    // Reset any hash to force scroll to top
     if (pathname === "/") {
       window.history.pushState(null, "", "/");
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setActiveHash("");
+      setActiveHash(""); // reset active menu highlight
     } else {
       router.push("/?scrollTo=welcome");
     }
@@ -139,6 +140,20 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     }
   };
 
+  const [activeHash, setActiveHash] = useState<string>("");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveHash(window.location.hash);
+    };
+
+    // Set on load
+    handleHashChange();
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
   return (
     <nav
       className={clsx(
@@ -149,17 +164,20 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
       )}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <button
-          onClick={() => toggleSidebar?.()}
-          className="lg:block hidden text-gray-700 hover:text-amber-600"
-        >
-          <AlignLeft className="w-6 h-6" />
-        </button>
-
+        {/* Logo and Sidebar Toggle */}
+        <div className="flex items-center gap-4">
+          {/* Sidebar Toggle Icon (Desktop/Tablet only) */}
+          <button
+            onClick={toggleSidebar}
+            className="text-gray-700 hover:text-amber-600 focus:outline-none lg:block hidden"
+          >
+            <AlignLeft className="w-6 h-6" />
+          </button>
         {/* Logo */}
         <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
           <Image src="/assets/pj_logo_icon.png" alt="PJ Logo" width={40} height={40} />
           <span className="text-xl font-bold text-gray-900">PJ Legal</span>
+        </div>
         </div>
 
         {/* Desktop Menu */}
@@ -274,7 +292,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
           </Link>
         </div>
 
-        {/* ✅ Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle */}
         <button className="lg:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
