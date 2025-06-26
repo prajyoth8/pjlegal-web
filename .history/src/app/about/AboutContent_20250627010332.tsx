@@ -70,9 +70,9 @@ export default function AboutContent() {
             className="flex-1 space-y-6"
           >
             <p className="text-lg leading-relaxed text-gray-800">
-              PJ Legal is founded by an <span className="text-amber-700 font-bold">R. Prajyoth Kumar</span> who transitioned from an extensive IT
-              career to law with a vision to bring clarity, efficiency, and empathy into legal
-              service delivery.
+              PJ Legal is founded by an individual who transitioned from an extensive IT career to
+              law with a vision to bring clarity, efficiency, and empathy into legal service
+              delivery.
             </p>
             <p className="text-gray-700">
               With years of experience as a <strong>Salesforce Developer</strong> and{" "}
@@ -87,21 +87,22 @@ export default function AboutContent() {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-6">
-              <button
-                onClick={() => router.push("/#contact")}
-                className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-full shadow-lg transition"
-              >
-                📞 Contact Me
-              </button>
-              <button
-                onClick={() => setModalOpen(true)}
-                className="bg-white border border-amber-600 text-amber-700 px-5 py-2 rounded-full shadow-md hover:bg-amber-100 transition"
-              >
-                📅 Book a Consultation
-              </button>
-            </div>
+  <button
+    onClick={() => router.push("/#contact")}
+    className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-full shadow-lg transition"
+  >
+    📞 Contact Me
+  </button>
+  <button
+    onClick={() => setModalOpen(true)}
+    className="bg-white border border-amber-600 text-amber-700 px-5 py-2 rounded-full shadow-md hover:bg-amber-100 transition"
+  >
+    📅 Book a Consultation
+  </button>
+</div>
 
-            <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
+<ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
+
           </motion.div>
         </div>
 

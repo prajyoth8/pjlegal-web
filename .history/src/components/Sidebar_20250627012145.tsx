@@ -118,14 +118,12 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "flex flex-col",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed ",
+          "lg:fixed lg:translate-x-0",
           "h-[calc(100vh-4rem)]" // Adjust height to account for navbar
         )}
       >
         {/* Single scrollable container for ALL content */}
-        <div className="flex-1 overflow-y-auto pb-4">
-          {" "}
-          {/* Added padding-bottom */}
+        <div className="flex-1 overflow-y-auto pb-4"> {/* Added padding-bottom */}
           {/* Search Bar */}
           <div className="p-4 border-b border-gray-700 sticky top-0 bg-[#111827] z-10">
             <div className="relative">
@@ -154,10 +152,12 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               </div>
             )}
           </div>
+
           {/* PJ Legal Name */}
           <div className="p-4 flex items-center gap-2 border-b border-gray-700">
             <div className="text-xl font-bold">PJ Legal</div>
           </div>
+
           {/* Main Menu Items */}
           <div className="p-4 space-y-2">
             {menuItems.map((item) => (
@@ -211,6 +211,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               Book Consultation
             </button>
           </div>
+
           {/* Footer Items - now part of the main scrollable content */}
           <div className="p-4 border-t border-gray-700 space-y-2 bg-[#111827]">
             {footerItems.map((item) => (

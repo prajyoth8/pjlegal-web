@@ -70,9 +70,9 @@ export default function AboutContent() {
             className="flex-1 space-y-6"
           >
             <p className="text-lg leading-relaxed text-gray-800">
-              PJ Legal is founded by an <span className="text-amber-700 font-bold">R. Prajyoth Kumar</span> who transitioned from an extensive IT
-              career to law with a vision to bring clarity, efficiency, and empathy into legal
-              service delivery.
+              PJ Legal is founded by an individual who transitioned from an extensive IT career to
+              law with a vision to bring clarity, efficiency, and empathy into legal service
+              delivery.
             </p>
             <p className="text-gray-700">
               With years of experience as a <strong>Salesforce Developer</strong> and{" "}

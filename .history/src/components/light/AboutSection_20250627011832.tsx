@@ -37,12 +37,11 @@ export default function AboutSection() {
         >
           <h2 className="text-4xl font-extrabold mb-4 text-amber-600">About PJ Legal</h2>
           <p className="text-lg leading-relaxed mb-6 text-gray-800">
-            PJ Legal is the brainchild of a passionate professional{" "}
-            <span className="text-blue-700 font-bold">R. Prajyoth Kumar</span>, who transitioned
-            from a successful IT career into the world of law. Founded by an ex-Salesforce Developer
-            and SAP Security Architect with an Executive PG in Artificial Intelligence from IIT
-            Roorkee, the firm is driven by a mission to simplify justice through tech-integrated
-            legal practice.
+            PJ Legal is the brainchild of a passionate professional <span className="text-amber-700 font-bold">R. Prajyoth Kumar</span>, who
+            transitioned from a successful IT career into the world of law. Founded by an
+            ex-Salesforce Developer and SAP Security Architect with an Executive PG in Artificial
+            Intelligence from IIT Roorkee, the firm is driven by a mission to simplify justice
+            through tech-integrated legal practice.
           </p>
 
           <p className="text-md leading-relaxed text-gray-700">

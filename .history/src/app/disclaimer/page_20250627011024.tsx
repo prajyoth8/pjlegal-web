@@ -87,7 +87,7 @@ export default function DisclaimerPage() {
             clarity and care.”
           </p>
           <p className="mt-4 font-semibold text-sm text-gray-600">
-            — Advocate R.Prajyoth Kumar, Founder of PJ Legal
+            — Advocate R., Founder of PJ Legal
           </p>
         </div>
       </div>
