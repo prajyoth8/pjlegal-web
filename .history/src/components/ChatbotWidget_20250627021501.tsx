@@ -69,7 +69,7 @@ export default function ChatWidget() {
   return (
     <>
       {/* Toggle Button */}
-      <div className="fixed bottom-5 right-20 z-50">
+      <div className="fixed bottom-20 right-10 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition duration-300"
@@ -80,7 +80,7 @@ export default function ChatWidget() {
             <img
               src="/assets/ai_avatar.png"
               alt="AI Agent"
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover"
             />
           )}
         </button>
