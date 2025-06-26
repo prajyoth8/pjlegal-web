@@ -8,10 +8,7 @@ export default function AboutSection() {
   const router = useRouter();
 
   return (
-    <section
-      id="about"
-      className="py-20 bg-gradient-to-b from-white to-gray-100 text-black rounded-t-3xl"
-    >
+    <section id="about" className="py-20 bg-gradient-to-b from-white to-gray-100 text-black rounded-t-3xl">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* 👤 Left: Your Image */}
         <motion.div
@@ -21,7 +18,7 @@ export default function AboutSection() {
           className="flex justify-center"
         >
           <Image
-            src="/assets/lawyer_profile_black.png" // ← Replace with your actual uploaded image
+            src="/assets/lawyer_profile_black.jpg" // ← Replace with your actual uploaded image
             alt="Founder of PJ Legal"
             width={400}
             height={500}
@@ -37,18 +34,16 @@ export default function AboutSection() {
         >
           <h2 className="text-4xl font-extrabold mb-4 text-amber-600">About PJ Legal</h2>
           <p className="text-lg leading-relaxed mb-6 text-gray-800">
-            PJ Legal is the brainchild of a passionate professional who transitioned from a
-            successful IT career into the world of law. Founded by an ex-Salesforce Developer and
-            SAP Security Architect with an Executive PG in Artificial Intelligence from IIT Roorkee,
-            the firm is driven by a mission to simplify justice through tech-integrated legal
-            practice.
+            PJ Legal is the brainchild of a passionate professional who transitioned from a successful IT
+            career into the world of law. Founded by an ex-Salesforce Developer and SAP Security Architect
+            with an Executive PG in Artificial Intelligence from IIT Roorkee, the firm is driven by a mission
+            to simplify justice through tech-integrated legal practice.
           </p>
 
           <p className="text-md leading-relaxed text-gray-700">
-            With a background in Engineering (IT), MBA in HR & Information Systems, and now LLB, I
-            bring a unique multidisciplinary approach to legal problem-solving. PJ Legal is a space
-            where tradition meets innovation—offering clear, client-focused, and intelligent legal
-            solutions.
+            With a background in Engineering (IT), MBA in HR & Information Systems, and now LLB, I bring a
+            unique multidisciplinary approach to legal problem-solving. PJ Legal is a space where tradition
+            meets innovation—offering clear, client-focused, and intelligent legal solutions.
           </p>
 
           <button

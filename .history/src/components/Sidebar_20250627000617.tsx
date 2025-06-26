@@ -229,9 +229,9 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
         )}
         style={{ height: "100vh" }} // Force full viewport height
       >
-        <div className="h-full flex flex-col">
+        <di className="h-full flex flex-col">
           {/* Scrollable content area */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto"></div>
           {/* Search Bar */}
           <div className="p-4 border-b border-gray-700">
             <div className="relative">
@@ -320,7 +320,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             </button>
             <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
-          </div>
           
           {/* Footer Items */}
           <div className="p-4 border-t border-gray-700 space-y-2">
@@ -338,7 +337,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               </div>
             ))}
           </div>
-        </div>
+        </di>
       </aside>
     </>
   );

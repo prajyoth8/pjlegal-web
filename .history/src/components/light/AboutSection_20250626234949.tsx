@@ -21,7 +21,7 @@ export default function AboutSection() {
           className="flex justify-center"
         >
           <Image
-            src="/assets/lawyer_profile_black.png" // ← Replace with your actual uploaded image
+            src="/assets/lawyer_profile_black." // ← Replace with your actual uploaded image
             alt="Founder of PJ Legal"
             width={400}
             height={500}

@@ -195,22 +195,22 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   };
 
   const handleItemClick = (href: string) => {
-    if (href === "#" || href === "/") {
-      // Special handling for Home link
-      if (pathname === "/") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        setActiveHash("");
-      } else {
-        router.push("/");
-      }
-      onClose();
-    } else if (href.startsWith("#")) {
-      scrollToId(href);
+  if (href === "#" || href === "/") {
+    // Special handling for Home link
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveHash("");
     } else {
-      router.push(href);
-      onClose();
+      router.push("/");
     }
-  };
+    onClose();
+  } else if (href.startsWith("#")) {
+    scrollToId(href);
+  } else {
+    router.push(href);
+    onClose();
+  }
+};
 
   return (
     <>
@@ -225,13 +225,11 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "fixed top-0 left-0 h-full w-64 bg-[#111827] text-white z-50",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed " // Make it fixed on desktop too
+          "lg:fixed lg:translate-x-0" // Make it fixed on desktop too
         )}
         style={{ height: "100vh" }} // Force full viewport height
       >
         <div className="h-full flex flex-col">
-          {/* Scrollable content area */}
-          <div className="flex-1 overflow-y-auto">
           {/* Search Bar */}
           <div className="p-4 border-b border-gray-700">
             <div className="relative">
@@ -320,8 +318,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             </button>
             <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
-          </div>
-          
+
           {/* Footer Items */}
           <div className="p-4 border-t border-gray-700 space-y-2">
             {footerItems.map((item) => (

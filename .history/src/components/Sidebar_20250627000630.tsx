@@ -320,7 +320,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             </button>
             <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
-          </div>
           
           {/* Footer Items */}
           <div className="p-4 border-t border-gray-700 space-y-2">
