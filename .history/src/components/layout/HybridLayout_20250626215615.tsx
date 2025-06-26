@@ -38,10 +38,10 @@
 //   return (
 //     <div className="min-h-screen flex flex-col bg-white">
 //       <Navbar toggleSidebar={toggleSidebar} />
-
+      
 //       {/* Sidebar */}
 //       <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-
+      
 //       {/* Main Content */}
 //       <div className="flex-1 flex flex-col">
 //         <main className="flex-grow p-6">{children}</main>
@@ -93,6 +93,7 @@
 //   );
 // }
 
+
 "use client";
 
 import { useState } from "react";
@@ -115,16 +116,14 @@ export default function HybridLayout({ children }: { children: React.ReactNode }
     <div className="min-h-screen flex flex-col">
       {/* Navbar - always visible */}
       <Navbar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-
+      
       <div className="flex flex-1 relative">
         {/* Sidebar - hidden by default on all screens */}
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-
+        
         {/* Main Content */}
-        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : ""}`}>
-          <div className="pt-16 min-h-[calc(100vh-4rem)]">
-            {" "}
-            {/* Account for navbar height */}
+        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-64' : ''}`}>
+          <div className="pt-16 min-h-[calc(100vh-4rem)]"> {/* Account for navbar height */}
             {children}
           </div>
           <Footer />

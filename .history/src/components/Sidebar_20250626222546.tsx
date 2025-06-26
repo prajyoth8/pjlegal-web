@@ -294,7 +294,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             >
               Book Consultation
             </button>
-            <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
 
           {/* Footer Items */}

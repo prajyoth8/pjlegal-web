@@ -7,11 +7,11 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { ChevronDown } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
-import { useState } from "react";
 
 export default function WelcomeSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
   const [modalOpen, setModalOpen] = useState(false);
+
 
   return (
     <section className="relative w-full bg-white py-12 px-4 sm:px-6 lg:px-8 flex justify-center overflow-hidden">
@@ -79,15 +79,14 @@ export default function WelcomeSection() {
           className="mt-8 flex flex-wrap justify-center gap-4"
         >
           <button
-            onClick={() => setModalOpen(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-transform hover:scale-105 hover:shadow-blue-300 animate-bounce-once"
-          >
-            Book Consultation
-          </button>
-          <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
+  onClick={() => setModalOpen(true)}
+  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-transform hover:scale-105 hover:shadow-blue-300 animate-bounce-once"
+>
+  Book Consultation
+</button>
 
           <Link
-            href="#contact"
+            href="/contact"
             className="bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 px-6 py-3 rounded-full shadow-md transition-transform hover:scale-105"
           >
             Get in Touch

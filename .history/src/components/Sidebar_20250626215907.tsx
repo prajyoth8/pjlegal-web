@@ -107,7 +107,6 @@ import clsx from "clsx";
 import { useState, useEffect } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import Fuse from "fuse.js";
-import ConsultationModal from "@/components/ConsultationModal";
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const pathname = usePathname();
@@ -116,7 +115,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const menuItems = [
     { name: "Home", href: "#" },
@@ -192,7 +190,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
 
   return (
     <>
-      {/* Overlay - only shown on mobile */}
+      {/* Overlay */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={onClose} />
       )}
@@ -203,9 +201,8 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "fixed top-0 left-0 h-full w-64 bg-[#111827] text-white z-50",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed" // Make it fixed on desktop too
+          "lg:translate-x-0 lg:relative" // Always visible on desktop
         )}
-        style={{ height: "100vh" }} // Force full viewport height
       >
         <div className="h-full flex flex-col">
           {/* Search Bar */}
@@ -290,11 +287,13 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             {/* Book Consultation Button */}
             <button
               className="w-full mt-6 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-md transition"
-              onClick={() => setModalOpen(true)}
+              onClick={() => {
+                router.push("/consultation");
+                onClose();
+              }}
             >
               Book Consultation
             </button>
-            <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
 
           {/* Footer Items */}

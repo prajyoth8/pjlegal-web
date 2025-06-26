@@ -107,7 +107,6 @@ import clsx from "clsx";
 import { useState, useEffect } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import Fuse from "fuse.js";
-import ConsultationModal from "@/components/ConsultationModal";
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const pathname = usePathname();
@@ -116,7 +115,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const menuItems = [
     { name: "Home", href: "#" },
@@ -290,11 +288,10 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             {/* Book Consultation Button */}
             <button
               className="w-full mt-6 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-md transition"
-              onClick={() => setModalOpen(true)}
+              <Button onClick={() => setModalOpen(true)}>
             >
               Book Consultation
             </button>
-            <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
 
           {/* Footer Items */}

@@ -109,6 +109,7 @@ import { ChevronDown, Search } from "lucide-react";
 import Fuse from "fuse.js";
 import ConsultationModal from "@/components/ConsultationModal";
 
+
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -294,7 +295,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
             >
               Book Consultation
             </button>
-            <ConsultationModal open={isModalOpen} onClose={() => setModalOpen(false)} />
           </nav>
 
           {/* Footer Items */}

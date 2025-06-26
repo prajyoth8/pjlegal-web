@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { ChevronDown } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
-import { useState } from "react";
 
 export default function WelcomeSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
@@ -87,7 +86,7 @@ export default function WelcomeSection() {
           <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
 
           <Link
-            href="#contact"
+            href="/contact"
             className="bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 px-6 py-3 rounded-full shadow-md transition-transform hover:scale-105"
           >
             Get in Touch

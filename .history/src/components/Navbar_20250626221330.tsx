@@ -301,7 +301,7 @@ export default function Navbar({
           </Link>
         </div>
 
-        {/* ✅ Mobile Menu Toggle
+        ✅ Mobile Menu Toggle
         
       </div>
 
@@ -463,7 +463,7 @@ export default function Navbar({
             </div>
           </motion.div>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
 
       <AnimatePresence>
         {showSearch && (
@@ -509,9 +509,7 @@ export default function Navbar({
           </motion.div>
         )}
       </AnimatePresence>
-      </div>
     </nav>
-    
   );
 }
 
