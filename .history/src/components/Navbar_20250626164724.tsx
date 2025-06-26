@@ -165,7 +165,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
         {/* Desktop Sidebar Toggle */}
         <div className="hidden lg:flex items-center">
           <button
-            onClick={() => {
+            onClick={onClick={toggleSidebar} className="lg:hidden" => {
               console.log("Sidebar Toggle Clicked");
               toggleSidebar?.();
             }}

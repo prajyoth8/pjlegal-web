@@ -150,30 +150,31 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Mobile Sidebar Toggle */}
-        <div className="lg:hidden flex items-center">
-          <button
-            onClick={() => {
-              console.log("Sidebar Toggle Clicked");
-              toggleSidebar?.();
-            }}
-            className="text-gray-700 hover:text-amber-600 mr-2"
-          >
-            <AlignLeft className="w-6 h-6" />
-          </button>
-        </div>
+<div className="lg:hidden flex items-center">
+  <button
+    onClick={() => {
+      console.log("Sidebar Toggle Clicked");
+      toggleSidebar?.();
+    }}
+    className="text-gray-700 hover:text-amber-600 mr-2"
+  >
+    <AlignLeft className="w-6 h-6" />
+  </button>
+</div>
 
-        {/* Desktop Sidebar Toggle */}
-        <div className="hidden lg:flex items-center">
-          <button
-            onClick={() => {
-              console.log("Sidebar Toggle Clicked");
-              toggleSidebar?.();
-            }}
-            className="text-gray-700 hover:text-amber-600 mr-4"
-          >
-            <AlignLeft className="w-6 h-6" />
-          </button>
-        </div>
+{/* Desktop Sidebar Toggle */}
+<div className="hidden lg:flex items-center">
+  <button
+    onClick={() => {
+      console.log("Sidebar Toggle Clicked");
+      toggleSidebar?.();
+    }}
+    className="text-gray-700 hover:text-amber-600 mr-4"
+  >
+    <AlignLeft className="w-6 h-6" />
+  </button>
+</div>
+
 
         {/* Logo */}
         <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">

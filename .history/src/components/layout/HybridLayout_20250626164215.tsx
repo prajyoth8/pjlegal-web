@@ -45,7 +45,10 @@ export default function HybridLayout({ children }: { children: React.ReactNode }
 
         {/* Backdrop */}
         {sidebarOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-30" onClick={closeSidebar} />
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-30"
+            onClick={closeSidebar}
+          />
         )}
 
         {/* Main */}

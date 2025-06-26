@@ -164,15 +164,14 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
 
         {/* Desktop Sidebar Toggle */}
         <div className="hidden lg:flex items-center">
-          <button
-            onClick={() => {
-              console.log("Sidebar Toggle Clicked");
-              toggleSidebar?.();
-            }}
-            className="text-gray-700 hover:text-amber-600 mr-4"
-          >
-            <AlignLeft className="w-6 h-6" />
-          </button>
+          {/* Sidebar Toggle - Only on Desktop */}
+<button
+  onClick={() => toggleSidebar?.()}
+  className="lg:block hidden text-gray-700 hover:text-amber-600"
+>
+  <AlignLeft className="w-6 h-6" />
+</button>
+
         </div>
 
         {/* Logo */}

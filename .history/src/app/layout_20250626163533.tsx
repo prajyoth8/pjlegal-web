@@ -60,7 +60,6 @@
 // app/layout.tsx or _app.tsx
 
 // app/layout.tsx
-// src/app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -70,14 +69,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "PJ Legal",
-  description:
-    "Independent legal practice by Advocate PJ – Trusted legal assistance in Telangana, India.",
+  description: "Practice Smarter. Defend Stronger.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white text-black`}>
+      <body className={inter.className}>
         <HybridLayout>{children}</HybridLayout>
       </body>
     </html>
