@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
+
 type Suggestion = {
   label: string;
   route: string;
@@ -302,7 +303,9 @@ export default function Navbar({
         </div>
 
         {/* ✅ Mobile Menu Toggle */}
-        
+        <button className="lg:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
 
       <AnimatePresence>
@@ -539,3 +542,4 @@ function highlightMatch(label: string, indices: [number, number][]) {
 
   return <>{result}</>;
 }
+
