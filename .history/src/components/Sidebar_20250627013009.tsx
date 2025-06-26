@@ -118,9 +118,8 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "flex flex-col",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed lg:translate-x-0",
-          // Different height for mobile vs desktop
-          "h-[calc(100vh-4rem)] lg:h-screen" // Mobile accounts for navbar, desktop full height
+          "lg:fixed ",
+          "h-[calc(100vh-4rem)]" // Adjust height to account for navbar
         )}
       >
         {/* Single scrollable container for ALL content */}
