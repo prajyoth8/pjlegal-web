@@ -1,6 +1,6 @@
 // ✅ No "use client" — this is a Server Component
 import AboutContent from "./AboutContent";
-
+import { HybridLayout } from "@/components/layout";
 
 export const metadata = {
   title: "About PJ Legal",
@@ -8,5 +8,6 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  <HybridLayout></HybridLayout>
   return <AboutContent />;
 }

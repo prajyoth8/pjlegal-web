@@ -162,6 +162,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }
         <div
           onClick={() => {
             if (toggleSidebar) toggleSidebar();
+            
           }}
           className="flex items-center gap-2 cursor-pointer"
         >

@@ -6,8 +6,9 @@ export default function Home() {
   return (
     <HybridLayout>
       <Suspense fallback={<div className="text-center p-8 text-gray-500">Loading...</div>}>
-        <HomeWrapper />
-      </Suspense>
+      <HomeWrapper />
+    </Suspense>
     </HybridLayout>
+    
   );
 }
