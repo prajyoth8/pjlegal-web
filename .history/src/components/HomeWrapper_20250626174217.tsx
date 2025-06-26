@@ -101,6 +101,7 @@
 //   );
 // }
 
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -189,7 +190,7 @@ export default function HomeWrapper() {
 
       {!showDisclaimer && (
         <div>
-          {/* REMOVE the Navbar component from here */}
+          <Navbar />
           <WelcomeSection />
           <AboutSection />
           <PracticeSection />

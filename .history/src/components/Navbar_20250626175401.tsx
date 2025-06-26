@@ -9,6 +9,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
+// export default function Navbar({
+//   toggleSidebar,
+//   sidebarOpen,
+// }: {
+//   toggleSidebar: () => void;
+//   sidebarOpen: boolean;
+// })
 
 type Suggestion = {
   label: string;

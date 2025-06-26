@@ -9,20 +9,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
-
 type Suggestion = {
   label: string;
   route: string;
   matchIndices: [number, number][];
 };
 
-export default function Navbar({
-  toggleSidebar,
-  sidebarOpen,
-}: {
-  toggleSidebar?: () => void;
-  sidebarOpen: boolean;
-}) {
+export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
 

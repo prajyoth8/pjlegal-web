@@ -101,6 +101,7 @@
 //   );
 // }
 
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -176,7 +177,7 @@ export default function HomeWrapper() {
     }
   };
 
-  return (
+    return (
     <>
       {showDisclaimer && (
         <DisclaimerModal

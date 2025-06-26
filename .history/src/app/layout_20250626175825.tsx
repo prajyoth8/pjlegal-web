@@ -60,29 +60,30 @@
 // app/layout.tsx or _app.tsx
 
 // app/layout.tsx
-//src/app/layout.tsx
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import HybridLayout from "@/components/layout/HybridLayout";
+// src/app/layout.tsx
+// import "./globals.css";
+// import type { Metadata } from "next";
+// import { Inter } from "next/font/google";
+// import HybridLayout from "@/components/layout/HybridLayout";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "PJ Legal",
-  description:
-    "Independent legal practice by Advocate PJ – Trusted legal assistance in Telangana, India.",
-};
+// export const metadata: Metadata = {
+//   title: "PJ Legal",
+//   description:
+//     "Independent legal practice by Advocate PJ – Trusted legal assistance in Telangana, India.",
+// };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} bg-white text-black`}>
-        <HybridLayout>{children}</HybridLayout>
-      </body>
-    </html>
-  );
-}
+// export default function RootLayout({ children }: { children: React.ReactNode }) {
+//   return (
+//     <html lang="en">
+//       <body className={`${inter.className} bg-white text-black`}>
+//         <HybridLayout>{children}</HybridLayout>
+//       </body>
+//     </html>
+//   );
+// }
+
 
 // import "./globals.css";
 // import type { Metadata } from "next";

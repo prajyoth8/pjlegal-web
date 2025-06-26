@@ -9,20 +9,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Fuse from "fuse.js";
 
-
 type Suggestion = {
   label: string;
   route: string;
   matchIndices: [number, number][];
 };
 
-export default function Navbar({
-  toggleSidebar,
-  sidebarOpen,
-}: {
-  toggleSidebar?: () => void;
-  sidebarOpen: boolean;
-}) {
+export default function Navbar({ toggleSidebar }: { toggleSidebar?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -159,7 +152,7 @@ export default function Navbar({
         {/* Mobile Sidebar Toggle */}
         <div className="lg:hidden flex items-center">
           <button
-            onClick={(e) => {
+            onClick={() => {
               e.stopPropagation(); // Prevent event bubbling
               console.log("Sidebar Toggle Clicked");
               toggleSidebar?.();
@@ -173,8 +166,7 @@ export default function Navbar({
         {/* Desktop Sidebar Toggle */}
         <div className="hidden lg:flex items-center">
           <button
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent event bubbling
+            onClick={() => {
               console.log("Sidebar Toggle Clicked");
               toggleSidebar?.();
             }}
@@ -542,105 +534,3 @@ function highlightMatch(label: string, indices: [number, number][]) {
 
   return <>{result}</>;
 }
-
-// "use client";
-
-// import Link from "next/link";
-// import Image from "next/image";
-// import { AlignLeft, Menu, X } from "lucide-react";
-// import { usePathname } from "next/navigation";
-// import { useState } from "react";
-
-// export default function Navbar({
-//   toggleSidebar,
-//   sidebarOpen,
-// }: {
-//   toggleSidebar: () => void;
-//   sidebarOpen: boolean;
-// }) {
-//   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-//   const pathname = usePathname();
-
-//   const menuItems = [
-//     { name: "Home", href: "/" },
-//     { name: "About", href: "/about" },
-//     { name: "Practice Areas", href: "/practice" },
-//     { name: "Contact", href: "/contact" },
-//   ];
-
-//   return (
-//     <nav className="fixed top-0 w-full bg-white shadow-md z-50">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex items-center justify-between h-16">
-//           {/* Left side - Logo and Sidebar Toggle */}
-//           <div className="flex items-center">
-//             {/* Sidebar Toggle - visible on all screens */}
-//             <button
-//               onClick={toggleSidebar}
-//               className="text-gray-700 hover:text-amber-600 mr-2"
-//               aria-label="Toggle sidebar"
-//             >
-//               <AlignLeft className="w-6 h-6" />
-//             </button>
-
-//             {/* Logo */}
-//             <div className="flex-shrink-0 flex items-center">
-//               <Image src="/assets/pj_logo_icon.png" alt="PJ Legal" width={40} height={40} />
-//               <span className="ml-2 text-xl font-bold">PJ Legal</span>
-//             </div>
-//           </div>
-
-//           {/* Center - Desktop Menu */}
-//           <div className="hidden lg:flex lg:items-center lg:space-x-8 lg:ml-16">
-//             {menuItems.map((item) => (
-//               <Link
-//                 key={item.name}
-//                 href={item.href}
-//                 className={`px-3 py-2 rounded-md text-sm font-medium ${
-//                   pathname === item.href
-//                     ? "bg-amber-100 text-amber-700"
-//                     : "text-gray-700 hover:text-amber-600"
-//                 }`}
-//               >
-//                 {item.name}
-//               </Link>
-//             ))}
-//           </div>
-
-//           {/* Right side - Mobile menu button */}
-//           <div className="lg:hidden flex items-center">
-//             <button
-//               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-//               className="text-gray-700 hover:text-amber-600"
-//               aria-label="Toggle menu"
-//             >
-//               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Mobile Menu Dropdown */}
-//       {mobileMenuOpen && (
-//         <div className="lg:hidden bg-white shadow-lg">
-//           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-//             {menuItems.map((item) => (
-//               <Link
-//                 key={item.name}
-//                 href={item.href}
-//                 className={`block px-3 py-2 rounded-md text-base font-medium ${
-//                   pathname === item.href
-//                     ? "bg-amber-100 text-amber-700"
-//                     : "text-gray-700 hover:text-amber-600"
-//                 }`}
-//                 onClick={() => setMobileMenuOpen(false)}
-//               >
-//                 {item.name}
-//               </Link>
-//             ))}
-//           </div>
-//         </div>
-//       )}
-//     </nav>
-//   );
-// }
