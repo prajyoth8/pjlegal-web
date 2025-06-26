@@ -195,22 +195,13 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   };
 
   const handleItemClick = (href: string) => {
-  if (href === "#" || href === "/") {
-    // Special handling for Home link
-    if (pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setActiveHash("");
+    if (href.startsWith("#")) {
+      scrollToId(href);
     } else {
-      router.push("/");
+      router.push(href);
+      onClose();
     }
-    onClose();
-  } else if (href.startsWith("#")) {
-    scrollToId(href);
-  } else {
-    router.push(href);
-    onClose();
-  }
-};
+  };
 
   return (
     <>

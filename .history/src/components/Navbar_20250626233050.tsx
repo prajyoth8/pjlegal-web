@@ -145,7 +145,6 @@ export default function Navbar({
     }
   };
 
-  // Update the navbar container structure
   return (
     <nav
       className={clsx(
@@ -284,12 +283,18 @@ export default function Navbar({
           >
             Disclaimer
           </Link>
-        </div>
 
-        {/* ✅ Mobile Menu Toggle
-        
+          {/* Search icon - pushed to far right */}
+          <button
+            onClick={() => router.push("/search")}
+            className="text-gray-600 hover:text-amber-600"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -448,53 +453,52 @@ export default function Navbar({
             </div>
           </motion.div>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
 
-        <AnimatePresence>
-          {showSearch && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50"
-            >
-              <div className="bg-white w-full max-w-lg p-4 rounded-lg shadow-xl">
-                <input
-                  type="text"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  placeholder="Search pages, sections..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-100 text-sm"
-                />
-                {suggestions.length > 0 && (
-                  <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
-                    {suggestions.map(({ label, route, matchIndices }) => (
-                      <div
-                        key={route}
-                        className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-sm text-gray-700"
-                        onClick={() => {
-                          setSearchText("");
-                          setShowSearch(false);
-                          setSuggestions([]);
-                          router.push(route);
-                        }}
-                      >
-                        {highlightMatch(label, matchIndices)}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <button
-                  onClick={() => setShowSearch(false)}
-                  className="mt-4 text-sm text-gray-500 hover:text-gray-800"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence>
+        {showSearch && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50"
+          >
+            <div className="bg-white w-full max-w-lg p-4 rounded-lg shadow-xl">
+              <input
+                type="text"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="Search pages, sections..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-100 text-sm"
+              />
+              {suggestions.length > 0 && (
+                <div className="mt-2 bg-white shadow-md rounded-md border border-gray-200">
+                  {suggestions.map(({ label, route, matchIndices }) => (
+                    <div
+                      key={route}
+                      className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-sm text-gray-700"
+                      onClick={() => {
+                        setSearchText("");
+                        setShowSearch(false);
+                        setSuggestions([]);
+                        router.push(route);
+                      }}
+                    >
+                      {highlightMatch(label, matchIndices)}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <button
+                onClick={() => setShowSearch(false)}
+                className="mt-4 text-sm text-gray-500 hover:text-gray-800"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

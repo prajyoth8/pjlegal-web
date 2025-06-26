@@ -174,6 +174,7 @@ export default function Navbar({
           </div>
         </div>
 
+        
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
           {desktopMenuItems.map((item) => {

@@ -174,6 +174,16 @@ export default function Navbar({
           </div>
         </div>
 
+        {/* Search icon - pushed to far right */}
+        <button
+          onClick={() => router.push("/search")}
+          className="hidden lg:block text-gray-600 hover:text-amber-600"
+        >
+          <Search className="w-5 h-5" />
+        </button>
+        {/* </div>
+  </nav>
+); */}
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6">
           {desktopMenuItems.map((item) => {
