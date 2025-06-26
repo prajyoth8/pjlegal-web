@@ -69,12 +69,12 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   }, [searchText]);
 
   useEffect(() => {
-    // Test for mobile devices
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      console.log("Mobile device detected - applying specific styles");
-    }
-  }, []);
+  // Test for mobile devices
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    console.log('Mobile device detected - applying specific styles');
+  }
+}, []);
 
   const scrollToId = (id: string) => {
     if (id.startsWith("#")) id = id.slice(1);
@@ -119,7 +119,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "flex flex-col",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed"
+          "lg:fixed lg:translate-x-0"
         )}
       >
         {/* Main scrollable content area */}

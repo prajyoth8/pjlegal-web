@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import HybridLayout from "@/components/layout/HybridLayout";
 import ConsultationModal from "@/components/ConsultationModal";
-import { useState } from "react";
 
 const faqs = [
   {

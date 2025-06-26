@@ -119,7 +119,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           "flex flex-col",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:fixed"
+          "lg:fixed lg:translate-x-0"
         )}
       >
         {/* Main scrollable content area */}

@@ -4,8 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import HybridLayout from "@/components/layout/HybridLayout";
-import ConsultationModal from "@/components/ConsultationModal";
-import { useState } from "react";
+import { Link } from "lucide-react";
 
 const faqs = [
   {
@@ -28,7 +27,6 @@ const faqs = [
 
 export default function AboutContent() {
   const router = useRouter();
-  const [isModalOpen, setModalOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-amber-50 text-gray-900 px-6 py-12">
@@ -87,14 +85,20 @@ export default function AboutContent() {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-6">
-              <button
-                onClick={() => router.push("#contact")}
+              {/* <button
+                onClick={() => router.push("/contact")}
                 className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-full shadow-lg transition"
               >
                 📞 Contact Me
-              </button>
+              </button> */}
+              <Link
+                href="#contact"
+                className="bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 px-6 py-3 rounded-full shadow-md transition-transform hover:scale-105"
+              >
+                📞 Contact Me
+              </Link>
               <button
-                onClick={() => setModalOpen(true)}
+                onClick={() => router.push("/booking")}
                 className="bg-white border border-amber-600 text-amber-700 px-5 py-2 rounded-full shadow-md hover:bg-amber-100 transition"
               >
                 📅 Book a Consultation
