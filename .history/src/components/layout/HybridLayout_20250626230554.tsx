@@ -105,10 +105,10 @@ export default function HybridLayout({ children }: { children: React.ReactNode }
 
   // Handle body scroll locking on mobile when sidebar is open
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const isMobile = window.innerWidth < 1024; // lg breakpoint
       if (isMobile) {
-        document.body.style.overflow = sidebarOpen ? "hidden" : "";
+        document.body.style.overflow = sidebarOpen ? 'hidden' : '';
       }
     }
   }, [sidebarOpen]);
@@ -124,12 +124,14 @@ export default function HybridLayout({ children }: { children: React.ReactNode }
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-
+      
       <div className="flex flex-1 relative">
         <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-
-        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : ""}`}>
-          <div className="pt-16 min-h-[calc(100vh-4rem)]">{children}</div>
+        
+        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-64' : ''}`}>
+          <div className="pt-16 min-h-[calc(100vh-4rem)]">
+            {children}
+          </div>
           <Footer />
         </main>
       </div>
