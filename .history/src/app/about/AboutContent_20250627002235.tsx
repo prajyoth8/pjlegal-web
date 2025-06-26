@@ -49,7 +49,7 @@ export default function AboutContent() {
             className="flex flex-col items-center"
           >
             <Image
-              src="/assets/lawyer_profile_black.png"
+              src="/assets/lawyer_profile_black.jpg"
               alt="PJ Legal Founder"
               width={240}
               height={240}
