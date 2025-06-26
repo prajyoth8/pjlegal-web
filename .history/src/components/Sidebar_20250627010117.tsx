@@ -45,6 +45,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
   const footerItems = [
     { name: "Disclaimer", href: "/disclaimer" },
     { name: "Terms of Use", href: "/terms" },
+    
   ];
 
   const allItems = [
