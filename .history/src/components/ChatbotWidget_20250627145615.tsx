@@ -6,7 +6,6 @@ import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import ChatAuthModal from "./ChatAuthModal"; // Ensure this path is correct
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +14,6 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -123,15 +120,6 @@ export default function ChatWidget() {
   useEffect(() => {
     handleInitialGreeting();
   }, [isOpen]);
-
-  const onAuthenticated = (sessionId: string, emailOrPhone: string) => {
-    setSessionId(sessionId);
-    setIsAuthenticated(true);
-    setMessages((prev) => [
-      ...prev,
-      { role: "ai", content: `✅ Authenticated successfully. You may now start chatting.` },
-    ]);
-  };
 
   return (
     <>
@@ -258,71 +246,64 @@ export default function ChatWidget() {
               </motion.div>
             )}
             <div ref={messagesEndRef} />
-
-            {/* Auth Modal Inline in Chatbox */}
-            {!isAuthenticated && (
-              <ChatAuthModal onClose={() => {}} onAuthenticated={onAuthenticated} />
-            )}
           </div>
 
           {/* Input Area */}
-          {isAuthenticated && (
-            <div className="border-t border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/50">
-              {showEmoji && (
-                <div className="absolute bottom-24 right-6 z-50">
-                  <Picker
-                    data={data}
-                    onEmojiSelect={(e: any) => {
-                      setInput((prev) => prev + e.native);
-                      inputRef.current?.focus();
-                    }}
-                    onClickOutside={() => setShowEmoji(false)}
-                    theme={document.documentElement.classList.contains("dark") ? "dark" : "light"}
-                    previewPosition="none"
-                  />
-                </div>
-              )}
-              <div className="flex items-end gap-2">
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => setShowEmoji(!showEmoji)}
-                    className="p-2 text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    aria-label="Emoji picker"
-                  >
-                    <span className="text-lg">😊</span>
-                  </button>
-                  <button
-                    onClick={handleVoiceInput}
-                    className={`p-2 rounded-full transition-colors ${isListening ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-900/50" : "text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-200 dark:hover:bg-gray-700"}`}
-                    aria-label={isListening ? "Stop listening" : "Voice input"}
-                  >
-                    <Mic className="w-5 h-5" />
-                  </button>
-                </div>
-                <textarea
-                  ref={inputRef}
-                  className="flex-1 border rounded-xl px-3 py-2 resize-none text-sm bg-white dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
-                  placeholder="Type your legal question..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  rows={Math.min(4, Math.max(1, input.split("\n").length))}
-                  autoFocus
+          <div className="border-t border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/50">
+            {showEmoji && (
+              <div className="absolute bottom-24 right-6 z-50">
+                <Picker
+                  data={data}
+                  onEmojiSelect={(e: any) => {
+                    setInput((prev) => prev + e.native);
+                    inputRef.current?.focus();
+                  }}
+                  onClickOutside={() => setShowEmoji(false)}
+                  theme={document.documentElement.classList.contains("dark") ? "dark" : "light"}
+                  previewPosition="none"
                 />
+              </div>
+            )}
+            <div className="flex items-end gap-2">
+              <div className="flex gap-1">
                 <button
-                  onClick={handleSend}
-                  disabled={!input.trim()}
-                  className={`p-2 rounded-full ${input.trim() ? "text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 bg-amber-100/50 hover:bg-amber-100 dark:bg-amber-900/20 dark:hover:bg-amber-900/30" : "text-gray-400 dark:text-gray-500"}`}
-                  aria-label="Send message"
+                  onClick={() => setShowEmoji(!showEmoji)}
+                  className="p-2 text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  aria-label="Emoji picker"
                 >
-                  <Send className="w-5 h-5" />
+                  <span className="text-lg">😊</span>
+                </button>
+                <button
+                  onClick={handleVoiceInput}
+                  className={`p-2 rounded-full transition-colors ${isListening ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-900/50" : "text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-200 dark:hover:bg-gray-700"}`}
+                  aria-label={isListening ? "Stop listening" : "Voice input"}
+                >
+                  <Mic className="w-5 h-5" />
                 </button>
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 px-1">
-                {isListening ? "Listening... Speak now" : "Press Enter to send"}
-              </div>
+              <textarea
+                ref={inputRef}
+                className="flex-1 border rounded-xl px-3 py-2 resize-none text-sm bg-white dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
+                placeholder="Type your legal question..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={Math.min(4, Math.max(1, input.split("\n").length))}
+                autoFocus
+              />
+              <button
+                onClick={handleSend}
+                disabled={!input.trim()}
+                className={`p-2 rounded-full ${input.trim() ? "text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 bg-amber-100/50 hover:bg-amber-100 dark:bg-amber-900/20 dark:hover:bg-amber-900/30" : "text-gray-400 dark:text-gray-500"}`}
+                aria-label="Send message"
+              >
+                <Send className="w-5 h-5" />
+              </button>
             </div>
-          )}
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 px-1">
+              {isListening ? "Listening... Speak now" : "Press Enter to send"}
+            </div>
+          </div>
         </motion.div>
       )}
     </>

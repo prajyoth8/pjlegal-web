@@ -261,8 +261,12 @@ export default function ChatWidget() {
 
             {/* Auth Modal Inline in Chatbox */}
             {!isAuthenticated && (
-              <ChatAuthModal onClose={() => {}} onAuthenticated={onAuthenticated} />
-            )}
+  <ChatAuthModal
+    onClose={() => {}}
+    onAuthenticated={onAuthenticated}
+  />
+)}
+
           </div>
 
           {/* Input Area */}
