@@ -10,6 +10,7 @@ import ChatAuthModal from "./ChatAuthModal";
 import { sendChatbotPrompt } from "@/lib/api";
 import { v4 as uuidv4 } from "uuid";
 
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -27,46 +28,36 @@ export default function ChatWidget() {
   };
 
   useEffect(() => {
-    const existingSession = sessionStorage.getItem("chatbot_session_id");
-    if (existingSession) {
-      setSessionId(existingSession);
-    } else {
-      const newSessionId = uuidv4();
-      sessionStorage.setItem("chatbot_session_id", newSessionId);
-      setSessionId(newSessionId);
-    }
-  }, []);
-
-  useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
 
   const handleSend = async () => {
-    if (!input.trim() || !sessionId) return;
+  if (!input.trim() || !sessionId) return;
 
-    const userMsg = input.trim();
-    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
-    setInput("");
-    setIsTyping(true);
+  const userMsg = input.trim();
+  setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
+  setInput("");
+  setIsTyping(true);
 
-    try {
-      const data = await sendChatbotPrompt(sessionId, userMsg);
-      const blocks = data.blocks as { type: string; text: string }[];
+  try {
+    const data = await sendChatbotPrompt(sessionId, userMsg);
+    const blocks = data.blocks as { type: string; text: string }[];
 
-      // Flatten blocks into a displayable string for now
-      const displayText = blocks.map((b) => b.text).join("\n\n");
+    // Flatten blocks into a displayable string for now
+    const displayText = blocks.map((b) => b.text).join("\n\n");
 
-      setMessages((prev) => [...prev, { role: "ai", content: displayText }]);
-    } catch (err) {
-      console.error("Chatbot error:", err);
-      setMessages((prev) => [
-        ...prev,
-        { role: "ai", content: "⚠️ Error getting response. Please try again later." },
-      ]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
+    setMessages((prev) => [...prev, { role: "ai", content: displayText }]);
+  } catch (err) {
+    console.error("Chatbot error:", err);
+    setMessages((prev) => [
+      ...prev,
+      { role: "ai", content: "⚠️ Error getting response. Please try again later." },
+    ]);
+  } finally {
+    setIsTyping(false);
+  }
+};
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -406,14 +397,14 @@ export default function ChatWidget() {
                   </button>
                 </div>
                 <textarea
-                  ref={inputRef}
-                  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[16px] focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
-                  placeholder="Type your legal question..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  rows={Math.min(4, Math.max(1, input.split("\n").length))}
-                />
+  ref={inputRef}
+  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[16px] focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
+  placeholder="Type your legal question..."
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  onKeyDown={handleKeyDown}
+  rows={Math.min(4, Math.max(1, input.split("\n").length))}
+/>
 
                 <button
                   onClick={handleSend}
