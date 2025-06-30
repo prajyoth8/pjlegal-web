@@ -391,15 +391,15 @@ export default function ChatWidget() {
                   </button>
                 </div>
                 <textarea
-  ref={inputRef}
-  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[16px] focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
-  placeholder="Type your legal question..."
-  value={input}
-  onChange={(e) => setInput(e.target.value)}
-  onKeyDown={handleKeyDown}
-  rows={Math.min(4, Math.max(1, input.split("\n").length))}
-/>
-
+                  ref={inputRef}
+                  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none text-sm bg-white dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
+                  placeholder="Type your legal question..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  rows={Math.min(4, Math.max(1, input.split("\n").length))}
+                  autoFocus
+                />
                 <button
                   onClick={handleSend}
                   disabled={!input.trim()}

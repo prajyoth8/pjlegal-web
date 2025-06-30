@@ -222,7 +222,7 @@ export default function ChatWidget() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="fixed bottom-20 sm:bottom-24 left-2 right-2 sm:right-6 sm:left-auto mx-auto w-[95vw] sm:w-[400px] max-h-[80vh] z-50 bg-white dark:bg-gray-900 shadow-2xl rounded-xl flex flex-col border border-gray-200 dark:border-gray-700 overflow-hidden"
+          className="fixed bottom-24 right-1 left-1 mx-auto w-[95vw] sm:right-6 sm:left-auto sm:w-[400px] max-h-[70vh] z-50 bg-white dark:bg-gray-900 shadow-2xl rounded-xl flex flex-col border border-gray-200 dark:border-gray-700 overflow-hidden"
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-600 to-amber-500 text-white p-4 flex items-center justify-between">
@@ -391,15 +391,15 @@ export default function ChatWidget() {
                   </button>
                 </div>
                 <textarea
-  ref={inputRef}
-  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[16px] focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
-  placeholder="Type your legal question..."
-  value={input}
-  onChange={(e) => setInput(e.target.value)}
-  onKeyDown={handleKeyDown}
-  rows={Math.min(4, Math.max(1, input.split("\n").length))}
-/>
-
+                  ref={inputRef}
+                  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none text-sm bg-white dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
+                  placeholder="Type your legal question..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  rows={Math.min(4, Math.max(1, input.split("\n").length))}
+                  autoFocus
+                />
                 <button
                   onClick={handleSend}
                   disabled={!input.trim()}
