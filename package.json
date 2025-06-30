@@ -15,6 +15,7 @@
     "@headlessui/react": "^2.2.4",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.50.2",
+    "axios": "^1.10.0",
     "framer-motion": "^12.19.1",
     "fuse.js": "^7.1.0",
     "ics": "^3.8.1",

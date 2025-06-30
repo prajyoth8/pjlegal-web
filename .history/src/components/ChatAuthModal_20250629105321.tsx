@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Lock, Mail, Smartphone } from "lucide-react";
 import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
-import Image from "next/image";
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";
@@ -101,20 +100,11 @@ export default function ChatAuthModal({
 
   return (
     <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
-      {/* Welcome Header - Updated with AI Avatar */}
+      {/* Welcome Header */}
       <div className="text-center mb-6">
         <div className="flex justify-center mb-3">
-          <div className="relative w-16 h-16 rounded-full border-2 border-amber-200 p-1">
-            <Image
-              src="/assets/ai_avatar.png"
-              alt="PJ Legal AI Assistant"
-              width={64}
-              height={64}
-              className="rounded-full"
-            />
-            <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1 rounded-full">
-              <Lock className="w-3 h-3" />
-            </div>
+          <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full inline-flex">
+            <Lock className="w-6 h-6 text-white" />
           </div>
         </div>
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
@@ -135,7 +125,7 @@ export default function ChatAuthModal({
             key={method}
             className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all w-full ${
               authMethod === method
-                ? "bg-white dark:bg-gray-700 shadow-sm text-amber-600 dark:text-amber-400"
+                ? "bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400"
                 : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
             }`}
             onClick={() => {
@@ -165,7 +155,7 @@ export default function ChatAuthModal({
                 <input
                   id="contact-input"
                   type="email"
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-sm dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-sm dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                   placeholder="you@example.com"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
@@ -177,7 +167,7 @@ export default function ChatAuthModal({
             <button
               onClick={sendOtp}
               disabled={loading || !value.trim()}
-              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 rounded-lg transition-all ${
+              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-3 rounded-lg transition-all ${
                 loading || !value.trim() ? "opacity-80" : ""
               }`}
             >
@@ -205,7 +195,7 @@ export default function ChatAuthModal({
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-center text-lg font-mono tracking-widest dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-center text-lg font-mono tracking-widest dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 placeholder="Enter 6-digit code"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
@@ -219,7 +209,7 @@ export default function ChatAuthModal({
               ) : (
                 <button
                   onClick={sendOtp}
-                  className="text-sm text-amber-600 dark:text-amber-400 underline mt-2"
+                  className="text-sm text-blue-600 dark:text-blue-400 underline mt-2"
                 >
                   Resend Code
                 </button>
@@ -267,7 +257,7 @@ export default function ChatAuthModal({
           href="/disclaimer"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline hover:text-amber-600 dark:hover:text-amber-400"
+          className="underline hover:text-blue-600 dark:hover:text-blue-400"
         >
           Terms of Use
         </a>

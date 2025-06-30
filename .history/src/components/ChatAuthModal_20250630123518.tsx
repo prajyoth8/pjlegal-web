@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Lock, Mail, Smartphone } from "lucide-react";
 import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
-import Image from "next/image";
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";
@@ -100,6 +99,7 @@ export default function ChatAuthModal({
   };
 
   return (
+    return (
     <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
       {/* Welcome Header - Updated with AI Avatar */}
       <div className="text-center mb-6">

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Lock, Mail, Smartphone } from "lucide-react";
 import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
-import Image from "next/image";
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";

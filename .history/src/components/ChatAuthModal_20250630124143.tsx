@@ -106,7 +106,7 @@ export default function ChatAuthModal({
         <div className="flex justify-center mb-3">
           <div className="relative w-16 h-16 rounded-full border-2 border-amber-200 p-1">
             <Image
-              src="/assets/ai_avatar.png"
+              src="assets/ai_avatar.png"
               alt="PJ Legal AI Assistant"
               width={64}
               height={64}

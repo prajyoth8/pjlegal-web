@@ -61,58 +61,56 @@ export default function ChatWidget() {
   };
 
   const handleSpeak = (text: string) => {
-    if (speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-      return;
-    }
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+    return;
+  }
 
-    // Utility: Convert abbreviations like "AI" to "A I"
-    const formatAbbreviations = (str: string) =>
-      str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
+  // Preprocess: remove emojis/icons and expand abbreviations (e.g., "AI" → "A I")
+  const cleanedText = text
+    .replace(/[\u{1F600}-\u{1F6FF}]/gu, '')
+    .replace(/\b([A-Z]{2,})\b/g, (match) => match.split('').join(' '));
 
-    // Apply basic emotion tone based on content
-    let rate = 0.95;
-    let pitch = 1.0;
+  const utterance = new SpeechSynthesisUtterance(cleanedText);
 
-    const lowered = text.toLowerCase();
+  // Default voice properties
+  let pitch = 1;
+  let rate = 0.95;
 
-    if (text.trim().endsWith("?")) {
-      pitch = 1.3; // inquisitive tone
-      rate = 1.05;
-    } else if (
-      lowered.includes("thank") ||
-      lowered.includes("great") ||
-      lowered.includes("welcome")
-    ) {
-      pitch = 1.2; // happy
-      rate = 1.05;
-    } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
-      pitch = 0.9; // serious
-      rate = 0.9;
-    } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
-      pitch = 0.85; // sad/apologetic
-      rate = 0.9;
-    }
+  // Emotion-based tone adjustment
+  if (text.trim().endsWith('?')) {
+    // It's a question
+    pitch = 1.4;
+    rate = 1.1;
+  } else if (text.includes('⚠️') || text.toLowerCase().includes("error") || text.toLowerCase().includes("warning")) {
+    // Warning or error message
+    pitch = 0.9;
+    rate = 0.85;
+  } else if (text.includes('✅') || /(!|\bcongratulations\b|\bthank you\b|\bawesome\b)/i.test(text)) {
+    // Happy or enthusiastic tone
+    pitch = 1.3;
+    rate = 1.05;
+  }
 
-    // Clean up icons or symbols (optional)
-    const cleanText = formatAbbreviations(
-      text.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "") // remove arrows/emojis
-    );
+  // Assign properties
+  utterance.pitch = pitch;
+  utterance.rate = rate;
+  utterance.lang = "en-IN";
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "en-IN";
-    utterance.pitch = pitch;
-    utterance.rate = rate;
+  // Select a human-like voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(
+    (v) =>
+      v.name.toLowerCase().includes("neural") ||
+      v.name.toLowerCase().includes("google") ||
+      v.lang === "en-IN"
+  );
+  if (preferred) utterance.voice = preferred;
 
-    // Optional: Pick a more natural voice
-    const voices = speechSynthesis.getVoices();
-    const humanVoice = voices.find(
-      (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
-    );
-    if (humanVoice) utterance.voice = humanVoice;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utterance);
+};
 
-    speechSynthesis.speak(utterance);
-  };
 
   const handleVoiceInput = () => {
     if (isListening) {

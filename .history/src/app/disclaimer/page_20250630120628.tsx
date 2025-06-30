@@ -150,23 +150,7 @@ export default function DisclaimerPage() {
         </div>
 
         {/* Signature Note */}
-
-        <div className="mt-16 text-center">
-          <div className="inline-block p-6 bg-white/90 dark:bg-gray-800 rounded-xl shadow-lg border border-amber-100 dark:border-gray-700">
-            <p className="italic text-lg text-amber-800 dark:text-amber-300">
-              "Law must not only speak, it must resonate with reason and reach every citizen with
-              clarity and care."
-            </p>
-            <div className="mt-4 flex items-center justify-center gap-3">
-              <div className="h-px flex-1 bg-amber-200 dark:bg-amber-800"></div>
-              <p className="font-semibold text-sm text-gray-600 dark:text-gray-300">
-                — Advocate R.Prajyoth Kumar
-              </p>
-              <div className="h-px flex-1 bg-amber-200 dark:bg-amber-800"></div>
-            </div>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Founder of PJ Legal</p>
-          </div>
-        </div>
+        <div className="mt-10 text-center pb-6">{/* ... your signature content ... */}</div>
       </div>
     </section>
   );

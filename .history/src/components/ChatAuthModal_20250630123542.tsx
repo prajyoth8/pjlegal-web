@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Lock, Mail, Smartphone } from "lucide-react";
 import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
-import Image from "next/image";
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";
@@ -106,7 +105,7 @@ export default function ChatAuthModal({
         <div className="flex justify-center mb-3">
           <div className="relative w-16 h-16 rounded-full border-2 border-amber-200 p-1">
             <Image
-              src="/assets/ai_avatar.png"
+              src="public/assets/ai_avatar.png"
               alt="PJ Legal AI Assistant"
               width={64}
               height={64}

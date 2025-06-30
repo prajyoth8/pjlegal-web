@@ -150,7 +150,7 @@ export default function DisclaimerPage() {
         </div>
 
         {/* Signature Note */}
-
+        <div className="mt-10 text-center pb-6">{/* ... your signature content ... */}</div>
         <div className="mt-16 text-center">
           <div className="inline-block p-6 bg-white/90 dark:bg-gray-800 rounded-xl shadow-lg border border-amber-100 dark:border-gray-700">
             <p className="italic text-lg text-amber-800 dark:text-amber-300">

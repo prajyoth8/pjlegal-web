@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Lock, Mail, Smartphone } from "lucide-react";
 import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
-import Image from "next/image";
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";
@@ -101,20 +100,11 @@ export default function ChatAuthModal({
 
   return (
     <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
-      {/* Welcome Header - Updated with AI Avatar */}
+      {/* Welcome Header */}
       <div className="text-center mb-6">
         <div className="flex justify-center mb-3">
-          <div className="relative w-16 h-16 rounded-full border-2 border-amber-200 p-1">
-            <Image
-              src="/assets/ai_avatar.png"
-              alt="PJ Legal AI Assistant"
-              width={64}
-              height={64}
-              className="rounded-full"
-            />
-            <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1 rounded-full">
-              <Lock className="w-3 h-3" />
-            </div>
+          <div className="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full inline-flex">
+            <Lock className="w-6 h-6 text-white" />
           </div>
         </div>
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">

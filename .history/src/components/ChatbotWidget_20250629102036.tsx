@@ -1,0 +1,375 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Mic, Send, Volume2, X, MessageSquare, Bot } from "lucide-react";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import ChatAuthModal from "./ChatAuthModal";
+
+export default function ChatWidget() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<{ role: "user" | "ai"; content: string }[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isOpen]);
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+    const userMsg = input.trim();
+    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
+    setInput("");
+    setIsTyping(true);
+
+    try {
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMsg }),
+      });
+      const data = await res.json();
+      setMessages((prev) => [...prev, { role: "ai", content: data.reply }]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { role: "ai", content: "⚠️ Error getting response. Please try again later." },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const handleSpeak = (text: string) => {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-IN";
+    utterance.rate = 0.9;
+    speechSynthesis.speak(utterance);
+  };
+
+  const handleVoiceInput = () => {
+    if (isListening) {
+      (window as any).webkitSpeechRecognition?.stop();
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      setInput("Listening...");
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event.error);
+      setInput("");
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
+
+  const handleInitialGreeting = () => {
+    if (messages.length === 0 && isOpen) {
+      setMessages([
+        {
+          role: "ai",
+          content:
+            "Hello! I'm PJ Legal AI Assistant. How can I help you with your legal questions today?",
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    handleInitialGreeting();
+  }, [isOpen]);
+
+  useEffect(() => {
+  if (isOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isOpen]);
+
+
+  const onAuthenticated = (sessionId: string, emailOrPhone: string) => {
+    setSessionId(sessionId);
+    setIsAuthenticated(true);
+    setMessages((prev) => [
+      ...prev,
+      { role: "ai", content: `✅ Authenticated successfully. You may now start chatting.` },
+    ]);
+  };
+
+  return (
+    <>
+      {/* Floating Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsOpen(!isOpen)}
+          className={`relative p-4 rounded-full shadow-xl transition-all duration-300 ${
+            isOpen ? "bg-gradient-to-br from-blue-600 to-blue-500" : "bg-gradient-to-br from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500"
+          } flex items-center justify-center shadow-lg`}
+          aria-label="Chat with AI Assistant"
+        >
+          {isOpen ? (
+            <X className="w-6 h-6 text-white" />
+          ) : (
+            <>
+              <MessageSquare className="w-6 h-6 text-white" />
+              {messages.length > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >
+                  {messages.length}
+                </motion.span>
+              )}
+            </>
+          )}
+        </motion.button>
+      </div>
+
+      {/* Chat Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed bottom-24 right-6 w-[400px] max-h-[70vh] z-50 bg-white dark:bg-gray-900 shadow-2xl rounded-xl flex flex-col border border-gray-200 dark:border-gray-700 overflow-hidden"
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white/10 rounded-full">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold">PJ Legal AI Assistant</h3>
+                  <p className="text-xs text-blue-100 opacity-80">
+                    {isAuthenticated ? "Online" : "Authentication required"}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white/80 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Chat History */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
+              {messages.map((msg, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={`flex items-end gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {msg.role === "ai" && (
+                    <div className="flex-shrink-0">
+                      <div className="p-1.5 bg-blue-100 dark:bg-blue-900/50 rounded-full">
+                        <Bot className="w-4 h-4 text-blue-600 dark:text-blue-300" />
+                      </div>
+                    </div>
+                  )}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className={`rounded-xl px-4 py-3 max-w-[80%] text-sm relative ${
+                      msg.role === "user"
+                        ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-none"
+                        : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-bl-none"
+                    }`}
+                  >
+                    <div className="whitespace-pre-wrap">{msg.content}</div>
+                    {msg.role === "ai" && (
+                      <button
+                        onClick={() => handleSpeak(msg.content)}
+                        className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                        aria-label="Read aloud"
+                      >
+                        <Volume2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                      </button>
+                    )}
+                  </motion.div>
+                </motion.div>
+              ))}
+
+              {/* Typing Indicator */}
+              {isTyping && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className="flex-shrink-0">
+                    <div className="p-1.5 bg-blue-100 dark:bg-blue-900/50 rounded-full">
+                      <Bot className="w-4 h-4 text-blue-600 dark:text-blue-300" />
+                    </div>
+                  </div>
+                  <div className="bg-gray-100 dark:bg-gray-800 rounded-xl rounded-bl-none px-4 py-3">
+                    <div className="flex gap-1.5">
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0ms" }}
+                      />
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                      />
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              <div ref={messagesEndRef} />
+
+              {/* Auth Modal Inline in Chatbox */}
+              {!isAuthenticated && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <ChatAuthModal onClose={() => {}} onAuthenticated={onAuthenticated} />
+                </motion.div>
+              )}
+            </div>
+
+            {/* Input Area */}
+            {isAuthenticated && (
+              <div className="border-t border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/50">
+                {showEmoji && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-24 right-6 z-50"
+                  >
+                    <Picker
+                      data={data}
+                      onEmojiSelect={(e: any) => {
+                        setInput((prev) => prev + e.native);
+                        inputRef.current?.focus();
+                      }}
+                      onClickOutside={() => setShowEmoji(false)}
+                      theme={document.documentElement.classList.contains("dark") ? "dark" : "light"}
+                      previewPosition="none"
+                    />
+                  </motion.div>
+                )}
+                <div className="flex items-end gap-2">
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => setShowEmoji(!showEmoji)}
+                      className="p-2 text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      aria-label="Emoji picker"
+                    >
+                      <span className="text-lg">😊</span>
+                    </button>
+                    <button
+                      onClick={handleVoiceInput}
+                      className={`p-2 rounded-full transition-colors ${
+                        isListening
+                          ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-900/50"
+                          : "text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`}
+                      aria-label={isListening ? "Stop listening" : "Voice input"}
+                    >
+                      <Mic className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <textarea
+                    ref={inputRef}
+                    className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 resize-none text-sm bg-white dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                    placeholder="Type your legal question..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    rows={Math.min(4, Math.max(1, input.split("\n").length))}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleSend}
+                    disabled={!input.trim()}
+                    className={`p-2 rounded-full ${
+                      input.trim()
+                        ? "text-white bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
+                        : "text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700"
+                    } transition-all`}
+                    aria-label="Send message"
+                  >
+                    <Send className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 px-1">
+                  {isListening ? (
+                    <span className="text-red-500 dark:text-red-400">Listening... Speak now</span>
+                  ) : (
+                    "Press Enter to send, Shift+Enter for new line"
+                  )}
+                </div>
+                
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}

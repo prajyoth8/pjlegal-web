@@ -28,30 +28,35 @@ export default function ChatWidget() {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMsg = input.trim();
-    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
-    setInput("");
-    setIsTyping(true);
+  const handleSpeak = (text: string) => {
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+    return;
+  }
 
-    try {
-      const res = await fetch("/api/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMsg }),
-      });
-      const data = await res.json();
-      setMessages((prev) => [...prev, { role: "ai", content: data.reply }]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { role: "ai", content: "⚠️ Error getting response. Please try again later." },
-      ]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
+  // Clean and preprocess abbreviations
+  const processedText = text
+    // Handle common emojis/icons
+    .replace(/[\u{1F600}-\u{1F6FF}]/gu, '')
+    // Replace ALL CAPS abbreviations (2+ letters) with spaced-out letters (e.g., "AI" → "A I")
+    .replace(/\b([A-Z]{2,})\b/g, (match) => match.split('').join(' '));
+
+  const utterance = new SpeechSynthesisUtterance(processedText);
+  utterance.lang = "en-IN";
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+
+  // Use better available voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferredVoice = voices.find(
+    (v) => v.name.toLowerCase().includes("neural") || v.name.toLowerCase().includes("google") || v.lang === "en-IN"
+  );
+  if (preferredVoice) utterance.voice = preferredVoice;
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utterance);
+};
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -61,56 +66,27 @@ export default function ChatWidget() {
   };
 
   const handleSpeak = (text: string) => {
-    if (speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-      return;
-    }
+    // Strip emoji/icons/special chars
+    const plainText = text
+      .replace(/[\u{1F600}-\u{1F6FF}]/gu, "")
+      .replace(/[^a-zA-Z0-9.,?!\s]/g, "");
 
-    // Utility: Convert abbreviations like "AI" to "A I"
-    const formatAbbreviations = (str: string) =>
-      str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
-
-    // Apply basic emotion tone based on content
-    let rate = 0.95;
-    let pitch = 1.0;
-
-    const lowered = text.toLowerCase();
-
-    if (text.trim().endsWith("?")) {
-      pitch = 1.3; // inquisitive tone
-      rate = 1.05;
-    } else if (
-      lowered.includes("thank") ||
-      lowered.includes("great") ||
-      lowered.includes("welcome")
-    ) {
-      pitch = 1.2; // happy
-      rate = 1.05;
-    } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
-      pitch = 0.9; // serious
-      rate = 0.9;
-    } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
-      pitch = 0.85; // sad/apologetic
-      rate = 0.9;
-    }
-
-    // Clean up icons or symbols (optional)
-    const cleanText = formatAbbreviations(
-      text.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "") // remove arrows/emojis
-    );
-
-    const utterance = new SpeechSynthesisUtterance(cleanText);
+    const utterance = new SpeechSynthesisUtterance(plainText);
     utterance.lang = "en-IN";
-    utterance.pitch = pitch;
-    utterance.rate = rate;
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
 
-    // Optional: Pick a more natural voice
-    const voices = speechSynthesis.getVoices();
-    const humanVoice = voices.find(
-      (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
+    // Try selecting a better, more natural voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(
+      (v) =>
+        v.name.toLowerCase().includes("neural") ||
+        v.name.toLowerCase().includes("google") ||
+        v.lang === "en-IN"
     );
-    if (humanVoice) utterance.voice = humanVoice;
+    if (preferredVoice) utterance.voice = preferredVoice;
 
+    speechSynthesis.cancel(); // Cancel any ongoing speech
     speechSynthesis.speak(utterance);
   };
 
@@ -157,7 +133,7 @@ export default function ChatWidget() {
         {
           role: "ai",
           content:
-            "Hello! I am PJ Legal AI Assistant. How can I help you with your legal questions today?",
+            "Hello! I' am PJ Legal AI Assistant. How can I help you with your legal questions today?",
         },
       ]);
     }

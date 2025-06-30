@@ -65,52 +65,9 @@ export default function ChatWidget() {
       speechSynthesis.cancel();
       return;
     }
-
-    // Utility: Convert abbreviations like "AI" to "A I"
-    const formatAbbreviations = (str: string) =>
-      str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
-
-    // Apply basic emotion tone based on content
-    let rate = 0.95;
-    let pitch = 1.0;
-
-    const lowered = text.toLowerCase();
-
-    if (text.trim().endsWith("?")) {
-      pitch = 1.3; // inquisitive tone
-      rate = 1.05;
-    } else if (
-      lowered.includes("thank") ||
-      lowered.includes("great") ||
-      lowered.includes("welcome")
-    ) {
-      pitch = 1.2; // happy
-      rate = 1.05;
-    } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
-      pitch = 0.9; // serious
-      rate = 0.9;
-    } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
-      pitch = 0.85; // sad/apologetic
-      rate = 0.9;
-    }
-
-    // Clean up icons or symbols (optional)
-    const cleanText = formatAbbreviations(
-      text.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "") // remove arrows/emojis
-    );
-
-    const utterance = new SpeechSynthesisUtterance(cleanText);
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-IN";
-    utterance.pitch = pitch;
-    utterance.rate = rate;
-
-    // Optional: Pick a more natural voice
-    const voices = speechSynthesis.getVoices();
-    const humanVoice = voices.find(
-      (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
-    );
-    if (humanVoice) utterance.voice = humanVoice;
-
+    utterance.rate = 0.9;
     speechSynthesis.speak(utterance);
   };
 
@@ -157,7 +114,7 @@ export default function ChatWidget() {
         {
           role: "ai",
           content:
-            "Hello! I am PJ Legal AI Assistant. How can I help you with your legal questions today?",
+            "Hello! I'm PJ Legal AI Assistant. How can I help you with your legal questions today?",
         },
       ]);
     }
@@ -238,9 +195,7 @@ export default function ChatWidget() {
               </div>
               <div>
                 <h3 className="font-bold">PJ Legal AI Assistant</h3>
-                <p
-                  className={`text-xs font-bold ${isAuthenticated ? "text-green-900" : "text-rose-900"} opacity-80`}
-                >
+                <p className={`text-xs font-bold ${isAuthenticated ? 'text-green-900' : 'text-rose-900'} opacity-80`}>
                   {isAuthenticated ? "Online..." : "Authentication required!"}
                 </p>
               </div>
@@ -256,26 +211,26 @@ export default function ChatWidget() {
           {/* Chat History */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
             {messages.map((msg, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className={`flex items-end gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                {msg.role === "ai" && (
-                  <div className="flex-shrink-0">
-                    <div className="relative w-8 h-8 rounded-full border border-amber-200 overflow-hidden">
-                      <Image
-                        src="/assets/ai_avatar.png"
-                        alt="AI Assistant"
-                        width={32}
-                        height={32}
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
+  <motion.div
+    key={idx}
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.2 }}
+    className={`flex items-end gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+  >
+    {msg.role === "ai" && (
+      <div className="flex-shrink-0">
+        <div className="relative w-8 h-8 rounded-full border border-amber-200 overflow-hidden">
+          <Image
+            src="/assets/ai_avatar.png"
+            alt="AI Assistant"
+            width={32}
+            height={32}
+            className="object-cover"
+          />
+        </div>
+      </div>
+    )}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   className={`rounded-xl px-4 py-3 max-w-[80%] text-sm relative ${
@@ -306,14 +261,8 @@ export default function ChatWidget() {
                 className="flex items-center gap-3"
               >
                 <div className="flex-shrink-0">
-                  <div className="relative w-8 h-8 rounded-full border border-amber-200 overflow-hidden">
-                    <Image
-                      src="/assets/ai_avatar.png"
-                      alt="AI Assistant"
-                      width={32}
-                      height={32}
-                      className="object-cover"
-                    />
+                  <div className="p-1.5 bg-amber-100 dark:bg-amber-900/50 rounded-full">
+                    <Bot className="w-4 h-4 text-amber-600 dark:text-amber-300" />
                   </div>
                 </div>
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-xl rounded-bl-none px-4 py-3">
