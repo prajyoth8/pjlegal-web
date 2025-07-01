@@ -383,7 +383,11 @@ export default function ChatWidget() {
                           typeof msg.content === "string"
                             ? msg.content
                             : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
+                                .map((block) => {
+                                  if ("text" in block) return block.text;
+                                  if ("caption" in block) return block.caption ?? "";
+                                  return "";
+                                })
                                 .join(" ");
                         handleSpeak(speakText);
                       }}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -42,12 +43,18 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-black to-gray-900 px-4">
-      <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl shadow-2xl p-10 w-full max-w-md text-white space-y-6">
-        <h1 className="text-3xl font-bold text-center text-blue-300">🔐 PJ Legal Admin Login</h1>
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] flex items-center justify-center px-4 py-10">
+      <div className="w-full max-w-md backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl px-8 py-10 text-white space-y-6">
+        <div className="flex justify-center mb-4">
+          <img src="/pj_logo_white.png" alt="PJ Legal Logo" className="h-14 drop-shadow-lg" />
+        </div>
+
+        <h1 className="text-3xl font-bold text-center text-blue-200 tracking-wide">
+          🔐 Admin Login
+        </h1>
 
         {errorMsg && (
-          <div className="bg-red-600/60 text-white p-2 rounded text-sm text-center shadow">
+          <div className="bg-red-600/70 text-white p-3 rounded text-center shadow-md text-sm">
             {errorMsg}
           </div>
         )}
@@ -56,7 +63,7 @@ export default function AdminLogin() {
           <input
             type="email"
             placeholder="Admin Email"
-            className="w-full p-3 rounded bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -64,7 +71,7 @@ export default function AdminLogin() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 rounded bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -72,7 +79,7 @@ export default function AdminLogin() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold shadow transition"
+            className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-700 hover:to-blue-700 rounded-lg font-semibold shadow-md transition"
           >
             Login
           </button>

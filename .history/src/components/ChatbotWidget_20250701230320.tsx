@@ -9,7 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ChatAuthModal from "./ChatAuthModal";
 import { sendChatbotPrompt } from "@/lib/api";
 import { v4 as uuidv4 } from "uuid";
-import { FormattedBlock, RenderFormattedBlocks } from "./RenderFormattedBlocks";
+import RenderFormattedBlocks, { FormattedBlock } from "./RenderFormattedBlocks";
+
 
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
@@ -53,12 +54,7 @@ const ContactButtons = () => (
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
-  type ChatMessage =
-    | { role: "user"; content: string }
-    | { role: "ai"; content: string | FormattedBlock[] };
-
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-
+  const [messages, setMessages] = useState<{ role: "user" | "ai"; content: string }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -94,24 +90,18 @@ export default function ChatWidget() {
     setInput("");
     setIsTyping(true);
 
+    let displayText = ""; // 🟡 Define outside
+
     try {
       const data = await sendChatbotPrompt(sessionId, userMsg);
-      const blocks = data.blocks as FormattedBlock[];
+      const blocks = data.blocks as { type: string; text: string }[];
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "ai",
-          content: blocks as FormattedBlock[],
-        },
-      ]);
+      // Flatten blocks into a displayable string
+      displayText = blocks.map((b) => b.text).join("\n\n");
 
-      // Optional: Add contact buttons if needed
-      const displayText = blocks
-        .filter((b) => "text" in b && typeof b.text === "string")
-        .map((b) => (b as any).text)
-        .join(" ");
+      setMessages((prev) => [...prev, { role: "ai", content: displayText }]);
 
+      // 🟢 Add contact buttons if needed
       if (shouldShowContactButtons(userMsg) || shouldShowContactButtons(displayText)) {
         setMessages((prev) => [
           ...prev,
@@ -368,25 +358,10 @@ export default function ChatWidget() {
                       : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-bl-none"
                   }`}
                 >
-                  {Array.isArray(msg.content) ? (
-                    <RenderFormattedBlocks blocks={msg.content as FormattedBlock[]} />
-                  ) : typeof msg.content === "string" ? (
-                    <div className="whitespace-pre-wrap">{msg.content}</div>
-                  ) : (
-                    msg.content
-                  )}
-
+                  <div className="whitespace-pre-wrap">{msg.content}</div>
                   {msg.role === "ai" && (
                     <button
-                      onClick={() => {
-                        const speakText =
-                          typeof msg.content === "string"
-                            ? msg.content
-                            : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
-                                .join(" ");
-                        handleSpeak(speakText);
-                      }}
+                      onClick={() => handleSpeak(msg.content)}
                       className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
                       aria-label="Read aloud"
                     >

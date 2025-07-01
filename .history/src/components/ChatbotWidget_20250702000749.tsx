@@ -379,14 +379,13 @@ export default function ChatWidget() {
                   {msg.role === "ai" && (
                     <button
                       onClick={() => {
-                        const speakText =
-                          typeof msg.content === "string"
-                            ? msg.content
-                            : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
-                                .join(" ");
-                        handleSpeak(speakText);
-                      }}
+  const speakText =
+    typeof msg.content === "string"
+      ? msg.content
+      : msg.content.map((block) => ("text" in block ? block.text : "")).join(" ");
+  handleSpeak(speakText);
+}}
+
                       className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
                       aria-label="Read aloud"
                     >

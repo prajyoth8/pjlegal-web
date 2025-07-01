@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ChatAuthModal from "./ChatAuthModal";
 import { sendChatbotPrompt } from "@/lib/api";
 import { v4 as uuidv4 } from "uuid";
-import { FormattedBlock, RenderFormattedBlocks } from "./RenderFormattedBlocks";
+import { FormattedBlock } from "./RenderFormattedBlocks";
 
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
@@ -383,7 +383,11 @@ export default function ChatWidget() {
                           typeof msg.content === "string"
                             ? msg.content
                             : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
+                                .map((block) => {
+                                  if ("text" in block) return block.text;
+                                  if ("caption" in block) return block.caption ?? "";
+                                  return "";
+                                })
                                 .join(" ");
                         handleSpeak(speakText);
                       }}

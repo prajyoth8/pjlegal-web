@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ChatAuthModal from "./ChatAuthModal";
 import { sendChatbotPrompt } from "@/lib/api";
 import { v4 as uuidv4 } from "uuid";
-import { FormattedBlock, RenderFormattedBlocks } from "./RenderFormattedBlocks";
+import RenderFormattedBlocks, { FormattedBlock } from "./RenderFormattedBlocks";
 
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
@@ -98,13 +98,7 @@ export default function ChatWidget() {
       const data = await sendChatbotPrompt(sessionId, userMsg);
       const blocks = data.blocks as FormattedBlock[];
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "ai",
-          content: blocks as FormattedBlock[],
-        },
-      ]);
+      setMessages((prev) => [...prev, { role: "ai", content: blocks }]);
 
       // Optional: Add contact buttons if needed
       const displayText = blocks
@@ -378,15 +372,7 @@ export default function ChatWidget() {
 
                   {msg.role === "ai" && (
                     <button
-                      onClick={() => {
-                        const speakText =
-                          typeof msg.content === "string"
-                            ? msg.content
-                            : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
-                                .join(" ");
-                        handleSpeak(speakText);
-                      }}
+                      onClick={() => handleSpeak(msg.content)}
                       className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
                       aria-label="Read aloud"
                     >
