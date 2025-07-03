@@ -1,20 +1,8 @@
 import React from "react";
 
-type ParagraphBlock = {
-  type:
-    | "paragraph"
-    | "heading_1"
-    | "heading_2"
-    | "heading_3"
-    | "heading_4"
-    | "subheading"
-    | "quote"
-    | "bulleted_list"
-    | "numbered_list";
-  text: string;
-};
+type ParagraphBlock = { type: "paragraph" | "heading_1" | "heading_2" | "heading_3" | "heading_4" | "subheading" | "quote" | "bulleted_list" | "numbered_list"; text: string };
 type ButtonBlock = { type: "button"; label: string; action: string };
-export type FormattedBlock = ParagraphBlock | ButtonBlock;
+type FormattedBlock = ParagraphBlock | ButtonBlock;
 
 export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ blocks }) => {
   const rendered: JSX.Element[] = [];
@@ -25,21 +13,17 @@ export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ 
 
     const listType = tempList[0].type;
     const items = tempList.map((item, idx) => (
-      <li key={idx} dangerouslySetInnerHTML={{ __html: item.text }} className="text-gray-700" />
+      <li
+        key={idx}
+        dangerouslySetInnerHTML={{ __html: item.text }}
+        className="text-gray-700"
+      />
     ));
 
     if (listType === "bulleted_list") {
-      rendered.push(
-        <ul key={Math.random()} className="list-disc pl-5">
-          {items}
-        </ul>
-      );
+      rendered.push(<ul key={Math.random()} className="list-disc pl-5">{items}</ul>);
     } else {
-      rendered.push(
-        <ol key={Math.random()} className="list-decimal pl-5">
-          {items}
-        </ol>
-      );
+      rendered.push(<ol key={Math.random()} className="list-decimal pl-5">{items}</ol>);
     }
 
     tempList = [];
@@ -57,57 +41,33 @@ export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ 
       switch (block.type) {
         case "heading_1":
           rendered.push(
-            <h1
-              key={index}
-              className="text-2xl font-bold text-gray-900"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <h1 key={index} className="text-2xl font-bold text-gray-900" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
         case "heading_2":
           rendered.push(
-            <h2
-              key={index}
-              className="text-xl font-bold text-gray-800"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <h2 key={index} className="text-xl font-bold text-gray-800" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
         case "heading_3":
           rendered.push(
-            <h3
-              key={index}
-              className="text-lg font-semibold text-gray-700"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <h3 key={index} className="text-lg font-semibold text-gray-700" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
         case "heading_4":
         case "subheading":
           rendered.push(
-            <h4
-              key={index}
-              className="text-md font-medium text-blue-600"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <h4 key={index} className="text-md font-medium text-blue-600" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
         case "paragraph":
           rendered.push(
-            <p
-              key={index}
-              className="text-base text-gray-700"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <p key={index} className="text-base text-gray-700" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
         case "quote":
           rendered.push(
-            <blockquote
-              key={index}
-              className="border-l-4 border-gray-300 pl-4 italic text-gray-600"
-              dangerouslySetInnerHTML={{ __html: block.text }}
-            />
+            <blockquote key={index} className="border-l-4 border-gray-300 pl-4 italic text-gray-600" dangerouslySetInnerHTML={{ __html: block.text }} />
           );
           break;
       }

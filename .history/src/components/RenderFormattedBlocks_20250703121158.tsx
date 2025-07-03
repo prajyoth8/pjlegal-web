@@ -14,7 +14,7 @@ type ParagraphBlock = {
   text: string;
 };
 type ButtonBlock = { type: "button"; label: string; action: string };
-export type FormattedBlock = ParagraphBlock | ButtonBlock;
+type FormattedBlock = ParagraphBlock | ButtonBlock;
 
 export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ blocks }) => {
   const rendered: JSX.Element[] = [];

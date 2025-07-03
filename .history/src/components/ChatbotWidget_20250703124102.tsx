@@ -238,28 +238,29 @@ export default function ChatWidget() {
   };
 
   const handleInitialGreeting = () => {
-    if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
-      const currentHour = new Date().getHours();
-      let greeting = "Hello";
+  if (messages.length === 0 && isOpen) {
+    const currentHour = new Date().getHours();
+    let greeting = "Hello";
 
-      if (currentHour >= 5 && currentHour < 12) {
-        greeting = "Good morning";
-      } else if (currentHour >= 12 && currentHour < 17) {
-        greeting = "Good afternoon";
-      } else if (currentHour >= 17 && currentHour < 22) {
-        greeting = "Good evening";
-      }
-
-      sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
-
-      setMessages([
-        {
-          role: "ai",
-          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you today?`,
-        },
-      ]);
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+      greeting = "Good afternoon";
+    } else if (currentHour >= 17 && currentHour < 22) {
+      greeting = "Good evening";
+    } else {
+      greeting = "Hello";
     }
-  };
+
+    setMessages([
+      {
+        role: "ai",
+        content: `${greeting}! I am PJ Legal AI Assistant. How can I help you with your legal questions today?`,
+      },
+    ]);
+  }
+};
+
 
   useEffect(() => {
     handleInitialGreeting();

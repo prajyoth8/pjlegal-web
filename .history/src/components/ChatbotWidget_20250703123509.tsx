@@ -193,7 +193,7 @@ export default function ChatWidget() {
 
     const voices = speechSynthesis.getVoices();
     const humanVoice = voices.find(
-      (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
+      (v) => v.name.includes("Google IN English Female") || v.name.includes("Samantha")
     );
     if (humanVoice) utterance.voice = humanVoice;
 
@@ -238,24 +238,12 @@ export default function ChatWidget() {
   };
 
   const handleInitialGreeting = () => {
-    if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
-      const currentHour = new Date().getHours();
-      let greeting = "Hello";
-
-      if (currentHour >= 5 && currentHour < 12) {
-        greeting = "Good morning";
-      } else if (currentHour >= 12 && currentHour < 17) {
-        greeting = "Good afternoon";
-      } else if (currentHour >= 17 && currentHour < 22) {
-        greeting = "Good evening";
-      }
-
-      sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
-
+    if (messages.length === 0 && isOpen) {
       setMessages([
         {
           role: "ai",
-          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you today?`,
+          content:
+            "Hello! I am PJ Legal AI Assistant. How can I help you with your legal questions today?",
         },
       ]);
     }

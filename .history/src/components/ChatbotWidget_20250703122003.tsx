@@ -144,46 +144,43 @@ export default function ChatWidget() {
     }
   };
 
-  const stripHTML = (html: string): string => {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    return div.textContent || div.innerText || "";
-  };
-
   const handleSpeak = (text: string) => {
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
       return;
     }
 
+    // Utility: Convert abbreviations like "AI" to "A I"
     const formatAbbreviations = (str: string) =>
       str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
 
+    // Apply basic emotion tone based on content
     let rate = 0.95;
     let pitch = 1.0;
 
     const lowered = text.toLowerCase();
+
     if (text.trim().endsWith("?")) {
-      pitch = 1.3;
+      pitch = 1.3; // inquisitive tone
       rate = 1.05;
     } else if (
       lowered.includes("thank") ||
       lowered.includes("great") ||
       lowered.includes("welcome")
     ) {
-      pitch = 1.2;
+      pitch = 1.2; // happy
       rate = 1.05;
     } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
-      pitch = 0.9;
+      pitch = 0.9; // serious
       rate = 0.9;
     } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
-      pitch = 0.85;
+      pitch = 0.85; // sad/apologetic
       rate = 0.9;
     }
 
-    const plain = stripHTML(text);
+    // Clean up icons or symbols (optional)
     const cleanText = formatAbbreviations(
-      plain.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "")
+      text.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "") // remove arrows/emojis
     );
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -191,6 +188,7 @@ export default function ChatWidget() {
     utterance.pitch = pitch;
     utterance.rate = rate;
 
+    // Optional: Pick a more natural voice
     const voices = speechSynthesis.getVoices();
     const humanVoice = voices.find(
       (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
@@ -238,24 +236,12 @@ export default function ChatWidget() {
   };
 
   const handleInitialGreeting = () => {
-    if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
-      const currentHour = new Date().getHours();
-      let greeting = "Hello";
-
-      if (currentHour >= 5 && currentHour < 12) {
-        greeting = "Good morning";
-      } else if (currentHour >= 12 && currentHour < 17) {
-        greeting = "Good afternoon";
-      } else if (currentHour >= 17 && currentHour < 22) {
-        greeting = "Good evening";
-      }
-
-      sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
-
+    if (messages.length === 0 && isOpen) {
       setMessages([
         {
           role: "ai",
-          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you today?`,
+          content:
+            "Hello! I am PJ Legal AI Assistant. How can I help you with your legal questions today?",
         },
       ]);
     }
@@ -504,14 +490,15 @@ export default function ChatWidget() {
                   </button>
                 </div>
                 <textarea
-                  ref={inputRef}
-                  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-[10px] resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[15px] placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all leading-[1.4] tracking-tight shadow-sm"
-                  placeholder="Type your legal question..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  rows={Math.min(4, Math.max(1, input.split("\n").length))}
-                />
+  ref={inputRef}
+  className="flex-1 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-[10px] resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-[15px] placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all leading-[1.4] tracking-tight shadow-sm"
+  placeholder="Type your legal question..."
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  onKeyDown={handleKeyDown}
+  rows={Math.min(4, Math.max(1, input.split("\n").length))}
+/>
+
 
                 <button
                   onClick={handleSend}

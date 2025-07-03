@@ -151,54 +151,51 @@ export default function ChatWidget() {
   };
 
   const handleSpeak = (text: string) => {
-    if (speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-      return;
-    }
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+    return;
+  }
 
-    const formatAbbreviations = (str: string) =>
-      str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
+  const formatAbbreviations = (str: string) =>
+    str.replace(/\b([A-Z]{2,})\b/g, (_, abbr) => abbr.split("").join(" "));
 
-    let rate = 0.95;
-    let pitch = 1.0;
+  let rate = 0.95;
+  let pitch = 1.0;
 
-    const lowered = text.toLowerCase();
-    if (text.trim().endsWith("?")) {
-      pitch = 1.3;
-      rate = 1.05;
-    } else if (
-      lowered.includes("thank") ||
-      lowered.includes("great") ||
-      lowered.includes("welcome")
-    ) {
-      pitch = 1.2;
-      rate = 1.05;
-    } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
-      pitch = 0.9;
-      rate = 0.9;
-    } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
-      pitch = 0.85;
-      rate = 0.9;
-    }
+  const lowered = text.toLowerCase();
+  if (text.trim().endsWith("?")) {
+    pitch = 1.3;
+    rate = 1.05;
+  } else if (lowered.includes("thank") || lowered.includes("great") || lowered.includes("welcome")) {
+    pitch = 1.2;
+    rate = 1.05;
+  } else if (lowered.includes("error") || lowered.includes("warning") || lowered.includes("⚠️")) {
+    pitch = 0.9;
+    rate = 0.9;
+  } else if (lowered.includes("sorry") || lowered.includes("unfortunately")) {
+    pitch = 0.85;
+    rate = 0.9;
+  }
 
-    const plain = stripHTML(text);
-    const cleanText = formatAbbreviations(
-      plain.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "")
-    );
+  const plain = stripHTML(text);
+  const cleanText = formatAbbreviations(
+    plain.replace(/[\u2190-\u21FF\u2600-\u27BF\uFE0F]|[^\x00-\x7F]/g, "")
+  );
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "en-IN";
-    utterance.pitch = pitch;
-    utterance.rate = rate;
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = "en-IN";
+  utterance.pitch = pitch;
+  utterance.rate = rate;
 
-    const voices = speechSynthesis.getVoices();
-    const humanVoice = voices.find(
-      (v) => v.name.includes("Google UK English Female") || v.name.includes("Samantha")
-    );
-    if (humanVoice) utterance.voice = humanVoice;
+  const voices = speechSynthesis.getVoices();
+  const humanVoice = voices.find(
+    (v) => v.name.includes("Google IN English Female") || v.name.includes("Samantha")
+  );
+  if (humanVoice) utterance.voice = humanVoice;
 
-    speechSynthesis.speak(utterance);
-  };
+  speechSynthesis.speak(utterance);
+};
+
 
   const handleVoiceInput = () => {
     if (isListening) {
@@ -238,24 +235,12 @@ export default function ChatWidget() {
   };
 
   const handleInitialGreeting = () => {
-    if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
-      const currentHour = new Date().getHours();
-      let greeting = "Hello";
-
-      if (currentHour >= 5 && currentHour < 12) {
-        greeting = "Good morning";
-      } else if (currentHour >= 12 && currentHour < 17) {
-        greeting = "Good afternoon";
-      } else if (currentHour >= 17 && currentHour < 22) {
-        greeting = "Good evening";
-      }
-
-      sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
-
+    if (messages.length === 0 && isOpen) {
       setMessages([
         {
           role: "ai",
-          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you today?`,
+          content:
+            "Hello! I am PJ Legal AI Assistant. How can I help you with your legal questions today?",
         },
       ]);
     }

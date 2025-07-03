@@ -238,7 +238,7 @@ export default function ChatWidget() {
   };
 
   const handleInitialGreeting = () => {
-    if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
+    if (messages.length === 0 && isOpen) {
       const currentHour = new Date().getHours();
       let greeting = "Hello";
 
@@ -248,14 +248,14 @@ export default function ChatWidget() {
         greeting = "Good afternoon";
       } else if (currentHour >= 17 && currentHour < 22) {
         greeting = "Good evening";
+      } else {
+        greeting = "Hello";
       }
-
-      sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
 
       setMessages([
         {
           role: "ai",
-          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you today?`,
+          content: `${greeting}! I am PJ Legal AI Assistant. How can I help you with your legal questions today?`,
         },
       ]);
     }
