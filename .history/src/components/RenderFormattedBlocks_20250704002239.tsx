@@ -131,11 +131,6 @@
 // };
 
 import React from "react";
-import { marked } from "marked";
-
-function convertMarkdownToHtml(markdown: string): string {
-  return marked.parseInline(markdown) as string; // 👈 Cast to string
-}
 
 type ParagraphBlock = {
   type:
@@ -158,12 +153,7 @@ type ListGroupBlock = {
 
 type ButtonBlock = { type: "button"; label: string; action: string };
 
-type TableBlock = {
-  type: "table";
-  rows: string[][];
-};
-
-export type FormattedBlock = ParagraphBlock | ButtonBlock | ListGroupBlock | TableBlock;
+export type FormattedBlock = ParagraphBlock | ButtonBlock | ListGroupBlock;
 
 export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ blocks }) => {
   const rendered: JSX.Element[] = [];
@@ -238,13 +228,7 @@ export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ 
       }
     } else if (block.type === "bulleted_list_group" || block.type === "numbered_list_group") {
       const items = block.items.map((item, idx) => (
-        <li key={idx} className="text-gray-700">
-          <span
-            dangerouslySetInnerHTML={{
-              __html: convertMarkdownToHtml(item.text),
-            }}
-          />
-        </li>
+        <li key={idx} dangerouslySetInnerHTML={{ __html: item.text }} className="text-gray-700" />
       ));
 
       if (block.type === "bulleted_list_group") {
@@ -272,31 +256,16 @@ export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ 
           {block.label}
         </a>
       );
-    } else if (block.type === "table" && "rows" in block) {
-      rendered.push(
-        <div key={index} className="overflow-x-auto max-w-full">
-          <table className="min-w-[400px] table-auto border-collapse border text-sm mt-2">
-            <tbody>
-              {block.rows.map((row, rIdx) => (
-                <tr key={rIdx} className={rIdx === 0 ? "bg-gray-200 font-semibold" : "bg-white"}>
-                  {row.map((cell, cIdx) => (
-                    <td
-                      key={cIdx}
-                      className="border border-gray-300 px-3 py-2 text-left align-top whitespace-normal"
-                      dangerouslySetInnerHTML={{ __html: cell }}
-                    />
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
     }
   });
 
   return <div className="space-y-3">{rendered}</div>;
 };
+
+
+
+
+
 
 // import React from "react";
 

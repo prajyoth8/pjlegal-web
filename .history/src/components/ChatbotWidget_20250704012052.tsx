@@ -50,6 +50,7 @@ const ContactButtons = () => (
   </div>
 );
 
+
 function generateGreeting(): string {
   const now = new Date();
 
@@ -70,6 +71,8 @@ function generateGreeting(): string {
 
   return `${greeting}! I am PJ Legal AI Assistant. How can I help you with your legal questions today?`;
 }
+
+
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -302,14 +305,14 @@ export default function ChatWidget() {
     setSessionId(sessionId);
     setIsAuthenticated(true);
     // Only greet if no previous messages
-    const greetingMessage = generateGreeting();
+  const greetingMessage = generateGreeting();
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "ai", content: `✅ Authenticated successfully. You may now start chatting.` },
-      { role: "ai", content: greetingMessage },
-    ]);
-  };
+  setMessages((prev) => [
+    ...prev,
+    { role: "ai", content: `✅ Authenticated successfully. You may now start chatting.` },
+    { role: "ai", content: greetingMessage },
+  ]);
+};
 
   return (
     <>

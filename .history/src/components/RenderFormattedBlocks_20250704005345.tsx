@@ -274,23 +274,23 @@ export const RenderFormattedBlocks: React.FC<{ blocks: FormattedBlock[] }> = ({ 
       );
     } else if (block.type === "table" && "rows" in block) {
       rendered.push(
-        <div key={index} className="overflow-x-auto max-w-full">
-          <table className="min-w-[400px] table-auto border-collapse border text-sm mt-2">
-            <tbody>
-              {block.rows.map((row, rIdx) => (
-                <tr key={rIdx} className={rIdx === 0 ? "bg-gray-200 font-semibold" : "bg-white"}>
-                  {row.map((cell, cIdx) => (
-                    <td
-                      key={cIdx}
-                      className="border border-gray-300 px-3 py-2 text-left align-top whitespace-normal"
-                      dangerouslySetInnerHTML={{ __html: cell }}
-                    />
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <d key={index} className="overflow-x-auto max-w-full">
+  <table className="min-w-[400px] table-auto border-collapse border text-sm mt-2"></table></d
+
+          <tbody>
+            {block.rows.map((row, rIdx) => (
+              <tr key={rIdx} className={rIdx === 0 ? "bg-gray-200 font-semibold" : "bg-white"}>
+                {row.map((cell, cIdx) => (
+                  <td
+                    key={cIdx}
+                    className="border border-gray-300 px-3 py-2"
+                    dangerouslySetInnerHTML={{ __html: cell }}
+                  />
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       );
     }
   });

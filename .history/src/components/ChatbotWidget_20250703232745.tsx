@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ChatAuthModal from "./ChatAuthModal";
 import { sendChatbotPrompt } from "@/lib/api";
 import { v4 as uuidv4 } from "uuid";
-import { FormattedBlock, RenderFormattedBlocks } from "./RenderFormattedBlocks";
+// import { FormattedBlock, RenderFormattedBlocks } from "./RenderFormattedBlocks";
 
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
@@ -49,27 +49,6 @@ const ContactButtons = () => (
     </a>
   </div>
 );
-
-function generateGreeting(): string {
-  const now = new Date();
-
-  // Force Indian timezone if desired (optional)
-  const indiaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-  const hour = indiaTime.getHours();
-
-  let greeting = "Hello";
-  if (hour >= 5 && hour < 12) {
-    greeting = "🌅 Good morning";
-  } else if (hour >= 12 && hour < 17) {
-    greeting = "🌞 Good afternoon";
-  } else if (hour >= 17 && hour < 22) {
-    greeting = "🌆 Good evening";
-  } else {
-    greeting = "🌙 Good night";
-  }
-
-  return `${greeting}! I am PJ Legal AI Assistant. How can I help you with your legal questions today?`;
-}
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -301,13 +280,9 @@ export default function ChatWidget() {
   const onAuthenticated = (sessionId: string, emailOrPhone: string) => {
     setSessionId(sessionId);
     setIsAuthenticated(true);
-    // Only greet if no previous messages
-    const greetingMessage = generateGreeting();
-
     setMessages((prev) => [
       ...prev,
       { role: "ai", content: `✅ Authenticated successfully. You may now start chatting.` },
-      { role: "ai", content: greetingMessage },
     ]);
   };
 
