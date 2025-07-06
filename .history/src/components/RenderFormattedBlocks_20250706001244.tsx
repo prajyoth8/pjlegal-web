@@ -494,239 +494,240 @@
 //     </div>
 //   );
 // };
+// import React, { useState } from "react";
+// import parse from "html-react-parser";
+// import ReactMarkdown from "react-markdown";
+// import remarkGfm from "remark-gfm";
+// import rehypeRaw from "rehype-raw";
 
-import React, { useState } from "react";
-import parse from "html-react-parser";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+// type ParagraphBlock = { type: "paragraph"; text: string };
+// type HeadingBlock = { type: "heading" | "title"; level?: number; text: string };
+// type ListItem = { text: string; children?: { text: string }[] };
+// type ListBlock = { type: "bulleted_list_group" | "numbered_list_group"; items: ListItem[] };
+// type TableBlock = { type: "table"; rows: string[][] };
+// type QuoteBlock = { type: "quote"; text: string };
+// type CodeBlock = { type: "code_block"; text: string };
+// type ButtonBlock = { type: "button"; label: string; action: string };
+// type ImageBlock = { type: "image"; url: string; alt?: string };
 
-type ParagraphBlock = { type: "paragraph"; text: string };
-type HeadingBlock = { type: "heading" | "title"; level?: number; text: string };
-type ListItem = { text: string; children?: { text: string }[] };
-type ListBlock = { type: "bulleted_list_group" | "numbered_list_group"; items: ListItem[] };
-type TableBlock = { type: "table"; rows: string[][] };
-type QuoteBlock = { type: "quote"; text: string };
-type CodeBlock = { type: "code_block"; text: string };
-type ButtonBlock = { type: "button"; label: string; action: string };
-type ImageBlock = { type: "image"; url: string; alt?: string };
+// export type FormattedBlock =
+//   | ParagraphBlock
+//   | HeadingBlock
+//   | ListBlock
+//   | TableBlock
+//   | QuoteBlock
+//   | CodeBlock
+//   | ButtonBlock
+//   | ImageBlock;
 
-export type FormattedBlock =
-  | ParagraphBlock
-  | HeadingBlock
-  | ListBlock
-  | TableBlock
-  | QuoteBlock
-  | CodeBlock
-  | ButtonBlock
-  | ImageBlock;
+// // 🔧 Utility to merge consecutive list blocks
+// function mergeListBlocks(blocks: FormattedBlock[]): FormattedBlock[] {
+//   const merged: FormattedBlock[] = [];
+//   let tempItems: ListItem[] = [];
+//   let currentType: "bulleted_list_group" | "numbered_list_group" | null = null;
 
-// 🔧 Utility to merge consecutive list blocks
-function mergeListBlocks(blocks: FormattedBlock[]): FormattedBlock[] {
-  const merged: FormattedBlock[] = [];
-  let tempItems: ListItem[] = [];
-  let currentType: "bulleted_list_group" | "numbered_list_group" | null = null;
+//   for (const block of blocks) {
+//     if (block.type === "numbered_list_group" || block.type === "bulleted_list_group") {
+//       if (currentType === block.type || currentType === null) {
+//         tempItems.push(...block.items);
+//         currentType = block.type;
+//       } else {
+//         merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
+//         tempItems = [...block.items];
+//         currentType = block.type;
+//       }
+//     } else {
+//       if (tempItems.length > 0 && currentType) {
+//         merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
+//         tempItems = [];
+//         currentType = null;
+//       }
+//       merged.push(block);
+//     }
+//   }
 
-  for (const block of blocks) {
-    if (block.type === "numbered_list_group" || block.type === "bulleted_list_group") {
-      if (currentType === block.type || currentType === null) {
-        tempItems.push(...block.items);
-        currentType = block.type;
-      } else {
-        merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
-        tempItems = [...block.items];
-        currentType = block.type;
-      }
-    } else {
-      if (tempItems.length > 0 && currentType) {
-        merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
-        tempItems = [];
-        currentType = null;
-      }
-      merged.push(block);
-    }
-  }
+//   if (tempItems.length > 0 && currentType) {
+//     merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
+//   }
 
-  if (tempItems.length > 0 && currentType) {
-    merged.push({ type: currentType, items: [...tempItems] } as ListBlock);
-  }
+//   return merged;
+// }
 
-  return merged;
-}
+// export const RenderFormattedBlocks: React.FC<{
+//   blocks: FormattedBlock[];
+// }> = ({ blocks }) => {
+//   const [devMode, setDevMode] = useState(false);
+//   const groupedBlocks = mergeListBlocks(blocks); // 🧠 Important fix
 
-export const RenderFormattedBlocks: React.FC<{
-  blocks: FormattedBlock[];
-}> = ({ blocks }) => {
-  const [devMode, setDevMode] = useState(false);
-  const groupedBlocks = mergeListBlocks(blocks); // 🧠 Important fix
+//   let globalNumbering = 1; // ✅ Track global start for numbered_list_group
 
-  let globalNumbering = 1; // ✅ Track global start for numbered_list_group
+//   return (
+//     <div className="space-y-4 text-[15px] leading-[1.6]">
+//       {/* Dev Toggle UI */}
+//       <div className="flex justify-end items-center mb-2">
+//         <label className="text-sm font-semibold mr-2 text-gray-500">🔧 Dev Mode</label>
+//         <input
+//           type="checkbox"
+//           checked={devMode}
+//           onChange={() => setDevMode(!devMode)}
+//           className="cursor-pointer"
+//         />
+//       </div>
 
-  return (
-    <div className="space-y-4 text-[15px] leading-[1.6]">
-      {/* Dev Toggle UI */}
-      {/* <div className="flex justify-end items-center mb-2">
-        <label className="text-sm font-semibold mr-2 text-gray-500">🔧 Dev Mode</label>
-        <input
-          type="checkbox"
-          checked={devMode}
-          onChange={() => setDevMode(!devMode)}
-          className="cursor-pointer"
-        />
-      </div> */}
+//       {/* Dev JSON View */}
+//       {devMode ? (
+//         <pre className="whitespace-pre-wrap bg-black text-green-400 p-4 rounded-md text-sm overflow-auto max-h-[600px]">
+//           {JSON.stringify(blocks, null, 2)}
+//         </pre>
+//       ) : (
+//         groupedBlocks.map((block, index) => {
+//           // ✅ Reset numbering on new headings
+//           if (
+//             block.type === "heading" ||
+//             block.type === "title" ||
+//             block.type.startsWith("heading_")
+//           ) {
+//             globalNumbering = 1; // 🔄 Reset numbering for each section
+//           }
 
-      {/* Dev JSON View */}
-      {devMode ? (
-        <pre className="whitespace-pre-wrap bg-black text-green-400 p-4 rounded-md text-sm overflow-auto max-h-[600px]">
-          {JSON.stringify(blocks, null, 2)}
-        </pre>
-      ) : (
-        groupedBlocks.map((block, index) => {
-          // ✅ Reset numbering on new headings
-          if (
-            block.type === "heading" ||
-            block.type === "title" ||
-            block.type.startsWith("heading_")
-          ) {
-            globalNumbering = 1; // 🔄 Reset numbering for each section
-          }
+//           if (block.type === "paragraph") {
+//             return <p key={index}>{parse(block.text)}</p>;
+//           }
 
-          if (block.type === "paragraph") {
-            return <p key={index}>{parse(block.text)}</p>;
-          }
+//           if (
+//             block.type === "heading" ||
+//             block.type === "title" ||
+//             block.type.startsWith("heading_")
+//           ) {
+//             let level = 2;
+//             if (block.type === "title") level = 1;
+//             else if (block.type.startsWith("heading_")) {
+//               const match = block.type.match(/^heading_(\d)$/);
+//               if (match) level = parseInt(match[1], 10);
+//             } else if ("level" in block && typeof block.level === "number") {
+//               level = block.level;
+//             }
 
-          if (
-            block.type === "heading" ||
-            block.type === "title" ||
-            block.type.startsWith("heading_")
-          ) {
-            let level = 2;
-            if (block.type === "title") level = 1;
-            else if (block.type.startsWith("heading_")) {
-              const match = block.type.match(/^heading_(\d)$/);
-              if (match) level = parseInt(match[1], 10);
-            } else if ("level" in block && typeof block.level === "number") {
-              level = block.level;
-            }
+//             const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+//             const headingText = (block as HeadingBlock).text;
 
-            const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-            const headingText = (block as HeadingBlock).text;
+//             return (
+//               <Tag key={index} className={`font-bold text-base md:text-lg`}>
+//                 {parse(headingText)}
+//               </Tag>
+//             );
+//           }
 
-            return (
-              <Tag key={index} className={`font-bold text-base md:text-lg`}>
-                {parse(headingText)}
-              </Tag>
-            );
-          }
+//           if (block.type === "bulleted_list_group") {
+//             return (
+//               <ul key={index} className="ml-4 pl-4 list-disc space-y-2">
+//                 {block.items.map((item, idx) => (
+//                   <li key={idx}>
+//                     {parse(item.text)}
+//                     {item.children && (
+//                       <ul className="list-disc ml-6 mt-1 space-y-1 text-sm text-gray-700">
+//                         {item.children.map((child, cidx) => (
+//                           <li key={cidx}>{parse(child.text)}</li>
+//                         ))}
+//                       </ul>
+//                     )}
+//                   </li>
+//                 ))}
+//               </ul>
+//             );
+//           }
 
-          if (block.type === "bulleted_list_group") {
-            return (
-              <ul key={index} className="ml-4 pl-4 list-disc space-y-2">
-                {block.items.map((item, idx) => (
-                  <li key={idx}>
-                    {parse(item.text)}
-                    {item.children && (
-                      <ul className="list-disc ml-6 mt-1 space-y-1 text-sm text-gray-700">
-                        {item.children.map((child, cidx) => (
-                          <li key={cidx}>{parse(child.text)}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            );
-          }
+//           if (block.type === "numbered_list_group") {
+//             const startNumber = globalNumbering;
+//             globalNumbering += block.items.length;
 
-          if (block.type === "numbered_list_group") {
-            const startNumber = globalNumbering;
-            globalNumbering += block.items.length;
+//             return (
+//               <ol key={index} className="ml-4 pl-4 list-decimal space-y-2" start={startNumber}>
+//                 {block.items.map((item, idx) => (
+//                   <li key={idx}>
+//                     {parse(item.text)}
+//                     {item.children && (
+//                       <ul className="list-disc ml-6 mt-1 space-y-1 text-sm text-gray-700">
+//                         {item.children.map((child, cidx) => (
+//                           <li key={cidx}>{parse(child.text)}</li>
+//                         ))}
+//                       </ul>
+//                     )}
+//                   </li>
+//                 ))}
+//               </ol>
+//             );
+//           }
 
-            return (
-              <ol key={index} className="ml-4 pl-4 list-decimal space-y-2" start={startNumber}>
-                {block.items.map((item, idx) => (
-                  <li key={idx}>
-                    {parse(item.text)}
-                    {item.children && (
-                      <ul className="list-disc ml-6 mt-1 space-y-1 text-sm text-gray-700">
-                        {item.children.map((child, cidx) => (
-                          <li key={cidx}>{parse(child.text)}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            );
-          }
+//           // ...rest of your rendering logic
 
-          if (block.type === "table") {
-            return (
-              <div key={index} className="overflow-x-auto">
-                <table className="table-auto border border-gray-300 w-full text-sm">
-                  <tbody>
-                    {block.rows.map((row, rowIndex) => (
-                      <tr
-                        key={rowIndex}
-                        className={rowIndex === 0 ? "bg-gray-100 font-semibold" : ""}
-                      >
-                        {row.map((cell, colIndex) => (
-                          <td key={colIndex} className="border border-gray-300 px-3 py-2">
-                            {parse(cell)}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            );
-          }
+//           if (block.type === "table") {
+//             return (
+//               <div key={index} className="overflow-x-auto">
+//                 <table className="table-auto border border-gray-300 w-full text-sm">
+//                   <tbody>
+//                     {block.rows.map((row, rowIndex) => (
+//                       <tr
+//                         key={rowIndex}
+//                         className={rowIndex === 0 ? "bg-gray-100 font-semibold" : ""}
+//                       >
+//                         {row.map((cell, colIndex) => (
+//                           <td key={colIndex} className="border border-gray-300 px-3 py-2">
+//                             {parse(cell)}
+//                           </td>
+//                         ))}
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             );
+//           }
 
-          if (block.type === "quote") {
-            return (
-              <blockquote key={index} className="border-l-4 pl-4 italic text-gray-600">
-                {parse(block.text)}
-              </blockquote>
-            );
-          }
+//           if (block.type === "quote") {
+//             return (
+//               <blockquote key={index} className="border-l-4 pl-4 italic text-gray-600">
+//                 {parse(block.text)}
+//               </blockquote>
+//             );
+//           }
 
-          if (block.type === "code_block") {
-            return (
-              <pre key={index} className="bg-black text-white p-3 rounded text-sm overflow-x-auto">
-                <code>{block.text}</code>
-              </pre>
-            );
-          }
+//           if (block.type === "code_block") {
+//             return (
+//               <pre key={index} className="bg-black text-white p-3 rounded text-sm overflow-x-auto">
+//                 <code>{block.text}</code>
+//               </pre>
+//             );
+//           }
 
-          if (block.type === "button") {
-            return (
-              <a
-                key={index}
-                href={block.action}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded shadow"
-              >
-                {block.label}
-              </a>
-            );
-          }
+//           if (block.type === "button") {
+//             return (
+//               <a
+//                 key={index}
+//                 href={block.action}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded shadow"
+//               >
+//                 {block.label}
+//               </a>
+//             );
+//           }
 
-          if (block.type === "image") {
-            return (
-              <img
-                key={index}
-                src={block.url}
-                alt={block.alt || ""}
-                className="rounded shadow max-w-full"
-              />
-            );
-          }
+//           if (block.type === "image") {
+//             return (
+//               <img
+//                 key={index}
+//                 src={block.url}
+//                 alt={block.alt || ""}
+//                 className="rounded shadow max-w-full"
+//               />
+//             );
+//           }
 
-          return null;
-        })
-      )}
-    </div>
-  );
-};
+//           return null;
+//         })
+//       )}
+//     </div>
+//   );
+// };

@@ -34,7 +34,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       target="_blank"
       className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-700 transition"
     >
-      💬 WhatsApp
+      💬 WhatsApp Us
     </a>
     <a
       href="tel:+918712351102"
@@ -46,7 +46,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       onClick={() => router.push("/?scrollTo=contact")}
       className="bg-gray-700 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-800 transition"
     >
-      📞 Contact
+      📞 Contact Me
     </button>
   </div>
 );
@@ -260,34 +260,6 @@ export default function ChatWidget() {
     recognition.start();
   };
 
-  // const handleInitialGreeting = () => {
-  //   if (messages.length === 0 && isOpen && !sessionStorage.getItem("pj_legal_chatbot_greeted")) {
-  //     const currentHour = new Date().getHours();
-  //     let greeting = "Hello";
-
-  //     if (currentHour >= 5 && currentHour < 12) {
-  //       greeting = "Good morning";
-  //     } else if (currentHour >= 12 && currentHour < 17) {
-  //       greeting = "Good afternoon";
-  //     } else if (currentHour >= 17 && currentHour < 22) {
-  //       greeting = "Good evening";
-  //     }
-
-  //     sessionStorage.setItem("pj_legal_chatbot_greeted", "true");
-
-  //     setMessages([
-  //       {
-  //         role: "ai",
-  //         content: `${greeting}! I am PJ Legal AI Assistant. How can I help you with your legal questions today?`,
-  //       },
-  //     ]);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleInitialGreeting();
-  // }, [isOpen]);
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -410,30 +382,15 @@ export default function ChatWidget() {
                   }`}
                 >
                   {Array.isArray(msg.content) ? (
-                    <RenderFormattedBlocks blocks={msg.content as FormattedBlock[]} />
+                    <RenderFormattedBlocks
+        raw_text={message.raw_text}
+        blocks={message.blocks}
+      />
                   ) : typeof msg.content === "string" ? (
                     <div className="whitespace-pre-wrap">{msg.content}</div>
                   ) : (
                     msg.content // Already a JSX.Element
                   )}
-
-                  {/* {msg.role === "ai" && (
-                    <button
-                      onClick={() => {
-                        const speakText =
-                          typeof msg.content === "string"
-                            ? msg.content
-                            : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
-                                .join(" ");
-                        handleSpeak(speakText);
-                      }}
-                      className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-                      aria-label="Read aloud"
-                    >
-                      <Volume2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                    </button>
-                  )} */}
 
                   {msg.role === "ai" && (
                     <button

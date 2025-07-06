@@ -13,6 +13,8 @@ import { RenderFormattedBlocks } from "./RenderFormattedBlocks";
 import { useRouter } from "next/navigation";
 import { FormattedBlock } from "@/types";
 
+
+
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
   return (
@@ -34,7 +36,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       target="_blank"
       className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-700 transition"
     >
-      💬 WhatsApp
+      💬 WhatsApp Us
     </a>
     <a
       href="tel:+918712351102"
@@ -46,7 +48,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       onClick={() => router.push("/?scrollTo=contact")}
       className="bg-gray-700 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-800 transition"
     >
-      📞 Contact
+      📞 Contact Me
     </button>
   </div>
 );
@@ -417,25 +419,7 @@ export default function ChatWidget() {
                     msg.content // Already a JSX.Element
                   )}
 
-                  {/* {msg.role === "ai" && (
-                    <button
-                      onClick={() => {
-                        const speakText =
-                          typeof msg.content === "string"
-                            ? msg.content
-                            : msg.content
-                                .map((block) => ("text" in block ? block.text : ""))
-                                .join(" ");
-                        handleSpeak(speakText);
-                      }}
-                      className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-700 p-1.5 rounded-full shadow border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-                      aria-label="Read aloud"
-                    >
-                      <Volume2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                    </button>
-                  )} */}
-
-                  {msg.role === "ai" && (
+                                    {msg.role === "ai" && (
                     <button
                       onClick={() => {
                         let speakText = "";

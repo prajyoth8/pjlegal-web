@@ -13,6 +13,8 @@ import { RenderFormattedBlocks } from "./RenderFormattedBlocks";
 import { useRouter } from "next/navigation";
 import { FormattedBlock } from "@/types";
 
+
+
 const shouldShowContactButtons = (text: string) => {
   const lowered = text.toLowerCase();
   return (
@@ -34,7 +36,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       target="_blank"
       className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-700 transition"
     >
-      💬 WhatsApp
+      💬 WhatsApp Us
     </a>
     <a
       href="tel:+918712351102"
@@ -46,7 +48,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       onClick={() => router.push("/?scrollTo=contact")}
       className="bg-gray-700 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-800 transition"
     >
-      📞 Contact
+      📞 Contact Me
     </button>
   </div>
 );
@@ -410,7 +412,11 @@ export default function ChatWidget() {
                   }`}
                 >
                   {Array.isArray(msg.content) ? (
-                    <RenderFormattedBlocks blocks={msg.content as FormattedBlock[]} />
+                    <RenderFormattedBlocks
+  raw_text={response.raw_text}
+  blocks={response.blocks}
+/>
+
                   ) : typeof msg.content === "string" ? (
                     <div className="whitespace-pre-wrap">{msg.content}</div>
                   ) : (

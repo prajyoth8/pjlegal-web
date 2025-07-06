@@ -494,7 +494,6 @@
 //     </div>
 //   );
 // };
-
 import React, { useState } from "react";
 import parse from "html-react-parser";
 import ReactMarkdown from "react-markdown";
@@ -565,7 +564,7 @@ export const RenderFormattedBlocks: React.FC<{
   return (
     <div className="space-y-4 text-[15px] leading-[1.6]">
       {/* Dev Toggle UI */}
-      {/* <div className="flex justify-end items-center mb-2">
+      <div className="flex justify-end items-center mb-2">
         <label className="text-sm font-semibold mr-2 text-gray-500">🔧 Dev Mode</label>
         <input
           type="checkbox"
@@ -573,7 +572,7 @@ export const RenderFormattedBlocks: React.FC<{
           onChange={() => setDevMode(!devMode)}
           className="cursor-pointer"
         />
-      </div> */}
+      </div>
 
       {/* Dev JSON View */}
       {devMode ? (
@@ -659,6 +658,8 @@ export const RenderFormattedBlocks: React.FC<{
               </ol>
             );
           }
+
+          // ...rest of your rendering logic
 
           if (block.type === "table") {
             return (

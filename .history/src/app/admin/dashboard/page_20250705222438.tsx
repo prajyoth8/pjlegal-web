@@ -156,35 +156,36 @@ export default function AdminDashboard() {
           </motion.div>
 
           {/* Token Usage Logs Tile */}
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => router.push("/admin/tokens")}
-            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 cursor-pointer hover:bg-white/10 transition-all duration-300"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-yellow-600/20 rounded-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-yellow-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11 17l-5-5m0 0l5-5m-5 5h12"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Token Usage Logs</h3>
-                <p className="text-yellow-200 text-sm">Monitor model usage & costs</p>
-              </div>
-            </div>
-          </motion.div>
+<motion.div
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.98 }}
+  onClick={() => router.push("/admin/tokens")}
+  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 cursor-pointer hover:bg-white/10 transition-all duration-300"
+>
+  <div className="flex items-center gap-4">
+    <div className="p-3 bg-yellow-600/20 rounded-lg">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 text-yellow-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M11 17l-5-5m0 0l5-5m-5 5h12"
+        />
+      </svg>
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold text-white">Token Usage Logs</h3>
+      <p className="text-yellow-200 text-sm">Monitor model usage & costs</p>
+    </div>
+  </div>
+</motion.div>
+
 
           <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 opacity-70">
             <div className="flex items-center gap-4">

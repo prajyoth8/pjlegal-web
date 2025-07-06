@@ -34,7 +34,7 @@ const ContactButtons = ({ router }: { router: ReturnType<typeof useRouter> }) =>
       target="_blank"
       className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-700 transition"
     >
-      💬 WhatsApp
+      💬 WhatsApp Us
     </a>
     <a
       href="tel:+918712351102"
