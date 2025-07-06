@@ -45,22 +45,16 @@ const simplifiedPracticeAreas = [
   { name: "Civil Law", slug: "civil-law", icon: "⚖️" },
   { name: "Criminal Law", slug: "criminal-law", icon: "🔍" },
   { name: "Family Law", slug: "family-law", icon: "👨‍👩‍👧‍👦" },
-  { name: "Property Law", slug: "property-law", icon: "🏠" },
   { name: "Constitutional Law", slug: "constitutional-law", icon: "📜" },
-  { name: "Cyber Law", slug: "cyber-law", icon: "💻" },
-  { name: "Corporate & Business Law", slug: "corporate-law", icon: "🏢" },
-  { name: "Consumer Protection Law", slug: "consumer-law", icon: "🛒" },
-  { name: "Labour & Employment Law", slug: "labour-law", icon: "👷‍♂️" },
-  { name: "Education Law", slug: "education-law", icon: "🎓" },
-  { name: "Environmental Law", slug: "environmental-law", icon: "🌿" },
-  { name: "Intellectual Property Rights (IPR)", slug: "ipr-law", icon: "💡" },
-  { name: "Taxation Law", slug: "taxation-law", icon: "💰" },
-  { name: "Banking & Insurance Law", slug: "banking-law", icon: "🏦" },
-  { name: "Technology & AI Law", slug: "technology-law", icon: "🤖" },
-  { name: "Arbitration & ADR", slug: "adr-law", icon: "🕊️" },
-  { name: "Legal Aid & Pro Bono Services", slug: "pro-bono-law", icon: "🤝" },
+  { name: "Corporate Laws", slug: "corporate-laws", icon: "🏢" },
+  
+  { name: "Election Law", slug: "election-law", icon: "🗳️" },
+  
+  { name: "Labour Law", slug: "labour-law", icon: "👷" },
+  
+  { name: "Real Estate RERA", slug: "real-estate-rera", icon: "🏗️" },
+  { name: "Service Law", slug: "service-law", icon: "💼" },
 ];
-
 
 const container = {
   hidden: { opacity: 0 },
@@ -69,13 +63,13 @@ const container = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.3,
-    },
-  },
+    }
+  }
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
 };
 
 export default function PracticeSection() {
@@ -83,20 +77,20 @@ export default function PracticeSection() {
     <section id="practice" className="relative py-20 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-purple-50/30 to-amber-100/30"></div>
-
+      
       {/* Decorative corner accents */}
       <div className="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-amber-400 opacity-60"></div>
       <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-purple-400 opacity-60"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-purple-400 opacity-60"></div>
       <div className="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-amber-400 opacity-60"></div>
-
+      
       {/* Floating gradient dots */}
       <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-amber-300/20 blur-3xl"></div>
       <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full bg-purple-300/20 blur-3xl"></div>
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <motion.h2
+          <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -123,12 +117,13 @@ export default function PracticeSection() {
         >
           {simplifiedPracticeAreas.map(({ name, slug, icon }) => (
             <motion.div key={slug} variants={item}>
-              <Link href={`/practice-areas/${slug}`} className="group block h-full">
+              <Link
+                href={`/practice-areas/${slug}`}
+                className="group block h-full"
+              >
                 <div className="h-full bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100 hover:border-purple-300 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-white">
                   <div className="flex items-start">
-                    <div className="text-3xl mr-4 group-hover:scale-110 transition-transform">
-                      {icon}
-                    </div>
+                    <div className="text-3xl mr-4 group-hover:scale-110 transition-transform">{icon}</div>
                     <div>
                       <h3 className="text-xl font-semibold text-gray-800 group-hover:text-purple-700 transition-colors">
                         {name}

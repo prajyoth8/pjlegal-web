@@ -47,20 +47,17 @@ const simplifiedPracticeAreas = [
   { name: "Family Law", slug: "family-law", icon: "👨‍👩‍👧‍👦" },
   { name: "Property Law", slug: "property-law", icon: "🏠" },
   { name: "Constitutional Law", slug: "constitutional-law", icon: "📜" },
-  { name: "Cyber Law", slug: "cyber-law", icon: "💻" },
-  { name: "Corporate & Business Law", slug: "corporate-law", icon: "🏢" },
-  { name: "Consumer Protection Law", slug: "consumer-law", icon: "🛒" },
-  { name: "Labour & Employment Law", slug: "labour-law", icon: "👷‍♂️" },
-  { name: "Education Law", slug: "education-law", icon: "🎓" },
-  { name: "Environmental Law", slug: "environmental-law", icon: "🌿" },
-  { name: "Intellectual Property Rights (IPR)", slug: "ipr-law", icon: "💡" },
-  { name: "Taxation Law", slug: "taxation-law", icon: "💰" },
-  { name: "Banking & Insurance Law", slug: "banking-law", icon: "🏦" },
-  { name: "Technology & AI Law", slug: "technology-law", icon: "🤖" },
-  { name: "Arbitration & ADR", slug: "adr-law", icon: "🕊️" },
-  { name: "Legal Aid & Pro Bono Services", slug: "pro-bono-law", icon: "🤝" },
-];
+  { name: "Cyber Law", slug: "cyber-law", icon: "" },
 
+  { name: "Corporate Laws", slug: "corporate-laws", icon: "🏢" },
+
+  { name: "Election Law", slug: "election-law", icon: "🗳️" },
+
+  { name: "Labour Law", slug: "labour-law", icon: "👷" },
+
+  { name: "Real Estate RERA", slug: "real-estate-rera", icon: "🏗️" },
+  { name: "Service Law", slug: "service-law", icon: "💼" },
+];
 
 const container = {
   hidden: { opacity: 0 },
