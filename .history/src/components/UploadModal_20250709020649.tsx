@@ -131,6 +131,10 @@
 //   );
 // }
 
+
+
+
+
 "use client";
 
 import { useState, useRef } from "react";
@@ -220,7 +224,7 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
             className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             aria-hidden="true"
           />
-
+          
           <div className="fixed inset-0 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -236,7 +240,7 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
                     <Dialog.Title className="text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
                       Upload Legal Document
                     </Dialog.Title>
-                    <button
+                    <button 
                       onClick={onClose}
                       className="text-neutral-400 hover:text-neutral-200 transition-colors"
                     >
@@ -317,10 +321,11 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
                         <div className="flex flex-col items-center">
                           <UploadCloud className="h-10 w-10 text-neutral-500 mb-3" />
                           <p className="text-sm text-neutral-400">
-                            <span className="font-medium text-neutral-300">Drag & drop</span> or
-                            click to browse
+                            <span className="font-medium text-neutral-300">Drag & drop</span> or click to browse
                           </p>
-                          <p className="text-xs text-neutral-500 mt-1">PDF, DOC, DOCX (Max 25MB)</p>
+                          <p className="text-xs text-neutral-500 mt-1">
+                            PDF, DOC, DOCX (Max 25MB)
+                          </p>
                         </div>
                       )}
                       <input
