@@ -2,7 +2,7 @@ export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delete-legal-document?id=${id}`, {
+  const res = await fetch(`${process.env.NE}/delete-legal-document?id=${id}`, {
     method: "DELETE",
   });
 
