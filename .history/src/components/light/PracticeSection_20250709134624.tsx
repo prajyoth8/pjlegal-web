@@ -36,10 +36,11 @@
 //   );
 // }
 
+
 "use client";
 
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
 
 const practiceAreas = [
@@ -74,27 +75,24 @@ const container: Variants = {
 
 const item: Variants = {
   hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.5, 
       type: "spring",
-      bounce: 0.4,
-    },
+      bounce: 0.4 
+    } 
   },
 };
 
 export default function PracticeSection() {
   return (
-    <section
-      id="practice"
-      className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-50 to-white"
-    >
+    <section id="practice" className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
       {/* 3D floating elements */}
       <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-purple-500/10 blur-[80px]"></div>
       <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-amber-500/10 blur-[90px]"></div>
-
+      
       {/* Grid texture overlay */}
       <div className="absolute inset-0 opacity-5 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
         <div className="absolute inset-0 [background-image:linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -111,7 +109,7 @@ export default function PracticeSection() {
             <span className="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
             <span className="text-sm font-medium text-gray-700">Legal Expertise</span>
           </motion.div>
-
+          
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -120,7 +118,7 @@ export default function PracticeSection() {
           >
             Our Practice Areas
           </motion.h2>
-
+          
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -144,20 +142,18 @@ export default function PracticeSection() {
                 <div className="h-full bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300 group-hover:border-transparent group-hover:bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
                   {/* Hover effect background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
+                  
                   {/* Card content */}
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex items-start mb-4">
-                      <div
-                        className={`text-4xl mr-4 transition-transform duration-300 group-hover:scale-110 ${color}`}
-                      >
+                      <div className={`text-4xl mr-4 transition-transform duration-300 group-hover:scale-110 ${color}`}>
                         {icon}
                       </div>
                       <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-900 transition-colors">
                         {name}
                       </h3>
                     </div>
-
+                    
                     <div className="mt-auto pt-4 border-t border-gray-100 group-hover:border-gray-200 transition-colors">
                       <div className="flex items-center text-gray-500 group-hover:text-purple-600 font-medium text-sm transition-colors">
                         Explore area
@@ -165,7 +161,7 @@ export default function PracticeSection() {
                       </div>
                     </div>
                   </div>
-
+                  
                   {/* Glow effect on hover */}
                   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-purple-400/20 to-amber-400/20"></div>
@@ -177,32 +173,28 @@ export default function PracticeSection() {
         </motion.div>
 
         {/* CTA at bottom */}
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <Link
-            href="/contact"
+          <Link 
+            href="/contact" 
             className="inline-flex items-center px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-amber-500 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
           >
             Schedule a Consultation
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1"
-              viewBox="0 0 20 20"
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" 
+              viewBox="0 0 20 20" 
               fill="currentColor"
             >
-              <path
-                fillRule="evenodd"
-                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
+              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
           </Link>
-        </motion.div> */}
+        </motion.div>
       </div>
     </section>
   );

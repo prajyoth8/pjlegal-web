@@ -1241,9 +1241,7 @@ export default function CMSPage() {
           {/* Content Creation Section */}
           <section className="bg-neutral-900 rounded-xl border border-neutral-800 shadow-lg overflow-hidden">
             <div className="px-4 py-3 sm:px-5 sm:py-4 border-b border-neutral-800">
-              <h3 className="text-sm sm:text-base font-medium text-neutral-200">
-                Content Creation
-              </h3>
+              <h3 className="text-sm sm:text-base font-medium text-neutral-200">Content Creation</h3>
             </div>
             <div className="p-4 sm:p-5">
               <div className="grid grid-cols-1 gap-6">

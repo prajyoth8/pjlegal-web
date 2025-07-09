@@ -131,6 +131,8 @@
 //   );
 // }
 
+
+
 "use client";
 
 import { useState, useRef } from "react";
@@ -148,39 +150,6 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
   const dropRef = useRef<HTMLDivElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [showLog, setShowLog] = useState(false);
-  const [logData, setLogData] = useState("");
-  const [status, setStatus] = useState("");
-  const wsRef = useRef<WebSocket | null>(null);
-
-  const pollEmbeddingStatus = async (docId: string) => {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-    let attempts = 0;
-    const maxAttempts = 15;
-
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${baseUrl}/embedding-status/${docId}`);
-        const data = await res.json();
-
-        if (data.status === "done") {
-          clearInterval(interval);
-          toast.success("✅ Embedding complete");
-        } else if (data.status === "failed") {
-          clearInterval(interval);
-          toast.error("❌ Embedding failed");
-        }
-
-        if (++attempts >= maxAttempts) {
-          clearInterval(interval);
-          toast("⚠️ Embedding status check timed out", { icon: "⏰" });
-        }
-      } catch (err) {
-        clearInterval(interval);
-        toast.error("⚠️ Failed to check embedding status");
-      }
-    }, 3000);
-  };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -215,8 +184,6 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
 
     try {
       setIsUploading(true);
-      toast.loading("Uploading document...", { id: "uploading" });
-
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
       const res = await fetch(`${baseUrl}/upload-legal-doc`, {
         method: "POST",
@@ -226,56 +193,10 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Upload failed");
 
-      toast.dismiss("uploading");
-      toast.success("✅ Document uploaded!");
-      if (data.document_id) {
-        toast.success("Uploaded! Starting embedding...");
-
-        const ws = new WebSocket(
-          `${process.env.NEXT_PUBLIC_WS_URL}/ws/embedding-status/${data.document_id}`
-        );
-        wsRef.current = ws;
-
-        ws.onmessage = (event) => {
-          const update = JSON.parse(event.data);
-          setStatus(update.status);
-          setLogData(update.log || "");
-          if (update.status === "success" || update.status === "failed") {
-            ws.close();
-          }
-        };
-
-        setShowLog(true); // auto open log sidebar
-      }
-
-      // 🧠 Add viewer button
-      toast(
-        (t) => (
-          <div className="text-sm text-white space-y-1">
-            <p>✅ Document uploaded</p>
-            <button
-              className="bg-emerald-600 text-white px-3 py-1.5 rounded text-xs mt-1 hover:bg-emerald-700"
-              onClick={() => {
-                toast.dismiss(t.id);
-                window.location.href = `/documents/${data.document_id}`; // Update route if different
-              }}
-            >
-              Open in Viewer
-            </button>
-          </div>
-        ),
-        { duration: 8000 }
-      );
-
-      // 🕒 Poll embedding status
-      if (data.document_id) {
-        pollEmbeddingStatus(data.document_id);
-      }
-
+      toast.success("Document uploaded successfully!");
       onClose();
       resetForm();
     } catch (err: any) {
-      toast.dismiss("uploading");
       toast.error(err.message || "Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
@@ -417,23 +338,6 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
                     </div>
                   </div>
                 </div>
-
-                {showLog && (
-                  <div className="fixed top-20 right-4 bg-black/80 backdrop-blur border border-neutral-700 text-white p-4 rounded-xl max-w-md shadow-lg z-50 overflow-auto max-h-[60vh]">
-                    <div className="flex justify-between items-center mb-2">
-                      <p className="font-semibold text-emerald-400">
-                        📡 Embedding Status: {status}
-                      </p>
-                      <button
-                        onClick={() => setShowLog(false)}
-                        className="text-sm text-neutral-400 hover:text-white"
-                      >
-                        Close
-                      </button>
-                    </div>
-                    <pre className="text-xs whitespace-pre-wrap">{logData}</pre>
-                  </div>
-                )}
 
                 {/* Modal footer */}
                 <div className="p-4 md:p-6 border-t border-neutral-800 flex justify-end space-x-3">

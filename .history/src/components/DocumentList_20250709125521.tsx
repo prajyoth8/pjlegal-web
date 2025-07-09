@@ -325,7 +325,7 @@ export default function DocumentList() {
   const fetchDocuments = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/get-legal-documents");
+      const res = await fetch('/api/get-legal-documents');
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Failed to fetch documents");
       setAllDocuments(data.documents);
@@ -357,24 +357,23 @@ export default function DocumentList() {
   // Apply filters whenever search, category or region changes
   useEffect(() => {
     let results = [...allDocuments];
-
+    
     if (search) {
       const searchTerm = search.toLowerCase();
-      results = results.filter(
-        (doc) =>
-          doc.title.toLowerCase().includes(searchTerm) ||
-          (doc.summary && doc.summary.toLowerCase().includes(searchTerm))
+      results = results.filter(doc => 
+        doc.title.toLowerCase().includes(searchTerm) || 
+        (doc.summary && doc.summary.toLowerCase().includes(searchTerm))
       );
     }
-
+    
     if (category) {
-      results = results.filter((doc) => doc.category === category);
+      results = results.filter(doc => doc.category === category);
     }
-
+    
     if (region) {
-      results = results.filter((doc) => doc.region === region);
+      results = results.filter(doc => doc.region === region);
     }
-
+    
     setFilteredDocuments(results);
     setCurrentPage(1); // Reset to first page when filters change
   }, [search, category, region, allDocuments]);
@@ -427,7 +426,7 @@ export default function DocumentList() {
   return (
     <div className="bg-neutral-950 text-neutral-100 min-h-screen p-4 sm:p-6">
       {/* Header Section */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4"
@@ -461,7 +460,7 @@ export default function DocumentList() {
       </motion.div>
 
       {/* Filter Controls */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
@@ -549,18 +548,16 @@ export default function DocumentList() {
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h3 className="mt-2 text-sm sm:text-base font-medium text-neutral-200">
-            No documents found
-          </h3>
+          <h3 className="mt-2 text-sm sm:text-base font-medium text-neutral-200">No documents found</h3>
           <p className="mt-1 text-xs sm:text-sm text-neutral-500">
             Try adjusting your search or filter criteria
           </p>
           {(search || category || region) && (
             <button
               onClick={() => {
-                setSearch("");
-                setCategory("");
-                setRegion("");
+                setSearch('');
+                setCategory('');
+                setRegion('');
               }}
               className="mt-4 text-xs sm:text-sm text-emerald-400 hover:text-emerald-300"
             >
@@ -617,11 +614,11 @@ export default function DocumentList() {
             </thead>
             <tbody className="bg-neutral-900/50 divide-y divide-neutral-800">
               {paginatedDocs.map((doc) => (
-                <motion.tr
-                  key={doc.id}
+                <motion.tr 
+                  key={doc.id} 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}
+                  whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.03)' }}
                   className="transition-colors"
                 >
                   <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-200 max-w-[150px] truncate sm:max-w-none">

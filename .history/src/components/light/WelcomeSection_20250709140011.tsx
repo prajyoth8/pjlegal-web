@@ -98,6 +98,8 @@ export default function WelcomeSection() {
   );
 }
 
+
+
 // "use client";
 
 // import Image from "next/image";

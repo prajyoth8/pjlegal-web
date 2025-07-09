@@ -296,6 +296,7 @@ export default function AdminDashboard() {
       setUserEmail(profile.email);
       setIsLoading(false);
 
+      // Hide welcome animation after 3 seconds
       setTimeout(() => setShowWelcome(false), 3000);
     };
 
@@ -614,10 +615,7 @@ export default function AdminDashboard() {
                     whileHover={{ rotate: 10 }}
                     className={`p-2 sm:p-3 rounded-lg bg-${item.color}-600/10 border border-${item.color}-500/20`}
                   >
-                    <div
-                      className={`text-${item.color}-300`}
-                      style={{ width: "24px", height: "24px" }}
-                    >
+                    <div className={`text-${item.color}-300 w-5 h-5 sm:w-6 sm:h-6`}>
                       {item.icon}
                     </div>
                   </motion.div>
@@ -642,13 +640,16 @@ export default function AdminDashboard() {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      sm:width="20"
+                      sm:height="20"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      style={{ width: "20px", height: "20px" }}
                     >
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>

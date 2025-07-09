@@ -419,21 +419,15 @@ export default function UploadModal({ isOpen, onClose }: { isOpen: boolean; onCl
                 </div>
 
                 {showLog && (
-                  <div className="fixed top-20 right-4 bg-black/80 backdrop-blur border border-neutral-700 text-white p-4 rounded-xl max-w-md shadow-lg z-50 overflow-auto max-h-[60vh]">
-                    <div className="flex justify-between items-center mb-2">
-                      <p className="font-semibold text-emerald-400">
-                        📡 Embedding Status: {status}
-                      </p>
-                      <button
-                        onClick={() => setShowLog(false)}
-                        className="text-sm text-neutral-400 hover:text-white"
-                      >
-                        Close
-                      </button>
-                    </div>
-                    <pre className="text-xs whitespace-pre-wrap">{logData}</pre>
-                  </div>
-                )}
+  <div className="fixed top-20 right-4 bg-black/80 backdrop-blur border border-neutral-700 text-white p-4 rounded-xl max-w-md shadow-lg z-50 overflow-auto max-h-[60vh]">
+    <div className="flex justify-between items-center mb-2">
+      <p className="font-semibold text-emerald-400">📡 Embedding Status: {status}</p>
+      <button onClick={() => setShowLog(false)} className="text-sm text-neutral-400 hover:text-white">Close</button>
+    </div>
+    <pre className="text-xs whitespace-pre-wrap">{logData}</pre>
+  </div>
+)}
+
 
                 {/* Modal footer */}
                 <div className="p-4 md:p-6 border-t border-neutral-800 flex justify-end space-x-3">

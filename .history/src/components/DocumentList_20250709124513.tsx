@@ -284,6 +284,7 @@
 //   );
 // }
 
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -325,7 +326,7 @@ export default function DocumentList() {
   const fetchDocuments = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch("/api/get-legal-documents");
+      const res = await fetch('/api/get-legal-documents');
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Failed to fetch documents");
       setAllDocuments(data.documents);
@@ -357,24 +358,23 @@ export default function DocumentList() {
   // Apply filters whenever search, category or region changes
   useEffect(() => {
     let results = [...allDocuments];
-
+    
     if (search) {
       const searchTerm = search.toLowerCase();
-      results = results.filter(
-        (doc) =>
-          doc.title.toLowerCase().includes(searchTerm) ||
-          (doc.summary && doc.summary.toLowerCase().includes(searchTerm))
+      results = results.filter(doc => 
+        doc.title.toLowerCase().includes(searchTerm) || 
+        (doc.summary && doc.summary.toLowerCase().includes(searchTerm))
       );
     }
-
+    
     if (category) {
-      results = results.filter((doc) => doc.category === category);
+      results = results.filter(doc => doc.category === category);
     }
-
+    
     if (region) {
-      results = results.filter((doc) => doc.region === region);
+      results = results.filter(doc => doc.region === region);
     }
-
+    
     setFilteredDocuments(results);
     setCurrentPage(1); // Reset to first page when filters change
   }, [search, category, region, allDocuments]);
@@ -425,23 +425,23 @@ export default function DocumentList() {
   );
 
   return (
-    <div className="bg-neutral-950 text-neutral-100 min-h-screen p-4 sm:p-6">
+    <div className="bg-neutral-950 text-neutral-100 min-h-screen p-6">
       {/* Header Section */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4"
+        className="flex justify-between items-center mb-8"
       >
-        <h1 className="text-xl sm:text-2xl font-light tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
+        <h1 className="text-2xl font-light tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
           Legal Document Repository
         </h1>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setShowUploadModal(true)}
-          className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-emerald-500/20 text-sm sm:text-base"
+          className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-emerald-500/20"
         >
-          <span className="flex items-center gap-1 sm:gap-2">
+          <span className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -461,11 +461,11 @@ export default function DocumentList() {
       </motion.div>
 
       {/* Filter Controls */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6"
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
       >
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -486,7 +486,7 @@ export default function DocumentList() {
           <input
             type="text"
             placeholder="Search documents..."
-            className="block w-full pl-10 pr-3 py-2 sm:py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm"
+            className="block w-full pl-10 pr-3 py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -495,7 +495,7 @@ export default function DocumentList() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="block w-full pl-3 pr-10 py-2 sm:py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjd2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem]"
+          className="block w-full pl-3 pr-10 py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjd2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem]"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
@@ -508,7 +508,7 @@ export default function DocumentList() {
         <select
           value={region}
           onChange={(e) => setRegion(e.target.value)}
-          className="block w-full pl-3 pr-10 py-2 sm:py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjd2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem]"
+          className="block w-full pl-3 pr-10 py-2.5 rounded-lg border-neutral-800 bg-neutral-900 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjd2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem]"
         >
           <option value="">All Regions</option>
           {regions.map((reg) => (
@@ -526,17 +526,17 @@ export default function DocumentList() {
           animate={{ opacity: 1 }}
           className="flex flex-col items-center justify-center py-12"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-transparent border-t-emerald-400 rounded-full animate-spin mb-4"></div>
-          <p className="text-neutral-400 text-sm sm:text-base">Loading documents...</p>
+          <div className="w-12 h-12 border-2 border-transparent border-t-emerald-400 rounded-full animate-spin mb-4"></div>
+          <p className="text-neutral-400">Loading documents...</p>
         </motion.div>
       ) : filteredDocuments.length === 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-neutral-900/50 rounded-xl border border-neutral-800 p-6 sm:p-8 text-center"
+          className="bg-neutral-900/50 rounded-xl border border-neutral-800 p-8 text-center"
         >
           <svg
-            className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-neutral-500"
+            className="mx-auto h-12 w-12 text-neutral-500"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -549,20 +549,18 @@ export default function DocumentList() {
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h3 className="mt-2 text-sm sm:text-base font-medium text-neutral-200">
-            No documents found
-          </h3>
-          <p className="mt-1 text-xs sm:text-sm text-neutral-500">
+          <h3 className="mt-2 text-sm font-medium text-neutral-200">No documents found</h3>
+          <p className="mt-1 text-sm text-neutral-500">
             Try adjusting your search or filter criteria
           </p>
           {(search || category || region) && (
             <button
               onClick={() => {
-                setSearch("");
-                setCategory("");
-                setRegion("");
+                setSearch('');
+                setCategory('');
+                setRegion('');
               }}
-              className="mt-4 text-xs sm:text-sm text-emerald-400 hover:text-emerald-300"
+              className="mt-4 text-sm text-emerald-400 hover:text-emerald-300"
             >
               Clear all filters
             </button>
@@ -572,44 +570,44 @@ export default function DocumentList() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="overflow-x-auto rounded-xl border border-neutral-800 shadow-lg"
+          className="overflow-hidden rounded-xl border border-neutral-800 shadow-lg"
         >
           <table className="min-w-full divide-y divide-neutral-800">
             <thead className="bg-neutral-900">
               <tr>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Title
                 </th>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Category
                 </th>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider hidden sm:table-cell"
+                  className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Region
                 </th>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider hidden md:table-cell"
+                  className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Tags
                 </th>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider hidden md:table-cell"
+                  className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Uploaded
                 </th>
                 <th
                   scope="col"
-                  className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-neutral-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-right text-xs font-medium text-neutral-400 uppercase tracking-wider"
                 >
                   Actions
                 </th>
@@ -617,22 +615,22 @@ export default function DocumentList() {
             </thead>
             <tbody className="bg-neutral-900/50 divide-y divide-neutral-800">
               {paginatedDocs.map((doc) => (
-                <motion.tr
-                  key={doc.id}
+                <motion.tr 
+                  key={doc.id} 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}
+                  whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.03)' }}
                   className="transition-colors"
                 >
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-200 max-w-[150px] truncate sm:max-w-none">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-200">
                     {doc.title}
                   </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-neutral-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">
                     {editRow === doc.id ? (
                       <select
                         value={editData.category}
                         onChange={(e) => setEditData({ ...editData, category: e.target.value })}
-                        className="block w-full pl-2 pr-6 py-1 rounded-md border-neutral-700 bg-neutral-800 focus:border-emerald-400 focus:ring-emerald-400/30 text-xs sm:text-sm border shadow-sm"
+                        className="block w-full pl-3 pr-8 py-1.5 rounded-md border-neutral-700 bg-neutral-800 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm"
                       >
                         {categories.map((cat) => (
                           <option key={cat} value={cat} className="bg-neutral-900">
@@ -641,17 +639,15 @@ export default function DocumentList() {
                         ))}
                       </select>
                     ) : (
-                      <span className="truncate max-w-[100px] inline-block sm:max-w-none">
-                        {doc.category}
-                      </span>
+                      doc.category
                     )}
                   </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-neutral-300 hidden sm:table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">
                     {editRow === doc.id ? (
                       <select
                         value={editData.region}
                         onChange={(e) => setEditData({ ...editData, region: e.target.value })}
-                        className="block w-full pl-2 pr-6 py-1 rounded-md border-neutral-700 bg-neutral-800 focus:border-emerald-400 focus:ring-emerald-400/30 text-xs sm:text-sm border shadow-sm"
+                        className="block w-full pl-3 pr-8 py-1.5 rounded-md border-neutral-700 bg-neutral-800 focus:border-emerald-400 focus:ring-emerald-400/30 text-sm border shadow-sm"
                       >
                         {regions.map((reg) => (
                           <option key={reg} value={reg} className="bg-neutral-900">
@@ -663,7 +659,7 @@ export default function DocumentList() {
                       doc.region
                     )}
                   </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-neutral-400 hidden md:table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
                     <div className="flex flex-wrap gap-1">
                       {doc.tags && typeof doc.tags === "string" ? (
                         doc.tags
@@ -673,7 +669,7 @@ export default function DocumentList() {
                             <motion.span
                               key={tag}
                               whileHover={{ scale: 1.05 }}
-                              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-neutral-800 text-neutral-300"
+                              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-800 text-neutral-300"
                             >
                               {tag.trim()}
                             </motion.span>
@@ -683,16 +679,15 @@ export default function DocumentList() {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-neutral-400 hidden md:table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
                     {new Date(doc.uploaded_at).toLocaleDateString()}
                   </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2 sm:space-x-3">
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                     <motion.a
                       whileHover={{ scale: 1.2 }}
                       href={doc.file_url}
                       download
                       className="inline-block text-emerald-400 hover:text-emerald-300 transition-colors"
-                      title="Download"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -714,7 +709,6 @@ export default function DocumentList() {
                       whileHover={{ scale: 1.2 }}
                       onClick={() => handleDelete(doc.id)}
                       className="inline-block text-red-400 hover:text-red-300 transition-colors"
-                      title="Delete"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -738,7 +732,6 @@ export default function DocumentList() {
                         whileHover={{ scale: 1.2 }}
                         onClick={() => handleSave(doc.id)}
                         className="inline-block text-green-400 hover:text-green-300 transition-colors"
-                        title="Save"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -761,7 +754,6 @@ export default function DocumentList() {
                         whileHover={{ scale: 1.2 }}
                         onClick={() => handleEditClick(doc)}
                         className="inline-block text-amber-400 hover:text-amber-300 transition-colors"
-                        title="Edit"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -786,8 +778,8 @@ export default function DocumentList() {
           </table>
 
           {/* Pagination */}
-          <div className="bg-neutral-900 px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-neutral-800">
-            <div className="text-xs sm:text-sm text-neutral-400">
+          <div className="bg-neutral-900 px-6 py-3 flex items-center justify-between border-t border-neutral-800">
+            <div className="text-sm text-neutral-400">
               Showing <span className="font-medium">{(currentPage - 1) * pageSize + 1}</span> to{" "}
               <span className="font-medium">
                 {Math.min(currentPage * pageSize, filteredDocuments.length)}
@@ -800,7 +792,7 @@ export default function DocumentList() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded-md border border-neutral-700 bg-neutral-800 text-xs sm:text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded-md border border-neutral-700 bg-neutral-800 text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Previous
               </motion.button>
@@ -809,7 +801,7 @@ export default function DocumentList() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-md border border-neutral-700 bg-neutral-800 text-xs sm:text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded-md border border-neutral-700 bg-neutral-800 text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Next
               </motion.button>

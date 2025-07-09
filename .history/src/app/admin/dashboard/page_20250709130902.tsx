@@ -1,3 +1,5 @@
+
+
 // "use client";
 
 // import { useRouter } from "next/navigation";
@@ -295,7 +297,7 @@ export default function AdminDashboard() {
 
       setUserEmail(profile.email);
       setIsLoading(false);
-
+      
       setTimeout(() => setShowWelcome(false), 3000);
     };
 
@@ -313,15 +315,7 @@ export default function AdminDashboard() {
       title: "CMS Manager",
       description: "Scrape, upload & manage legal content",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
           <line x1="8" y1="4" x2="8" y2="20"></line>
           <line x1="16" y1="4" x2="16" y2="20"></line>
@@ -330,22 +324,14 @@ export default function AdminDashboard() {
         </svg>
       ),
       color: "purple",
-      path: "/admin/cms",
+      path: "/admin/cms"
     },
     {
       id: "documents",
       title: "Legal Documents",
       description: "View and manage uploaded legal docs",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
           <polyline points="14 2 14 8 20 8"></polyline>
           <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -354,22 +340,14 @@ export default function AdminDashboard() {
         </svg>
       ),
       color: "indigo",
-      path: "/admin/documents_list",
+      path: "/admin/documents_list"
     },
     {
       id: "keywords",
       title: "Keyword Manager",
       description: "Manage banned and legal keywords",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
           <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
           <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -377,43 +355,27 @@ export default function AdminDashboard() {
         </svg>
       ),
       color: "blue",
-      path: "/admin/keywords",
+      path: "/admin/keywords"
     },
     {
       id: "tokens",
       title: "Token Usage Logs",
       description: "Monitor model usage & costs",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="12" y1="1" x2="12" y2="23"></line>
           <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
         </svg>
       ),
       color: "yellow",
-      path: "/admin/tokens",
+      path: "/admin/tokens"
     },
     {
       id: "users",
       title: "User Management",
       description: "Coming soon",
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
           <circle cx="9" cy="7" r="4"></circle>
           <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -422,8 +384,8 @@ export default function AdminDashboard() {
       ),
       color: "green",
       path: "#",
-      disabled: true,
-    },
+      disabled: true
+    }
   ];
 
   if (isLoading) {
@@ -444,29 +406,29 @@ export default function AdminDashboard() {
         {/* Animated Background Elements */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-900/50 to-neutral-950/90"></div>
-          <motion.div
+          <motion.div 
             animate={{
               x: [0, 100, 0],
               y: [0, 50, 0],
-              rotate: [0, 180, 360],
+              rotate: [0, 180, 360]
             }}
             transition={{
               duration: 30,
               repeat: Infinity,
-              ease: "linear",
+              ease: "linear"
             }}
             className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl"
           ></motion.div>
-          <motion.div
+          <motion.div 
             animate={{
               x: [0, -100, 0],
               y: [0, -50, 0],
-              rotate: [0, -180, -360],
+              rotate: [0, -180, -360]
             }}
             transition={{
               duration: 40,
               repeat: Infinity,
-              ease: "linear",
+              ease: "linear"
             }}
             className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl"
           ></motion.div>
@@ -488,14 +450,14 @@ export default function AdminDashboard() {
                 className="text-center px-4"
               >
                 <motion.div
-                  animate={{
+                  animate={{ 
                     y: [0, -10, 0],
-                    rotate: [0, 5, -5, 0],
+                    rotate: [0, 5, -5, 0]
                   }}
-                  transition={{
+                  transition={{ 
                     duration: 2,
                     repeat: Infinity,
-                    repeatType: "reverse",
+                    repeatType: "reverse"
                   }}
                   className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400"
                 >
@@ -526,21 +488,11 @@ export default function AdminDashboard() {
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
                 Admin Dashboard
               </h1>
-              <motion.p
+              <motion.p 
                 whileHover={{ x: 5 }}
                 className="text-neutral-400 mt-1 sm:mt-2 flex items-center gap-2 text-sm sm:text-base"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
@@ -585,80 +537,63 @@ export default function AdminDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 100 }}
-                whileHover={{
+                whileHover={{ 
                   scale: window.innerWidth > 768 ? 1.03 : 1,
-                  boxShadow:
-                    window.innerWidth > 768
-                      ? "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                      : "none",
+                  boxShadow: window.innerWidth > 768 ? "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" : "none"
                 }}
                 whileTap={{ scale: 0.98 }}
                 onHoverStart={() => window.innerWidth > 768 && setActiveHover(item.id)}
                 onHoverEnd={() => window.innerWidth > 768 && setActiveHover(null)}
                 onClick={() => !item.disabled && router.push(item.path)}
-                className={`relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border ${item.disabled ? "border-neutral-800" : "border-neutral-700 hover:border-emerald-500/30"} rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 ${item.disabled ? "opacity-60" : "hover:bg-neutral-800/30"}`}
+                className={`relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border ${item.disabled ? 'border-neutral-800' : 'border-neutral-700 hover:border-emerald-500/30'} rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 ${item.disabled ? 'opacity-60' : 'hover:bg-neutral-800/30'}`}
               >
                 {/* Hover effect background */}
                 <motion.div
                   initial={{ opacity: 0 }}
-                  animate={{
+                  animate={{ 
                     opacity: activeHover === item.id ? 0.2 : 0,
-                    scale: activeHover === item.id ? 1 : 0.8,
+                    scale: activeHover === item.id ? 1 : 0.8
                   }}
                   transition={{ duration: 0.3 }}
                   className={`absolute inset-0 bg-gradient-to-br from-${item.color}-500/10 to-transparent rounded-xl pointer-events-none`}
                 ></motion.div>
-
+                
                 <div className="flex items-center gap-3 sm:gap-4 relative z-10">
                   <motion.div
                     whileHover={{ rotate: 10 }}
                     className={`p-2 sm:p-3 rounded-lg bg-${item.color}-600/10 border border-${item.color}-500/20`}
                   >
-                    <div
-                      className={`text-${item.color}-300`}
-                      style={{ width: "24px", height: "24px" }}
-                    >
+                    <div className={`text-${item.color}-300`} style={{ width: '24px', height: '24px' }}>
                       {item.icon}
                     </div>
                   </motion.div>
                   <div>
                     <h3 className="text-base sm:text-lg font-medium text-white">{item.title}</h3>
-                    <p className={`text-${item.color}-200 text-xs sm:text-sm`}>
-                      {item.description}
-                    </p>
+                    <p className={`text-${item.color}-200 text-xs sm:text-sm`}>{item.description}</p>
                   </div>
                 </div>
-
+                
                 {/* Animated arrow for clickable items */}
                 {!item.disabled && (
                   <motion.div
                     initial={{ x: 10, opacity: 0 }}
-                    animate={{
+                    animate={{ 
                       x: activeHover === item.id ? 0 : 10,
-                      opacity: activeHover === item.id ? 1 : 0,
+                      opacity: activeHover === item.id ? 1 : 0
                     }}
                     transition={{ duration: 0.2 }}
                     className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-neutral-400"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ width: "20px", height: "20px" }}
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px' }}>
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                   </motion.div>
                 )}
-
+                
                 {/* Coming soon badge */}
                 {item.disabled && (
-                  <motion.div
+                  <motion.div 
                     whileHover={{ scale: 1.05 }}
                     className="absolute right-3 sm:right-4 top-3 sm:top-4 px-2 py-1 rounded-full text-xs bg-neutral-800/50 text-neutral-400 border border-neutral-700"
                   >

@@ -176,8 +176,8 @@ export default function PracticeSection() {
           ))}
         </motion.div>
 
-        {/* CTA at bottom */}
-        {/* <motion.div
+        CTA at bottom
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -202,7 +202,7 @@ export default function PracticeSection() {
               />
             </svg>
           </Link>
-        </motion.div> */}
+        </motion.div>
       </div>
     </section>
   );

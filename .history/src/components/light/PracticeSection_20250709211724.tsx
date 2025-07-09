@@ -130,7 +130,6 @@ export default function PracticeSection() {
             Specialized legal services tailored to your unique needs with innovative solutions
           </motion.p>
         </div>
-
         <motion.div
           variants={container}
           initial="hidden"
@@ -175,9 +174,8 @@ export default function PracticeSection() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* CTA at bottom */}
-        {/* <motion.div
+        CTA at bottom
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -202,7 +200,7 @@ export default function PracticeSection() {
               />
             </svg>
           </Link>
-        </motion.div> */}
+        </motion.div>
       </div>
     </section>
   );
