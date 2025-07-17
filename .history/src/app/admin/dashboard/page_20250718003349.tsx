@@ -302,17 +302,6 @@ export default function AdminDashboard() {
     checkSession();
   }, [router]);
 
-  async function handleLogout() {
-    // Supabase session logout
-    await supabase.auth.signOut();
-
-    // Clear admin_token cookie
-    document.cookie = "admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-
-    // Redirect to admin login
-    router.push("/admin");
-  }
-
   // async function handleLogout() {
   //   await supabase.auth.signOut();
   //   router.push("/admin");

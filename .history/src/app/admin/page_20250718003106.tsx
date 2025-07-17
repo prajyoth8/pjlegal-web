@@ -149,8 +149,6 @@ export default function AdminLogin() {
       }
 
       // localStorage.setItem("admin_token", data.session.access_token);
-      document.cookie = `admin_token=${data.session.access_token}; path=/; secure; samesite=strict`;
-
       router.push("/admin/dashboard");
     } catch (error) {
       setErrorMsg("An unexpected error occurred");
