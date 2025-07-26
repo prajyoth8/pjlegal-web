@@ -1,7 +1,7 @@
 // ✅ Server Component (no warning, SEO optimized)
 import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-import ArticleClientPage from "./ArticleClientPage";
+import ArticleClientPage from "./";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

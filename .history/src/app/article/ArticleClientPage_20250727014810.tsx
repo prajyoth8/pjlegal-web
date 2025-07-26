@@ -1,138 +1,51 @@
-// ✅ Server Component (no warning, SEO optimized)
-import { createClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
-import ArticleClientPage from "./ArticleClientPage";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+"use client";
 
-export default async function ArticlePage(props: { searchParams?: { id?: string } }) {
-  const id = props.searchParams?.id;
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-  if (!id) {
-    redirect("/insights?type=articles");
-  }
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import { ArrowLeft, Bookmark, Clock, User, Eye, MessageSquare, ChevronRight } from "lucide-react";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  LinkedinIcon,
+} from "react-share";
+import { motion } from "framer-motion";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
-  const { data: article } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("id", id)
-    .single();
+export default function ArticleClientPage({
+  article,
+  related,
+}: {
+  article: any;
+  related: any[];
+}) {
+  const [readingTime, setReadingTime] = useState(0);
+  const currentURL = typeof window !== "undefined" ? window.location.href : "";
 
-  const { data: related } = await supabase
-    .from("articles")
-    .select("*")
-    .neq("id", id)
-    .limit(3);
+  useEffect(() => {
+    if (article?.content) {
+      const words = article.content.split(/\s+/).length;
+      setReadingTime(Math.max(1, Math.round(words / 200)));
+    }
+  }, [article]);
 
-  return (
-    <ArticleClientPage
-      article={article}
-      related={related || []}
-    />
-  );
-}
+  if (!article)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-neutral-500">Article not found</p>
+      </div>
+    );
 
-
-
-
-
-// "use client";
-
-// import { useSearchParams } from "next/navigation";
-// import { useEffect, useState } from "react";
-// import { createClient } from "@supabase/supabase-js";
-// import Link from "next/link";
-// import ReactMarkdown from "react-markdown";
-// import { ArrowLeft, Bookmark, Clock, User, Eye, MessageSquare, ChevronRight } from "lucide-react";
-// import {
-//   FacebookShareButton,
-//   TwitterShareButton,
-//   WhatsappShareButton,
-//   LinkedinShareButton,
-//   FacebookIcon,
-//   TwitterIcon,
-//   WhatsappIcon,
-//   LinkedinIcon,
-// } from "react-share";
-// import { motion } from "framer-motion";
-// import remarkGfm from "remark-gfm";
-// import rehypeRaw from "rehype-raw";
-
-
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// );
-
-// export default function ArticleClientPage() {
-//   const searchParams = useSearchParams();
-//   const id = searchParams.get("id");
-
-//   const [article, setArticle] = useState<any>(null);
-//   const [related, setRelated] = useState<any[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [readingTime, setReadingTime] = useState(0);
-
-//   const currentURL = typeof window !== "undefined" ? window.location.href : "";
-
-//   useEffect(() => {
-//     if (!id) return;
-
-//     const fetchData = async () => {
-//       const { data, error } = await supabase
-//         .from("articles")
-//         .select("*")
-//         .eq("id", id)
-//         .single();
-//       setArticle(data);
-
-//       // Calculate reading time
-//       if (data?.content) {
-//         const words = data.content.split(/\s+/).length;
-//         setReadingTime(Math.max(1, Math.round(words / 200)));
-//       }
-
-//       const { data: allArticles } = await supabase
-//         .from("articles")
-//         .select("*")
-//         .neq("id", id)
-//         .limit(3);
-//       setRelated(allArticles || []);
-//       setLoading(false);
-//     };
-
-//     fetchData();
-//   }, [id]);
-
-//   if (loading) return (
-//     <div className="min-h-screen flex items-center justify-center">
-//       <div className="animate-pulse flex flex-col items-center">
-//         <div className="h-12 w-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 mb-4"></div>
-//         <p className="text-lg text-neutral-500">Loading article...</p>
-//       </div>
-//     </div>
-//   );
-
-//   if (!article) return (
-//     <div className="min-h-screen flex items-center justify-center px-4">
-//       <div className="text-center max-w-md p-6 bg-red-500/10 rounded-xl border border-red-500/30">
-//         <h3 className="text-xl font-medium text-red-400 mb-2">Article not found</h3>
-//         <p className="text-neutral-500 mb-4">The requested article could not be loaded.</p>
-//         <Link
-//           href="/insights?type=articles"
-//           className="inline-flex items-center px-4 py-2 bg-neutral-800 text-neutral-200 rounded-lg hover:bg-neutral-700 transition-colors"
-//         >
-//           <ArrowLeft className="w-4 h-4 mr-2" />
-//           Back to Articles
-//         </Link>
-//       </div>
-//     </div>
-//   );
-
-//   return (
+    return (
 //     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
 //       {/* Header with back button */}
 //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">

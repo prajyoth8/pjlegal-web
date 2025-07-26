@@ -1,26 +1,37 @@
-// ✅ Server Component (no warning, SEO optimized)
+// ✅ Server Component for Article Page
 import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import ArticleClientPage from "./ArticleClientPage";
 
+// ✅ Supabase client setup
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default async function ArticlePage(props: { searchParams?: { id?: string } }) {
-  const id = props.searchParams?.id;
+export default async function ArticlePage({
+  searchParams,
+}: {
+  searchParams?: { id?: string };
+}) {
+  const id = searchParams?.id;
 
   if (!id) {
     redirect("/insights?type=articles");
   }
 
+  // ✅ Fetch article by ID
   const { data: article } = await supabase
     .from("articles")
     .select("*")
     .eq("id", id)
     .single();
 
+  if (!article) {
+    redirect("/insights?type=articles"); // fallback if invalid ID
+  }
+
+  // ✅ Fetch related articles
   const { data: related } = await supabase
     .from("articles")
     .select("*")

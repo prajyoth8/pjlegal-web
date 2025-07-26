@@ -1,39 +1,50 @@
-// ✅ Server Component (no warning, SEO optimized)
-import { createClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
-import ArticleClientPage from "./ArticleClientPage";
+// // ✅ Server Component for Article Page
+// import { createClient } from "@supabase/supabase-js";
+// import { redirect } from "next/navigation";
+// import ArticleClientPage from "./ArticleClientPage";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// // ✅ Supabase client setup
+// const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// );
 
-export default async function ArticlePage(props: { searchParams?: { id?: string } }) {
-  const id = props.searchParams?.id;
+// export default async function ArticlePage({
+//   searchParams,
+// }: {
+//   searchParams?: { id?: string };
+// }) {
+//   const id = searchParams?.id;
 
-  if (!id) {
-    redirect("/insights?type=articles");
-  }
+//   if (!id) {
+//     redirect("/insights?type=articles");
+//   }
 
-  const { data: article } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("id", id)
-    .single();
+//   // ✅ Fetch article by ID
+//   const { data: article } = await supabase
+//     .from("articles")
+//     .select("*")
+//     .eq("id", id)
+//     .single();
 
-  const { data: related } = await supabase
-    .from("articles")
-    .select("*")
-    .neq("id", id)
-    .limit(3);
+//   if (!article) {
+//     redirect("/insights?type=articles"); // fallback if invalid ID
+//   }
 
-  return (
-    <ArticleClientPage
-      article={article}
-      related={related || []}
-    />
-  );
-}
+//   // ✅ Fetch related articles
+//   const { data: related } = await supabase
+//     .from("articles")
+//     .select("*")
+//     .neq("id", id)
+//     .limit(3);
+
+//   return (
+//     <ArticleClientPage
+//       article={article}
+//       related={related || []}
+//     />
+//   );
+// }
 
 
 

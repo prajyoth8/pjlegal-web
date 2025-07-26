@@ -1,4 +1,4 @@
-// ✅ Server Component (no warning, SEO optimized)
+// ✅ This is a Server Component using searchParams
 import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import ArticleClientPage from "./ArticleClientPage";
@@ -8,8 +8,12 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default async function ArticlePage(props: { searchParams?: { id?: string } }) {
-  const id = props.searchParams?.id;
+export default async function ArticlePage({
+  searchParams,
+}: {
+  searchParams: { id?: string };
+}) {
+  const id = searchParams.id;
 
   if (!id) {
     redirect("/insights?type=articles");
@@ -34,7 +38,6 @@ export default async function ArticlePage(props: { searchParams?: { id?: string 
     />
   );
 }
-
 
 
 
