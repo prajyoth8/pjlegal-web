@@ -1,10 +1,44 @@
-"use client"; // ✅ Mark as client component
-
+// ✅ Server Component (no warning, SEO optimized)
+import { createClient } from "@supabase/supabase-js";
+import { redirect } from "next/navigation";
 import ArticleClientPage from "./ArticleClientPage";
 
-export default function Page() {
-  return <ArticleClientPage />;
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+export default async function ArticlePage(props: { searchParams?: { id?: string } }) {
+  const id = props.searchParams?.id;
+
+  if (!id) {
+    redirect("/insights?type=articles");
+  }
+
+  const { data: article } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  const { data: related } = await supabase
+    .from("articles")
+    .select("*")
+    .neq("id", id)
+    .limit(3);
+
+  return (
+    <ArticleClientPage
+      article={article}
+      related={related || []}
+    />
+  );
 }
+
+
+
+
 
 // "use client";
 
@@ -27,6 +61,7 @@ export default function Page() {
 // import { motion } from "framer-motion";
 // import remarkGfm from "remark-gfm";
 // import rehypeRaw from "rehype-raw";
+
 
 // const supabase = createClient(
 //   process.env.NEXT_PUBLIC_SUPABASE_URL!,

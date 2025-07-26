@@ -1,10 +1,16 @@
-"use client"; // ✅ Mark as client component
+import dynamic from "next/dynamic";
 
-import ArticleClientPage from "./ArticleClientPage";
+const ArticleClientPage = dynamic(() => import("./ArticleClientPage"), {
+  ssr: false,
+});
 
-export default function Page() {
+export default function ArticlePage() {
   return <ArticleClientPage />;
 }
+
+
+
+
 
 // "use client";
 
@@ -27,6 +33,7 @@ export default function Page() {
 // import { motion } from "framer-motion";
 // import remarkGfm from "remark-gfm";
 // import rehypeRaw from "rehype-raw";
+
 
 // const supabase = createClient(
 //   process.env.NEXT_PUBLIC_SUPABASE_URL!,

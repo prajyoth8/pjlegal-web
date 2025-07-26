@@ -1,8 +1,9 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 import ArticleClientRenderer from "./ArticleClientRenderer";
 
 const supabase = createClient(
@@ -46,7 +47,7 @@ export default function ArticleClientPage() {
     fetchData();
   }, [id]);
 
-  if (loading || !article) return null;
+  if (!id || loading) return null;
 
   return <ArticleClientRenderer article={article} related={related} />;
 }

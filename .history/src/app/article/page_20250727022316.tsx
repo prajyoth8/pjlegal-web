@@ -6,6 +6,7 @@ export default function Page() {
   return <ArticleClientPage />;
 }
 
+
 // "use client";
 
 // import { useSearchParams } from "next/navigation";

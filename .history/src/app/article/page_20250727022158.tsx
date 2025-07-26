@@ -1,6 +1,7 @@
-"use client"; // ✅ Mark as client component
+import dynamic from "next/dynamic";
 
-import ArticleClientPage from "./ArticleClientPage";
+// Use dynamic import to disable SSR (client-side only)
+const ArticleClientPage = dynamic(() => import("./ArticleClientPage"), { ssr: false });
 
 export default function Page() {
   return <ArticleClientPage />;
