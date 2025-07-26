@@ -67,14 +67,14 @@ export default function InsightsSection() {
         </div>
       </div>
 
-      {/* <div className="text-center mt-12">
+      <div className="text-center mt-12">
         <Link
           href="/insights"
           className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-all"
         >
           View All Insights
         </Link>
-      </div> */}
+      </div>
     </section>
   );
 }
