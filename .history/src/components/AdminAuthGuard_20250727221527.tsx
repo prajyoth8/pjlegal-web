@@ -16,10 +16,7 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
     const checkAuth = async () => {
       try {
         // 1. Check Supabase session first
-        const {
-          data: { session },
-          error,
-        } = await supabase.auth.getSession();
+        const { data: { session }, error } = await supabase.auth.getSession();
 
         if (!session || error) {
           throw new Error("No session");
@@ -39,6 +36,7 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
         // 3. If everything checks out
         setChecked(true);
+        
       } catch (err) {
         console.error("Auth check failed:", err);
         router.replace("/admin");
@@ -58,6 +56,8 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
   return <>{children}</>;
 }
+
+
 
 // "use client";
 // import { useRouter } from "next/navigation";

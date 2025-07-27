@@ -91,101 +91,6 @@
 
 
 
-
-
-
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { createClient } from "@supabase/supabase-js";
-
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// );
-
-// export default function AdminLoginPage() {
-//   const router = useRouter();
-
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   async function handleLogin(e: React.FormEvent) {
-//     e.preventDefault();
-//     setError("");
-//     setLoading(true);
-
-//     const { data, error } = await supabase.auth.signInWithPassword({
-//       email,
-//       password,
-//     });
-
-//     if (error || !data.session) {
-//       setError("Invalid email or password");
-//       setLoading(false);
-//       return;
-//     }
-
-//     const { data: userData, error: userError } = await supabase
-//       .from("users")
-//       .select("is_admin")
-//       .eq("id", data.user.id)
-//       .single();
-
-//     if (userError || !userData?.is_admin) {
-//       setError("Access denied. Not an admin.");
-//       await supabase.auth.signOut();
-//       setLoading(false);
-//       return;
-//     }
-
-//     // ✅ Successfully authenticated and is admin
-//     router.push("/admin/dashboard");
-//   }
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-//       <form onSubmit={handleLogin} className="bg-gray-800 p-8 rounded-lg space-y-6 w-full max-w-md shadow-xl">
-//         <h1 className="text-2xl font-bold text-center">Admin Login</h1>
-
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Admin Email"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-
-//         <button
-//           type="submit"
-//           disabled={loading}
-//           className="w-full bg-blue-600 hover:bg-blue-700 font-semibold py-2 rounded transition"
-//         >
-//           {loading ? "Logging in..." : "Login"}
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -207,13 +112,13 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [deviceSecurity, setDeviceSecurity] = useState({
     isSecure: false,
-    isMobile: false,
+    isMobile: false
   });
   const router = useRouter();
 
   // Check device security on mount
   useEffect(() => {
-    const isSecure = window.location.protocol === "https:";
+    const isSecure = window.location.protocol === 'https:';
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setDeviceSecurity({ isSecure, isMobile });
   }, []);
@@ -231,14 +136,11 @@ export default function AdminLogin() {
         return;
       }
 
-      const { data: profile, error: profileError } = await supabase
+      const { data: profile } = await supabase
         .from("users")
         .select("is_admin")
         .eq("id", data.user.id)
         .single();
-
-        console.log("ADMIN PROFILE:", profile);
-        console.log("PROFILE ERROR:", profileError);
 
       if (!profile?.is_admin) {
         setErrorMsg("Access denied. Not an admin.");
@@ -250,7 +152,7 @@ export default function AdminLogin() {
       // document.cookie = `admin_token=${data.session.access_token}; path=/; secure; samesite=strict`;
 
       const isProd = process.env.NODE_ENV === "production";
-      document.cookie = `admin_token=${data.session.access_token}; path=/; samesite=strict${isProd ? "; secure" : ""}`;
+document.cookie = `admin_token=${data.session.access_token}; path=/; samesite=strict${isProd ? "; secure" : ""}`;
 
       router.push("/admin/dashboard");
     } catch (error) {
@@ -259,8 +161,6 @@ export default function AdminLogin() {
       setIsLoading(false);
     }
   }
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0c10] p-4 md:p-8">
@@ -287,7 +187,7 @@ export default function AdminLogin() {
 
           {/* Header */}
           <div className="text-center">
-            <motion.div
+            <motion.div 
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2 }}
@@ -305,10 +205,8 @@ export default function AdminLogin() {
 
           {/* Security status */}
           <div className="flex items-center justify-center gap-2 text-sm text-gray-400">
-            <span
-              className={`h-2 w-2 rounded-full ${deviceSecurity.isSecure ? "bg-emerald-500" : "bg-red-500"}`}
-            ></span>
-            {deviceSecurity.isSecure ? "Secure Connection" : "Unsecured Connection"}
+            <span className={`h-2 w-2 rounded-full ${deviceSecurity.isSecure ? 'bg-emerald-500' : 'bg-red-500'}`}></span>
+            {deviceSecurity.isSecure ? 'Secure Connection' : 'Unsecured Connection'}
             {deviceSecurity.isMobile && (
               <span className="flex items-center ml-2">
                 <span className="h-2 w-2 rounded-full bg-blue-500 mr-1"></span>
@@ -322,7 +220,7 @@ export default function AdminLogin() {
             {errorMsg && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 className="bg-red-500/20 border border-red-500/30 text-red-100 p-3 rounded-lg text-sm text-center backdrop-blur-sm"
               >
@@ -353,12 +251,12 @@ export default function AdminLogin() {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-gray-300">Password</label>
-                <button
-                  type="button"
+                <button 
+                  type="button" 
                   onClick={() => setShowPassword(!showPassword)}
                   className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
                 >
-                  {showPassword ? "Hide" : "Show"}
+                  {showPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
               <div className="relative">
@@ -373,7 +271,7 @@ export default function AdminLogin() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <button
+                <button 
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
@@ -441,18 +339,10 @@ export default function AdminLogin() {
       {/* Global styles for animations */}
       <style jsx global>{`
         @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
         }
         .animate-blob {
           animation: blob 7s infinite ease-in-out;

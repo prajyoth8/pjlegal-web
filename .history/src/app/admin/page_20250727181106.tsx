@@ -89,103 +89,6 @@
 //   );
 // }
 
-
-
-
-
-
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { createClient } from "@supabase/supabase-js";
-
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// );
-
-// export default function AdminLoginPage() {
-//   const router = useRouter();
-
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   async function handleLogin(e: React.FormEvent) {
-//     e.preventDefault();
-//     setError("");
-//     setLoading(true);
-
-//     const { data, error } = await supabase.auth.signInWithPassword({
-//       email,
-//       password,
-//     });
-
-//     if (error || !data.session) {
-//       setError("Invalid email or password");
-//       setLoading(false);
-//       return;
-//     }
-
-//     const { data: userData, error: userError } = await supabase
-//       .from("users")
-//       .select("is_admin")
-//       .eq("id", data.user.id)
-//       .single();
-
-//     if (userError || !userData?.is_admin) {
-//       setError("Access denied. Not an admin.");
-//       await supabase.auth.signOut();
-//       setLoading(false);
-//       return;
-//     }
-
-//     // ✅ Successfully authenticated and is admin
-//     router.push("/admin/dashboard");
-//   }
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-//       <form onSubmit={handleLogin} className="bg-gray-800 p-8 rounded-lg space-y-6 w-full max-w-md shadow-xl">
-//         <h1 className="text-2xl font-bold text-center">Admin Login</h1>
-
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Admin Email"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-
-//         <button
-//           type="submit"
-//           disabled={loading}
-//           className="w-full bg-blue-600 hover:bg-blue-700 font-semibold py-2 rounded transition"
-//         >
-//           {loading ? "Logging in..." : "Login"}
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -218,47 +121,74 @@ export default function AdminLogin() {
     setDeviceSecurity({ isSecure, isMobile });
   }, []);
 
+  // async function handleLogin(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   setErrorMsg("");
+  //   setIsLoading(true);
+
+  //   try {
+  //     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  //     if (error || !data.session) {
+  //       setErrorMsg("Invalid credentials");
+  //       return;
+  //     }
+
+  //     const { data: profile, error: profileError } = await supabase
+  //       .from("users")
+  //       .select("is_admin")
+  //       .eq("id", data.user.id)
+  //       .single();
+
+  //       console.log("ADMIN PROFILE:", profile);
+  //       console.log("PROFILE ERROR:", profileError);
+
+  //     if (!profile?.is_admin) {
+  //       setErrorMsg("Access denied. Not an admin.");
+  //       await supabase.auth.signOut();
+  //       return;
+  //     }
+
+  //     // localStorage.setItem("admin_token", data.session.access_token);
+  //     // document.cookie = `admin_token=${data.session.access_token}; path=/; secure; samesite=strict`;
+
+  //     const isProd = process.env.NODE_ENV === "production";
+  //     document.cookie = `admin_token=${data.session.access_token}; path=/; samesite=strict${isProd ? "; secure" : ""}`;
+
+  //     router.push("/admin/dashboard");
+  //   } catch (error) {
+  //     setErrorMsg("An unexpected error occurred");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
+
   async function handleLogin(e: React.FormEvent) {
-    e.preventDefault();
-    setErrorMsg("");
-    setIsLoading(true);
+  e.preventDefault();
+  setErrorMsg("");
+  setIsLoading(true);
 
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  try {
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      if (error || !data.session) {
-        setErrorMsg("Invalid credentials");
-        return;
-      }
-
-      const { data: profile, error: profileError } = await supabase
-        .from("users")
-        .select("is_admin")
-        .eq("id", data.user.id)
-        .single();
-
-        console.log("ADMIN PROFILE:", profile);
-        console.log("PROFILE ERROR:", profileError);
-
-      if (!profile?.is_admin) {
-        setErrorMsg("Access denied. Not an admin.");
-        await supabase.auth.signOut();
-        return;
-      }
-
-      // localStorage.setItem("admin_token", data.session.access_token);
-      // document.cookie = `admin_token=${data.session.access_token}; path=/; secure; samesite=strict`;
-
-      const isProd = process.env.NODE_ENV === "production";
-      document.cookie = `admin_token=${data.session.access_token}; path=/; samesite=strict${isProd ? "; secure" : ""}`;
-
-      router.push("/admin/dashboard");
-    } catch (error) {
-      setErrorMsg("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
+    if (!res.ok) {
+      const { error } = await res.json();
+      setErrorMsg(error || "Login failed");
+      return;
     }
+
+    // ✅ Optional: small delay to ensure cookie is set
+    setTimeout(() => router.push("/admin/dashboard"), 100);
+  } catch (error) {
+    setErrorMsg("Unexpected error");
+  } finally {
+    setIsLoading(false);
   }
+}
 
 
 

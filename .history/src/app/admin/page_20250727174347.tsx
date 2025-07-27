@@ -89,103 +89,6 @@
 //   );
 // }
 
-
-
-
-
-
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { createClient } from "@supabase/supabase-js";
-
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// );
-
-// export default function AdminLoginPage() {
-//   const router = useRouter();
-
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   async function handleLogin(e: React.FormEvent) {
-//     e.preventDefault();
-//     setError("");
-//     setLoading(true);
-
-//     const { data, error } = await supabase.auth.signInWithPassword({
-//       email,
-//       password,
-//     });
-
-//     if (error || !data.session) {
-//       setError("Invalid email or password");
-//       setLoading(false);
-//       return;
-//     }
-
-//     const { data: userData, error: userError } = await supabase
-//       .from("users")
-//       .select("is_admin")
-//       .eq("id", data.user.id)
-//       .single();
-
-//     if (userError || !userData?.is_admin) {
-//       setError("Access denied. Not an admin.");
-//       await supabase.auth.signOut();
-//       setLoading(false);
-//       return;
-//     }
-
-//     // ✅ Successfully authenticated and is admin
-//     router.push("/admin/dashboard");
-//   }
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-//       <form onSubmit={handleLogin} className="bg-gray-800 p-8 rounded-lg space-y-6 w-full max-w-md shadow-xl">
-//         <h1 className="text-2xl font-bold text-center">Admin Login</h1>
-
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Admin Email"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//           className="w-full px-4 py-2 bg-gray-700 rounded focus:outline-none"
-//           required
-//         />
-
-//         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-
-//         <button
-//           type="submit"
-//           disabled={loading}
-//           className="w-full bg-blue-600 hover:bg-blue-700 font-semibold py-2 rounded transition"
-//         >
-//           {loading ? "Logging in..." : "Login"}
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -231,14 +134,11 @@ export default function AdminLogin() {
         return;
       }
 
-      const { data: profile, error: profileError } = await supabase
+      const { data: profile } = await supabase
         .from("users")
         .select("is_admin")
         .eq("id", data.user.id)
         .single();
-
-        console.log("ADMIN PROFILE:", profile);
-        console.log("PROFILE ERROR:", profileError);
 
       if (!profile?.is_admin) {
         setErrorMsg("Access denied. Not an admin.");
@@ -259,8 +159,6 @@ export default function AdminLogin() {
       setIsLoading(false);
     }
   }
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0c10] p-4 md:p-8">

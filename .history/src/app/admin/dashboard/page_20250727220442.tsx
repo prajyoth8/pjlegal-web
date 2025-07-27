@@ -269,38 +269,82 @@ export default function AdminDashboard() {
   const [activeHover, setActiveHover] = useState<string | null>(null);
   const [showWelcome, setShowWelcome] = useState(true);
 
-  useEffect(() => {
-    const checkSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     const {
+  //       data: { session },
+  //       error,
+  //     } = await supabase.auth.getSession();
 
-      if (!session) {
-        router.push("/admin");
+  //    if (!session) {
+  //       router.push("/admin");
+  //       return;
+  //     }
+
+  //     const { data: profile } = await supabase
+  //       .from("users")
+  //       .select("email, is_admin")
+  //       .eq("id", session.user.id)
+  //       .single();
+
+  //     if (!profile?.is_admin) {
+  //       await supabase.auth.signOut();
+  //       router.push("/admin");
+  //       return;
+  //     }
+
+  //     setUserEmail(profile.email);
+  //     setIsLoading(false);
+
+  //     setTimeout(() => setShowWelcome(false), 3000);
+  //   };
+
+  //   checkSession();
+  // }, [router]);
+
+  useEffect(() => {
+  let isMounted = true;
+
+  const checkSession = async () => {
+    try {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+      if (!session || sessionError) {
+        router.replace("/admin");
         return;
       }
 
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from("users")
         .select("email, is_admin")
         .eq("id", session.user.id)
         .single();
 
-      if (!profile?.is_admin) {
+      if (!profile || profileError || !profile.is_admin) {
         await supabase.auth.signOut();
-        router.push("/admin");
+        router.replace("/admin");
         return;
       }
 
-      setUserEmail(profile.email);
-      setIsLoading(false);
+      if (isMounted) {
+        setUserEmail(profile.email);
+        setIsLoading(false);
+        setTimeout(() => setShowWelcome(false), 3000);
+      }
+    } catch (error) {
+      console.error("Session check error:", error);
+      if (isMounted) {
+        router.replace("/admin");
+      }
+    }
+  };
 
-      setTimeout(() => setShowWelcome(false), 3000);
-    };
+  checkSession();
 
-    checkSession();
-  }, [router]);
+  return () => {
+    isMounted = false;
+  };
+}, [router]);
 
   async function handleLogout() {
     // Supabase session logout
@@ -320,26 +364,26 @@ export default function AdminDashboard() {
 
   const dashboardItems = [
     {
-      id: "articles",
-      title: "Articles",
-      description: "Manage and publish articles",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-        </svg>
-      ),
-      color: "cyan",
-      path: "/admin/articles",
-    },
+    id: "articles",
+    title: "Articles",
+    description: "Manage and publish articles",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+    ),
+    color: "cyan",
+    path: "/admin/articles",
+  },
     {
       id: "cms",
       title: "CMS Manager",
