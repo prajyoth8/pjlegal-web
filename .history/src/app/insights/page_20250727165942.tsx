@@ -117,9 +117,10 @@
 //   );
 // }
 
+
 "use client";
 
-import { Suspense } from "react";
+import { Suspense } from 'react';
 import { useSearchParams } from "next/navigation";
 import NewsList from "@/components/insights/NewsList";
 import ArticlesList from "@/components/insights/ArticlesList";
@@ -139,24 +140,26 @@ function InsightsContent() {
 
 export default function InsightsPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 w-64 bg-gray-200 rounded mb-4"></div>
-            <div className="space-y-4">
-              <div className="h-20 bg-gray-200 rounded"></div>
-              <div className="h-20 bg-gray-200 rounded"></div>
-              <div className="h-20 bg-gray-200 rounded"></div>
-            </div>
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-8">
+        <div className="animate-pulse">
+          <div className="h-8 w-64 bg-gray-200 rounded mb-4"></div>
+          <div className="space-y-4">
+            <div className="h-20 bg-gray-200 rounded"></div>
+            <div className="h-20 bg-gray-200 rounded"></div>
+            <div className="h-20 bg-gray-200 rounded"></div>
           </div>
         </div>
-      }
-    >
+      </div>
+    }>
       <InsightsContent />
     </Suspense>
   );
 }
+
+
+
+
 
 // ✅ src/app/insights/page.tsx
 // "use client";
@@ -175,7 +178,8 @@ export default function InsightsPage() {
 
 //       {type === "news" && <NewsList />}
 //       {type === "articles" && <ArticlesList />}
-
+      
+     
 //     </div>
 //   );
 // }
