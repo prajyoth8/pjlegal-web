@@ -6,7 +6,7 @@ import PhoneInputWithCountry from "@/components/PhoneInputWithCountry";
 import Image from "next/image";
 
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "https://pjlegal-backend-production.up.railway.app";
+  process.env.NEXT_PUBLIC_API_URL || "https://pjlegal-backend-production.up.railway.app";
 
 export default function ChatAuthModal({
   onAuthenticated,
@@ -485,7 +485,7 @@ return (
       </div>
 
       <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-        By using this assistant, you agree to our{" 
+        By using this assistant, you agree to our{" "}
         <a
           href="/disclaimer"
           target="_blank"
