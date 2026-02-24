@@ -173,6 +173,178 @@ export default function ChatAuthModal({
     }
   };
 
+
+
+  return (
+    <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
+      <div className="text-center mb-6">
+        <div className="flex justify-center mb-3">
+          <div className="relative w-20 h-20 rounded-full border-2 border-amber-200 p-1">
+            <Image
+              src="/assets/ai_avatar.png"
+              alt="PJ Legal AI Assistant"
+              width={80}
+              height={80}
+              className="rounded-full"
+            />
+            <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1.5 rounded-full">
+              <Lock className="w-4 h-4" />
+            </div>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+          Secure Email Verification
+        </h3>
+        <p className="text-gray-600 dark:text-gray-300 text-sm">
+          We'll send a verification code to your email
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {step === "input" ? (
+          <>
+            <div>
+              <label
+                htmlFor="email-input"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
+                Email Address
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="email-input"
+                  type="email"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-3 text-sm dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                  placeholder="you@example.com"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            </div>
+            <button
+              onClick={sendOtp}
+              disabled={loading || !value.trim()}
+              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 rounded-lg transition-all ${
+                loading || !value.trim()
+                  ? "opacity-80 cursor-not-allowed"
+                  : "shadow-md hover:shadow-lg"
+              }`}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Sending Verification Code...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Send Verification Code
+                </>
+              )}
+            </button>
+          </>
+        ) : (
+          <>
+            <div>
+              <label
+                htmlFor="otp-input"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
+                Verification Code
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Key className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="otp-input"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-3 text-center text-lg font-mono tracking-widest dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                  placeholder="Enter 6-digit code"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  autoFocus
+                />
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                We've sent a 6-digit code to your email address
+              </p>
+              {!canResend ? (
+                <p className="text-sm text-gray-400 mt-2 flex items-center justify-center gap-1">
+                  <Clock className="w-3 h-3" /> Resend available in {timer}s
+                </p>
+              ) : (
+                <button
+                  onClick={sendOtp}
+                  className="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline mt-2 flex items-center justify-center gap-1 w-full"
+                >
+                  <RefreshCw className="w-3 h-3" /> Resend Code
+                </button>
+              )}
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setStep("input")}
+                className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" /> Back
+              </button>
+              <button
+                onClick={verifyOtpAndCreateSession}
+                disabled={loading || otp.length < 6}
+                className={`flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 rounded-lg transition-all ${
+                  loading || otp.length < 6
+                    ? "opacity-80 cursor-not-allowed"
+                    : "shadow-md hover:shadow-lg"
+                }`}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4" /> Continue
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+          <ShieldCheck className="inline w-3 h-3 mr-1" />
+          Your information is encrypted and secure
+        </p>
+      </div>
+
+      <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
+        By using this assistant, you agree to our{" "}
+        <a
+          href="/disclaimer"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-amber-600 dark:hover:text-amber-400"
+        >
+          Terms of Use
+        </a>
+        . Do not share personal or sensitive data.
+      </div>
+    </div>
+  );
+}
+
+
+
   //   return (
   //     <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
   //       <div className="text-center mb-6">
@@ -346,173 +518,16 @@ export default function ChatAuthModal({
   //   );
   // }
 
-  return (
-    <div className="p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl max-w-md w-full mx-auto backdrop-blur-lg">
-      <div className="text-center mb-6">
-        <div className="flex justify-center mb-3">
-          <div className="relative w-20 h-20 rounded-full border-2 border-amber-200 p-1">
-            <Image
-              src="/assets/ai_avatar.png"
-              alt="PJ Legal AI Assistant"
-              width={80}
-              height={80}
-              className="rounded-full"
-            />
-            <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1.5 rounded-full">
-              <Lock className="w-4 h-4" />
-            </div>
-          </div>
-        </div>
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-          Secure Email Verification
-        </h3>
-        <p className="text-gray-600 dark:text-gray-300 text-sm">
-          We'll send a verification code to your email
-        </p>
-      </div>
 
-      <div className="space-y-4">
-        {step === "input" ? (
-          <>
-            <div>
-              <label
-                htmlFor="email-input"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-              >
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="email-input"
-                  type="email"
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-3 text-sm dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
-                  placeholder="you@example.com"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                  autoFocus
-                />
-              </div>
-            </div>
-            <button
-              onClick={sendOtp}
-              disabled={loading || !value.trim()}
-              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 rounded-lg transition-all ${
-                loading || !value.trim()
-                  ? "opacity-80 cursor-not-allowed"
-                  : "shadow-md hover:shadow-lg"
-              }`}
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Sending Verification Code...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  Send Verification Code
-                </>
-              )}
-            </button>
-          </>
-        ) : (
-          <>
-            <div>
-              <label
-                htmlFor="otp-input"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-              >
-                Verification Code
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Key className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="otp-input"
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-3 text-center text-lg font-mono tracking-widest dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
-                  placeholder="Enter 6-digit code"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                  autoFocus
-                />
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                We've sent a 6-digit code to your email address
-              </p>
-              {!canResend ? (
-                <p className="text-sm text-gray-400 mt-2 flex items-center justify-center gap-1">
-                  <Clock className="w-3 h-3" /> Resend available in {timer}s
-                </p>
-              ) : (
-                <button
-                  onClick={sendOtp}
-                  className="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline mt-2 flex items-center justify-center gap-1 w-full"
-                >
-                  <RefreshCw className="w-3 h-3" /> Resend Code
-                </button>
-              )}
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setStep("input")}
-                className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
-              >
-                <ArrowLeft className="w-4 h-4" /> Back
-              </button>
-              <button
-                onClick={verifyOtpAndCreateSession}
-                disabled={loading || otp.length < 6}
-                className={`flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 rounded-lg transition-all ${
-                  loading || otp.length < 6
-                    ? "opacity-80 cursor-not-allowed"
-                    : "shadow-md hover:shadow-lg"
-                }`}
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Verifying...
-                  </>
-                ) : (
-                  <>
-                    <Check className="w-4 h-4" /> Continue
-                  </>
-                )}
-              </button>
-            </div>
-          </>
-        )}
-      </div>
 
-      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-          <ShieldCheck className="inline w-3 h-3 mr-1" />
-          Your information is encrypted and secure
-        </p>
-      </div>
 
-      <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-        By using this assistant, you agree to our{" "}
-        <a
-          href="/disclaimer"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-amber-600 dark:hover:text-amber-400"
-        >
-          Terms of Use
-        </a>
-        . Do not share personal or sensitive data.
-      </div>
-    </div>
-  );
-}
+
+
+
+
+
+
+
 
 // "use client";
 
